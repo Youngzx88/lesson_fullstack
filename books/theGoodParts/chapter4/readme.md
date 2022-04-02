@@ -88,7 +88,7 @@ Function.prototype.method = function (name,func){
 - 建议大家都是用let去定义局部作用域的变量;
 
 
-## 4.10、闭包
+## 4.10、闭包(重要)
 
 - 作用域
     - 全局作用域
@@ -98,6 +98,13 @@ Function.prototype.method = function (name,func){
     - 全局环境
     - 函数环境
     - Eval环境(不关注)
+    
+1. 创建阶段：
+    - 创建作用域链:当前变量对象+父级变量对象
+    - 变量对象:参数+变量+函数声明
+    - this
+2. 执行阶段：
+    - 执行代码：变量赋值+函数引用
 
 **案例一**:分析执行上下文
 ```javascript
@@ -112,3 +119,71 @@ function a() {
 }
 a();
 ```
+
+- 分析
+
+    4. 函数c执行上下文-第四个进入
+    3. 函数b执行上下文-第三个进入
+    2. 函数a执行上下文- 第二个进入
+    1. 全局执行上下文-最先进入
+
+    - 当函数c没有可以输出以及可执行的语句时,函数c退出执行上下文...依次退出 代码即可继续往下进行
+
+**案例二**:为什么book无法输出？
+```javascript
+function books ( ){
+    var book ="书包里面的书本";
+}
+console.log (book);
+```
+- 分析
+    1. 执行books函数
+    2. 作用域从全局进入到books,执行完了books执行上下文退出
+    3. 在全局中拿不到book
+
+**案例三**:book又可以输出了
+```javascript
+function books (){
+    var book = "书包里的书本"
+       return function () {
+        console.log(book);
+    }
+}
+var bag = books();
+bag();
+```
+- 分析
+    1. 全局执行上下文
+    2. books执行上下文(因为bag指向books)
+    3. 匿名函数执行上下文:此时匿名函数的作用域  链是从全局开始嵌套的,所以能访问book
+
+**案例四**:面试题
+```javascript 
+for (var i = 0; i<5; i++){
+    setTimeout (function (){
+        console.log (i++);
+    },4000);
+}
+console.log (i);
+```
+- 分析(答案5 5 6 7 8 9)
+    1. 进入全局执行上下文
+    2. 任务队列 setTimeout不会直接放到 执行栈,而是会放到任务队列
+    3. 等到执行栈结束才会根据任务队列按照时间间隔开始执行:任务队列中存放了5个i++
+    4. 先输出console.log的5 再执行5个i++
+
+**案例四**:面试题修改
+```javascript 
+for (var i = 0; i<5; i++){
+    (function(x){
+        setTimeout (function (){
+            console.log (i++);
+        },4000);
+    })(i);
+}
+console.log (i);
+```
+- 分析(5,0,1,2,3,4)
+  1. 全局执行上下文
+  2. 立即执行函数执行上下文
+  3. 可以获得全局变量的参数并打印
