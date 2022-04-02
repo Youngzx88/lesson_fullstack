@@ -87,3 +87,28 @@ Function.prototype.method = function (name,func){
 - es6中的let是局部作用域
 - 建议大家都是用let去定义局部作用域的变量;
 
+
+## 4.10、闭包
+
+- 作用域
+    - 全局作用域
+    - 函数作用域
+
+- 执行上下文(执行环境:决定代码的作用域)
+    - 全局环境
+    - 函数环境
+    - Eval环境(不关注)
+
+**案例一**:分析执行上下文
+```javascript
+function a() {
+    b();
+        function b() {
+            c();
+            function c(){
+                console.log("我在里面");
+            }
+        }
+}
+a();
+```
