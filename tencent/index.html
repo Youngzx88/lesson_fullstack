@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1.国王的1000只鸭子组成合唱团
+        
+        /*
+            简单数据类型,值不可以改变
+            复杂数据类型,可以改变,类型不可以改变
+        */
+        const choir = [];
+        //  js没有特定的Array类型，除了简单类型,其他的都是对象
+        //console.log(typeof choir);//Object
+        
+        /*  
+            @func：招募一个成员
+            @author：Youngzx
+            @Date：2020.3.30
+        */
+        let duck ={
+           sing(){
+               console.log('嘎嘎嘎');
+           }
+        }
+        let cat ={
+
+        }
+        let chick ={
+            sing(){
+                console.log('咯咯咯')
+            }
+        }
+        function buildChoir(animal){
+            //typeof 返回函数为 function
+            if(animal.sing && typeof animal.sing === 'function'){
+                choir.push(animal);
+            }
+            return choir;
+        }
+        for(let i = 0 ; i < 999 ; i++ ){
+           buildChoir(duck);
+        }
+        buildChoir(chick);
+       
+        if(choir.length>=1000){
+            console.log('合唱团招募完成');
+        }
+    </script>
+</body>
+</html>

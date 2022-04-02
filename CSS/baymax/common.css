@@ -1,0 +1,23 @@
+div{
+    width: 100px;
+    height: 100px;
+    background : red;
+    margin-bottom: 10px;
+}
+body {
+    background-color: pink;
+}
+/*div.boy的权重更大  
+div p 1分
+.body 10分
+# 100分
+*/
+div#hero{
+    background-color: green;
+}
+div.boy{
+    background-color: yellow;
+}
+.body{
+    background-color: black;
+}

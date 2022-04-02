@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEUI-Button</title>
+    <link rel="stylesheet" href="./btn.css">
+</head>
+<body>
+    <!-- 
+        取类名是一个技术活 page结构命名套路 
+        1.page结构 命名套路
+        2.__ BEM 国际命名规范
+        3.BEM Blok Element Modifier
+        4.组件命名btn 可以复用的按钮组件 weui-btn 是按钮的基类 再加状态类让按钮改变样式
+                 eg: .bd-btn .tm-btn .m-btm .jd-btn
+                    weui项目名或公司名 作为前缀 .btn一个新的block
+                    .weui-messagebox>.weui-messagebox__hd+.weui-messagebox__bd+.weui-messagebox__ft>.weui-btn*2
+    -->
+    <!-- .page>.page__hd+.page__bd+.page__ft-->
+    <div class="page">
+        <div class="page__hd">
+            <h1 class="page__title">Button</h1>
+            <p class="page__desc">按钮</p>
+        </div>
+        <div class="page__bd">
+            <div class="button-sp-area">
+                <a href=" " class="weui-btn weui-btn_primary">主要操作</a>
+                <a href=" " class="weui-btn weui-btn_default">次要操作</a>
+                <a href=" " class="weui-btn disbale weui-btn_disable">次要操作</a>
+            </div>
+        </div>
+        <div class="page__ft"></div>
+    </div>
+</body>
+</html>
