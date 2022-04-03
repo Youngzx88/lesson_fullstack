@@ -26,7 +26,6 @@ for(let item of arr){
 //4.for each(call back)
 arr.forEach(function(item,index){
     console.log(index+":"+item);
-
 })
 //5.对象的遍历
 for(let key in obj){

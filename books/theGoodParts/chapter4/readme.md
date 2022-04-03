@@ -89,7 +89,6 @@ Function.prototype.method = function (name,func){
 
 
 ## 4.10、闭包(重要)
-
 - 作用域
     - 全局作用域
     - 函数作用域
@@ -134,6 +133,7 @@ a();
 function books ( ){
     var book ="书包里面的书本";
 }
+books();
 console.log (book);
 ```
 - 分析
@@ -187,3 +187,56 @@ console.log (i);
   1. 全局执行上下文
   2. 立即执行函数执行上下文
   3. 可以获得全局变量的参数并打印
+
+
+## 4.11、回调
+- 类似与对共享资源的占用不连续而产生死锁的问题
+- 把需要连续操作的代码放入函数当中,如书中举例,提供一个当服务器的响应到达时将被调用的回调函数,这样客户端就不会阻塞
+
+回调函数的使用
+```javascript
+let x = function(){
+    console.log("i am called from inside a function")
+};
+
+let y = function(callback){
+    console.log("do something");
+    callback();
+}
+y(x);
+/*
+ 回调函数： 
+    并不是把x的返回值传给y,而是传入整个函数体
+    当你需要调用的时候再去使用
+*/
+```
+回调函数的用法
+```javascript
+//原来
+let calc = function(num1,num2,callback){
+    if(callback==='add'){
+        return num1+num2;
+    }   
+}
+console.log(calc(2,3,'add'));
+//使用回调函数后
+let add =function (a,b){
+    return a+b;
+}
+let mutiply =function (a,b){
+    return a*b;
+}
+let calc2 = function(num1,num2,callback){
+    return callback(num1,num2);
+}
+console.log(calc2(2,3,mutiply));
+```
+## 4.12、模块
+类似于封装
+- 我们可以使用函数和闭包来构造模块。模块是一个提供接口却隐藏状态与实现的函数或对象。
+- 模块模式的一般形式是:一个定义了私有变量和函数的函数,利用闭包创建可以访问私有变量和函数的特权函数，最后返回这个特权函数，或者把它们保存到一个可访问到的地方。
+- 使用模块模式就可以摒弃全局变量的使用。它促进了信息隐藏和其他优秀的设计实践。对于应用程序的封装，或者构造其他单例对象，模块模式非常有效。
+
+## 4.13、级联
+## 4.14、套用
+## 4.15、记忆
