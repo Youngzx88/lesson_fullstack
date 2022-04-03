@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Update CSS Skills With <span class="hl">JS</span></h2>
+    <div class="controls">
+        <div class="fields">
+            <label for="spacing">Spacing</label>
+             <!-- 输入控件  html5 更加强大的表单类型 -->
+             <!-- data-sizing只能通过  spacingInput.dataset.sizing-->
+            <input type="range" min="10" max="200" id="spacing" name="spacing" value="150" data-num="120" data-sizing="px">
+            <span id="spacing__res">150px</span>
+        </div>
+        <div class="fields">
+            <label for="color">base color</label>
+            <input type="color" id="color" name="color" value="#ffc600">
+            <span id="color__res">#ffc600</span>
+        </div>
+    </div>  
+    <script>
+        const inputs = document.querySelectorAll('.fields input')//选择多个元素
+        const spacingInput =  document.querySelector('#spacing');
+        const blurInput =  document.querySelector('#blur');
+        console.log(inputs);
+        //不可以给数组添加事件->foreach 并调用执行callback
+        inputs.forEach(function(input){
+            //console.log(input);
+            input.addEventListener('change',function(event){
+                const res = '#' + this.id+'__res';
+                document
+                    .querySelector(res)
+                    .innerText = this.value+(this.dataset.sizing? this.dataset.sizing:"");
+            })
+        })
+
+    // spacingInput.addEventListener('change', function(event) {
+    //     // js 是事件驱动的语言
+    //     // 函数有一个指针 事件处理函数中：this指向事件发生的对象
+    //         //console.log(this.value);
+    //     document.querySelector('#spacing__res').innerText=this.value+this.dataset.sizing;
+    // })
+    // spacingInput.addEventListener('change', function(event) {
+    //     // js 是事件驱动的语言
+    //     // 函数有一个指针 事件处理函数中：this指向事件发生的对象
+    //         //console.log(this.value);
+    //     document.querySelector('#blur__res').innerText=this.value+this.dataset.sizing;
+    // })
+    </script>
+</body>
+</html>
+</body>
+</html>
