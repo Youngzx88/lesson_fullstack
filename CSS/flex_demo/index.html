@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        body,html{
+            height: 100%;
+        }
+        body{
+            /* 手机网页 苹果手机 不匹配会用后面的 */
+            /* css继承 整个页面都会适用字体 */
+            font-family:  -apple-system-font,sans-serif;
+            background-color: #111;
+        }
+        .page{
+            /* 脱离了文档流 格式化上下文 */
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            /* 内部滚动 */
+            overflow-y: auto;
+            /* 让我们的滚动如丝般的顺滑 */
+            -webkit-overflow-scrolling: touch;
+        }
+        .page__hd{
+            color: aliceblue;
+            /* 相对单位:viewport 相对于视窗 */
+            height: 200vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="page__hd">
+            <div class="hd__title">Flex</div>
+            <div class="hd__desc">Flex布局</div>
+        </div>
+        <div class="page__bd padding__bd_spacing">
+            
+        </div>
+    </div>
+</body>
+</html>
