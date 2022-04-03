@@ -11,30 +11,24 @@ let obj={
 }
 console.log(Object.prototype.toString.call(obj));//[object Object]
 //循环
-    //1.for in(有点慢)
-/*
+//1.for in(有点慢)
 for(let a in arr){
     console.log(a);
 }
-*/
-    //2.计数循环(很快，缺点是代码思维机器)
-/*
+//2.计数循环(很快，缺点是代码思维机器)
 for(let i=0;i<arr.length;i++){
     console.log(arr[i]);
 }
-*/
-    //3.es6方案(可读性更好,面向人类编程)
-/*
+//3.es6方案(可读性更好,面向人类编程)
 for(let item of arr){
     console.log(item);
 }
-*/
-    //4.for each(call back)
+//4.for each(call back)
 arr.forEach(function(item,index){
     console.log(index+":"+item);
 
 })
-    //5.对象的遍历
+//5.对象的遍历
 for(let key in obj){
     console.log(key);
 }
