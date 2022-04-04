@@ -17,13 +17,12 @@ y(x);
 
 //2.回调函数的使用
 //原来
-
-// let calc = function(num1,num2,callback){
-//     if(callback==='add'){
-//         return num1+num2;
-//     }   
-// }
-// console.log(calc(2,3,'add'));
+let calc = function(num1,num2,callback){
+    if(callback==='add'){
+        return num1+num2;
+    }   
+}
+console.log(calc(2,3,'add'));
 //使用回调函数后
 let add =function (a,b){
     return a+b;
@@ -31,7 +30,7 @@ let add =function (a,b){
 let mutiply =function (a,b){
     return a*b;
 }
-let calc = function(num1,num2,callback){
+let calc2 = function(num1,num2,callback){
     return callback(num1,num2);
 }
-console.log(calc(2,3,mutiply));
+console.log(calc2(2,3,mutiply));
