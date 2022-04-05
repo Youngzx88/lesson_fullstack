@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="song">
+        <p>
+            你的背包 -陈奕迅
+            特点:k哥之王
+        </p>
+    </div>
+    <script>
+        const song = {
+            name:'dying to live',
+            artist:'Tupac',
+            featuring:'Biggle Smalls'
+        }
+        console.log(document.querySelector('.song').innerHTML);
+        document.querySelector('.song').innerHTML=
+        `
+        <p>
+            ${song.name}<br>
+            ${song.artist}<br>
+            ${song.featuring}<br>
+        </p>
+        `
+        song.innerHTML+=`
+        `
+    </script>
+</body>
+</html>
