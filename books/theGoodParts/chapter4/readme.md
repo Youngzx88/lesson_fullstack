@@ -12,7 +12,6 @@
 var add =function (a, b){
     return a + b;
 };
-
 ```
 - 组成
     1. function
