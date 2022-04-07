@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .page{
+            height: 100vh;
+            background-color: green;
+        }
+        /* 响应式(自适应)布局 网页可以响应设备 宽度 不能写死 px 100vw */
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- 
+            html5语义化标签 可以和div一样做盒子,块级元素都适合
+            可读性更强 团队 爬虫 有利于百度分析网页内容
+        -->
+        <header class="header">header</header>
+        <div class="nav">nav</div>
+        <div class="main">
+            <!-- 文章标签 -->
+            <article class="article">
+                <!-- section比div表达不同盒子外 还可以传达出不同性质的内容 -->
+                <section class="content"> 
+                    <h1>谁是头号玩家?</h1>
+                    <p>A：不是。。。。。。。</p>
+                </section>
+                <section class="comments">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </section>
+            </article>
+        </div>
+        <footer class="footer">footer</footer>
+    </div>
+</body>
+</html>
