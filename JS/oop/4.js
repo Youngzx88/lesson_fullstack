@@ -14,7 +14,7 @@ var Cat = {
     createNew: function(name){
         var cat = Animal.createNew();
         cat.name = name;
-        var sound = '喵喵喵';
+        var sound = '喵喵喵';//这样写可以让sound变成私有的
         cat.makeSound = function(){
             console.log(sound);
         }
