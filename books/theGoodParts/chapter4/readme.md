@@ -115,7 +115,7 @@ function a() {
             }
         }
 }
-a();
+a();//我在里面
 ```
 
 - 分析
@@ -237,5 +237,56 @@ console.log(calc2(2,3,mutiply));
 - 使用模块模式就可以摒弃全局变量的使用。它促进了信息隐藏和其他优秀的设计实践。对于应用程序的封装，或者构造其他单例对象，模块模式非常有效。
 
 ## 4.13、级联
+- 级联函数就是在对象调用中通过点的方式串联调用，在jQuery中就是链式调用, 其关键点就是在内部 return this 返回自身
+```javascript   
+function Person() {
+    this.name = '';
+    this.age = 0;
+    this.weight = 10;
+   }
+   Person.prototype = {
+    setName:function(name){
+     this.name = name;
+     return this;
+    },
+    setAge:function(age){
+     this.age = age;
+     return this;
+    },
+    setWeight:function(weight) {
+     this.weight = weight;
+     return this;
+    }
+   }
+   var p = new Person();
+   p.setName('Joh').setAge(26).setWeight(80);
+   console.log(p); // {name: "Joh", age: 26, weight: 80}
+   
+```
 ## 4.14、套用
+函数也是值，从而我们可以用有趣的方式去操作函数值。套用允许我们将函数与传递给它的参数相结合去产生出一个新的函数。
+
 ## 4.15、记忆
+递归求斐波那契数列优化(和闭包结合)
+```javascript
+var memoizer = function (memo,fundamental){
+    var shell =function (n) {
+        var result = memo[n];
+        if (typeof result !== 'number') {
+            result = fundamental (shell,n);
+            memo [n] =result;
+        }
+    return result;
+    };
+return shell;
+};
+
+var fibonacci = memoizer( [0,1], function (shell,n){
+    return shell(n - 1)+shell(n - 2);
+});
+
+var factorial = memoizer ( [1,1],function (shell,n){
+    return n + shell(n - 1);
+});
+console.log(factorial(10));    
+```
