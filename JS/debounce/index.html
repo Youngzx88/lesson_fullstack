@@ -22,6 +22,7 @@
             }
             function doInput(event){
                 //流程性代码超过十行,一定封装
+                //通过event.targt.value同样能拿到值
                 let keyword = event.target.value;
                 ajax(keyword);
             }
