@@ -1,1 +1,71 @@
 /* mark组件 */
+.weui-mark{
+    padding-left: 0.625em;
+    padding-right: 0;
+    padding-top: 0.625rem;
+    padding: 0.625rem 0 0 0.625rem;
+}
+.weui-mark::after{
+    content: '';
+    display: block;
+    clear: both;
+}
+/* 盒模型计算方式:盒子大小 = 内容 + padding + border + margin 标准盒模型 */
+.weui-mark li{
+    padding-right: 0.625rem;
+    padding-bottom: 0.625rem;
+    float: left;
+    position: relative;
+    width: 50%;
+    /* 1.如何在增加padding-right的基础上实现在同一行 cal()---------不推荐 */
+    /* width: calc(50% - 0.625rem); */
+    
+    /* 2.盒子大小计算换了一种计算方式  width(盒子的宽度) = 内容 + padding + border + margin */
+    box-sizing: border-box;
+}
+.weui-mark__img{
+    padding-top: 100%;
+    position: relative;
+}
+.weui-mark___img {
+    padding-top: 100%;
+    position: relative;
+    background-size: cover;
+}
+
+.weui-mark__rt{
+    position: absolute;
+    right: 0.625rem;
+    border-radius: 2px;
+    top: 0;
+    color: orange;
+    font-size: 1em;
+    height: 1.25em;
+    text-align: center;
+    padding: 0.1em;
+}
+
+.weui-mark__lb{
+    border-radius: 2px;
+    position: absolute;
+    bottom: 0.825em;
+    color: #fff;
+    font-size: 0.825em;
+    height: 1.25em;
+    text-align-last: left;
+    max-width: 100%;
+    padding: 0.125em 0.375em;
+    background-color: rgba(0,0,0,0.4);
+    /* 定位之后失去块级能力,需要重新定义宽度 */
+    width: calc(100%-1.625em)
+}
+
+.weui-mark__vip{
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    height: 50px;
+    width: 90px;
+    color: #fff;
+}

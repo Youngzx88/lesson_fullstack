@@ -36,14 +36,50 @@
 
 }
 
-/* 通用业务 */
+.icon-27:before {
 
+    content: '\e615';
+
+}
+
+.icon-28{
+
+    content: '\e616';
+
+}
+
+.icon-29{
+
+    content: '\e617';
+
+}
+
+.icon-30{
+
+    content: '\e618';
+
+}
+
+.weui-bar__item_on .icon{
+    color: green;
+}
+/* 通用业务 */
 img {
 
     max-width: 100%;
 
 }
 
+/* 字体大小基类 */
+.f27{
+    font-size: 27px;
+}
+
+
+/* 颜色基类 */
+.bg-green{
+    background-color: green;
+}
 .page {
     /* 流出固定定位的像素 */
     padding-top: 47px;
@@ -58,6 +94,18 @@ img {
 
     -webkit-overflow-scrolling: touch;
 
+}
+
+
+.page__bd{
+    padding-bottom: 8em;
+}
+
+.page__ft{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 /* header容器样式 */

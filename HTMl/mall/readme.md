@@ -64,3 +64,14 @@
     3. 默认字体之外,引入一个图标字体 @font-face
     4. .icon 元素的地方，使用这种字体
     5. 使用编码去查找特定文字符号 .icon-109
+
+
+- 以文件打开product.html
+    - 物理路径本地:file:////C:/Users/86199/Desktop/lesson_fullstack-master/htm15/mall/product.html
+- 相对路径-> web App根路径，启动了http服务
+    - ip 可以是本地，远程
+    - http://127.0.0.1:5500/ html5/mall/product.html
+
+1. 协议
+2. html css js image. . ..等资源下载
+    - http协议是基于请求响应式的协议
