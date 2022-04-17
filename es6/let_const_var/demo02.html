@@ -14,7 +14,7 @@
             hobbies:['篮球','音乐']
         }
         Object.freeze(obj);//对象变得不可改变,但是hobbies仍然可以改变
-        //证明Object.freeze()只能做渐层的改变,无法改变对象里的对象
+        //证明Object.freeze()只能做浅层的改变,无法改变对象里的对象
         obj.hobbies.unshift('羽毛球')
         console.log(obj);
     </script>
