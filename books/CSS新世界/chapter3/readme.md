@@ -33,3 +33,8 @@
 ```
 
 ### 3.1.2、strech，available,fill-available关键字究竟用哪个?
+- 首先这三个作用一致,就是让元素的尺寸自动填满可用空间
+    - `stretch`:弹性拉伸，最新规范定义的关键字，替换之前的`fill-available`和`available`
+    - `available`:指可用空间，是`firefox`浏览器使用的关键字，要配合`-moz-`使用
+    - `fill-available`:指填充可用空间，`webkit`浏览器使用的关键字，需要配合`-webkit-`私有前缀来使用
+1. strech的使用场景
