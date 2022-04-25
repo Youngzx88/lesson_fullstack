@@ -22,7 +22,7 @@
                 +"<div id=div2>bbb</div>"
                 +"<div id=div3>ccc</div>"
         for (var i = 1 ; i < 4 ;i++){
-            // 写一个立即执行函数
+            // 写一个立即执行函数,!是为了让函数变成函数表达式，而不是声明
             !function(i){
             document.getElementById('div'+i)
                 .addEventListener('click',function(){
