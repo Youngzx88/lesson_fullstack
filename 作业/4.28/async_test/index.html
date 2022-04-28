@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1.fetch方式拿到json数据
+        fetch("http://localhost:3000/comments")
+        .then(data => data.json())
+        .then (data => {
+            console.log(data);
+        })
+        // 2.xhr方式拿到json数据
+        //const xhr = new XMLHttpRequest();
+        xhr.open("GET","http://localhost:3001/users",true);
+        xhr.send();//发送请求
+        xhr.addEventListener("readystatechange",function(event){
+            if (event.target.readyState === 4) { // 数据全部到达了
+                    let data = JSON.parse(event.target.responseText);
+                    console.log(data);
+            }
+        })
+        // 3.1fetch嵌套实现异步变同步
+        fetch("http://localhost:3000/comments")
+        .then(data => data.json())
+        .then (data => {
+            console.log(data);
+            fetch("http://localhost:3001/users")
+                .then(data => data.json())
+                .then (data => {
+                    console.log(data);
+        })
+        })
+        // 3.2xhr嵌套实现异步变同步
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET","http://localhost:3001/users",true);
+        xhr.send();//发送请求
+        xhr.addEventListener("readystatechange",function(event){
+            if (event.target.readyState === 4) { // 数据全部到达了
+                    let data = JSON.parse(event.target.responseText);
+                    console.log(data);
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("GET","http://localhost:3000/post",true);
+                    xhr.send();//发送请求
+                    xhr.addEventListener("readystatechange",function(event){
+                        if (event.target.readyState === 4) { // 数据全部到达了
+                            let data = JSON.parse(event.target.responseText);
+                            console.log(data);
+                        }   
+                    })
+            }   
+        })
+        // 4.这样违反了dry(dont repeat yourself)原则
+        ajax("http://localhost:3001/users",()=>{
+            ajax("http://localhost:3000/post",()=>{
+                
+            })
+        });
+        function ajax(url,cb){
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.send(); 
+            xhr.addEventListener('readystatechange', function(event) {
+                if (event.target.readyState === 4) { 
+                    let data = JSON.parse(event.target.responseText);
+                    console.log(data);  
+                    cb();
+                }
+            })
+        }
+    </script>
+</body>
+</html>
