@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>异步之控制请求顺序</title>
+</head>
+<body>
+    <ul id="posts"></ul>
+    <script>
+        // 异步的控制顺序：异步变同步
+        let posts = [];
+        let users = [];
+        // fetch('http://127.0.0.1:3000/post')
+        // .then(data => data.json())
+        // .then(data => {
+        //     posts = [...data];//扩展运算符
+        //     fetch('http://127.0.0.1:3001/users')
+        //     .then(data => data.json())
+        //     .then(data => {
+        //         users = [...data];
+        //         console.log(posts,users);
+        //     })
+        // })
+        
+        //违反dry原则
+        //封装ajax,使用回调函数，实现异步任务嵌套，异步任务，同步化，控制代码的执行流程
+
+        ajax("http://127.0.0.1:3000/post",()=>{
+            ajax("http://127.0.0.1:3001/users",()=>{
+                console.log('the work is over');
+            })
+        });
+        function ajax(url,cb){
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.send(); 
+            xhr.addEventListener('readystatechange', function(event) {
+                if (event.target.readyState === 4) { 
+                    let data = JSON.parse(event.target.responseText);
+                    console.log(data);  
+                    cb();
+                }
+            })
+        }
+    </script>
+</body>
+</html>
+
