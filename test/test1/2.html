@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    .tooltip {
+        position: relative;
+        border-bottom: 1px dashed black;
+    }
+    .tooltip:before {
+        content: attr(tooltip-data);
+        position : absolute;
+        width: 250px;
+        background-color:#efba93;
+        color: #fff;
+        text-align: center;
+        line-height: 1.1;
+        padding: 15px;
+        border-radius: 5px;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        transform : translatex ( -50%);
+        /* 0.7*16px */
+        font-size: 0.7em;
+        /* 决定元素可见不可见 */
+        visibility: hidden;
+        /* 决定过度效果 */
+        transition: opacity .5s;
+        opacity: 0;
+    }
+    /* 在hover之后被 before*/
+    .tooltip:hover:before,.tooltip:hover:after{
+        visibility: visible;
+        /* 决定过度效果 */
+        transition: opacity .5s;
+        opacity: 1;
+    }
+    .tooltip::after {
+        content: '';
+        position: absolute;
+        bottom: 75%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .5s;
+        border-color: red transparent transparent transparent;
+    }
+    </style>
+</head>
+<body>
+    <h1>
+        HTML/CSS tooltip
+    </h1>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam ab accusantium minima, laboriosam ipsam porro at minus! Maiores quidem excepturi eligendi, unde animi a fugit assumenda, cum sequi beatae quas.</p>
+    <p>
+        Hover 
+        <span class="tooltip" tooltip-data="Tooltip Content">Here</span> 
+        to see the tooltip.
+    </p>
+    <p>
+        You can also hover
+        <span class="tooltip" tooltip-data="This is another Tooltip Content">here</span>
+        to see another example.
+    </p>
+</body>
+</html>
