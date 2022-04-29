@@ -39,3 +39,15 @@ for (i=0; i<10; i++) {
 // foo 被调用了多少次？
 console.log( foo.count ); // 0 -- WTF?
 ```
+### 1.2.2、指向它的作用域(×)
+- 需要明确的是，this 在任何情况下都不指向函数的词法作用域。在 JavaScript 内部，作用 域确实和对象类似，可见的标识符都是它的属性。但是作用域“对象”无法通过 JavaScript 代码访问，它存在于 JavaScript 引擎内部。
+- 下面的代码，它试图（但是没有成功）跨越边界，使用 this 来隐式引用函数的词 法作用域
+```javascript
+function foo() {
+    var a = 2;
+    this.bar(); }
+function bar() { 
+    console.log( this.a ); 
+}
+foo(); // ReferenceError: a is not defined
+```
