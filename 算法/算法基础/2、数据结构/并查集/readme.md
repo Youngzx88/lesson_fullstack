@@ -83,3 +83,88 @@ int main()
     return 0;
 }
 ```
+
+## 837、连通块中点的数量 
+- 和836题目基本一样
+- 加了Q2操作
+
+对于每个询问指令 `Q1 a b`，如果 `a` 和 `b`
+
+在同一个连通块中，则输出 `Yes`，否则输出 `No`。
+
+对于每个询问指令 `Q2 a`，输出一个整数表示点 `a`
+所在连通块中点的数量
+
+**输入样例：**
+```
+5 5
+C 1 2
+Q1 1 2
+Q2 1
+C 2 5
+Q2 5
+```
+**输出样例：**
+```
+Yes
+2
+3
+```
+**题解**
+```c++
+#include <iostream>
+
+using namespace std;
+
+const int N = 100010;
+
+int n, m;
+int p[N], cnt[N];
+
+int find(int x)
+{
+    if (p[x] != x) p[x] = find(p[x]);
+    return p[x];
+}
+
+int main()
+{
+    cin >> n >> m;
+
+    for (int i = 1; i <= n; i ++ )
+    {
+        p[i] = i;
+        cnt[i] = 1;
+    }
+
+    while (m -- )
+    {
+        string op;
+        int a, b;
+        cin >> op;
+
+        if (op == "C")
+        {
+            cin >> a >> b;
+            a = find(a), b = find(b);
+            if (a != b)
+            {
+                p[a] = b;
+                cnt[b] += cnt[a];
+            }
+        }
+        else if (op == "Q1")
+        {
+            cin >> a >> b;
+            if (find(a) == find(b)) puts("Yes");
+            else puts("No");
+        }
+        else
+        {
+            cin >> a;
+            cout << cnt[find(a)] << endl;
+        }
+    }
+    return 0;
+}
+```
