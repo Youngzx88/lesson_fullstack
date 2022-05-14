@@ -20,3 +20,4 @@ function curry(fn){
 let addCurry = curry(add); 
 //执行函数
 console.log(addCurry(1)(2)(4));
+//addCurry(1)  

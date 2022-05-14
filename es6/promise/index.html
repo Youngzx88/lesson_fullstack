@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let url = 'https://api.github.com/users/shunwuyu';
+        const pre = document.querySelector('point');
+        fetch(url)
+            .then(data =>data.json())
+            .then(data => {
+                console.log(data);
+            })
+        console.log(fetch(url) instanceof Promise);//true
+        
+        //如何实现先输出---再输出111？
+        // setTimeout(function(){
+        //     console.log('--------');//2.输出---
+        // },1000);
+        // console.log(111);//1.输出111
+        //异步代码放到Promise里(具有异步代码同步化的能力)
+        const p = new Promise((resolve,reject)=>{//resolve通过，reject不通过
+            setTimeout(function(){
+                console.log('--------');
+                resolve()
+            },1000);
+        });
+        p.then(()=>{
+            console.log(111);//1.输出111
+        })
+        //--------
+        //111
+    </script>
+</body>
+</html>
