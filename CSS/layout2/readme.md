@@ -40,3 +40,19 @@
         - FFC 弹性格式化上下文
         - GFC 栅栏格式化上下文呢
 
+- grid和flex的区别
+    - grid适合分列布局，但是兼容性不好
+
+
+### BFC的渲染规则
+- 内部盒子会在垂直方向，一个接一个放置
+- 盒子垂直方向的距离由margin决定，属于同一个BFC的两个相邻盒子的margin会发生重叠
+- BFC的区域不会与float盒子重叠
+- BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响刀外面的元素。反之也如此
+- 计算BFC高度时，浮动元素也参与其中
+### 如何创建BFC？
+1. 根元素html
+2. 非溢出的可见元素:overflow:hidden
+3. 设置浮动: float属性不为none
+4. 设置定位: position为absolute或fixed
+5. 定义成块级的非块级元素： display除了block和inline都可以
