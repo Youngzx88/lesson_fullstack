@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    html, body {
+        height: 100%;
+    }
+    .box {
+        width: 500px;
+        height: 500px;
+        background-color: pink;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* transform: translate(-50%, -50%); */
+        margin-left: -250px;
+        margin-top: -250px;
+        line-height: 500px;
+        font-size: 50px;
+        color: white;
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <div class="box">1</div>
+    <script>
+    let count = 1;
+    const box = document.querySelector('.box');
+
+    function getUserAction(e) {
+        console.log(e);
+        box.innerHTML = ++count;
+    }
+
+    function debounce(func, wait, immediate) {
+        // 闭包空间
+        // 1次 闭包函数的声明
+        // 闭包函数在执行期间， 可以访问到声明时，位于闭包空间中的变量
+        var  timeout;
+        // 返回函数
+        function debounced(e) {
+            //  执行期间？ n 
+            var context = this;  // 上下文 
+            var args = arguments;
+            if (timeout) clearTimeout(timeout); // 防抖的关键 
+            if(immediate){
+                var callNow = !timeout;
+                // if(callNow) func.apply(context,args);
+                //实现只让第一次true后面为false
+                timeout = setTimeout(function(){//让后面的timeout为true
+                    timeout = null;//没有每次都能运行的机会
+                },wait);
+                if(callNow) func.apply(context,args)
+            }else{
+                timeout = setTimeout(function() {
+                    func.apply(context, args)
+                }, wait);
+            }
+            
+        }
+
+        return debounced;
+    }
+
+    // debounce 给我们要执行的getUserAction带来防抖的能力， 
+    // 较少执行次数到最后一次
+    // 增加需求  1. 先执行， 还是最后执行  参数 去赋值   立即执行 
+    // 2. 支持取消功能   
+    const setUserAction = debounce(getUserAction, 2000, true);//为true表示。为false则
+    box.addEventListener('mousemove', setUserAction);
+    </script>
+</body>
+</html>
