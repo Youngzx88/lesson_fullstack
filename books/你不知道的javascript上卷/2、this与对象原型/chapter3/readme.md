@@ -100,3 +100,4 @@ newObj.d === anotherFunction; // true
 
 
 #### 3.3.5、属性描述符
+?
