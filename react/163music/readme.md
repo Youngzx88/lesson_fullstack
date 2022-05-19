@@ -8,3 +8,4 @@
         1. * 通配符 性能不好
         2. npm i styled-components安装样式组件
 4. 写了一个静态页面（html + css）一个Tab模块
+    - 组件化思想来开发页面
