@@ -7,3 +7,7 @@
     1. 合并
     2. 功能不受影响
 - node除了是后端环境外，还可以给我们带来前端DOM没有能力，合并功能
+- 在package.json中rollup,会产生一个bundle.js打包，引入bundle.js即可
+```json
+"build": "rollup m2.js --file bundle.js"
+```

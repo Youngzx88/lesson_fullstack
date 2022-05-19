@@ -1,13 +1,16 @@
 {
-  "name": "rollup",
+  "name": "rollup-demo",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "scripts": {
     "dev": "live-server",
-    "test": "rollup m2.js"
+    "build": "rollup m2.js --file bundle.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "rollup": "^2.74.0"
+  }
 }
