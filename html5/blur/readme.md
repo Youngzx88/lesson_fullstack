@@ -11,4 +11,4 @@
     3. 标签里面的都叫属性:attribute
        - data-sizing之类的数据属性,以data-开始，用dataset来访问
     4. dry原则
-       - dont repeat yourself
+       - don't repeat yourself

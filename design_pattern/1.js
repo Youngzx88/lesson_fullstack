@@ -25,7 +25,7 @@ let CreateSingleton = (function(){
 let singleton = new CreateSingleton('杨仲鑫');
 console.log(singleton.name);//杨仲鑫
 
-let singleton2 = new CreateSingleton('');
+let singleton2 = new CreateSingleton('ywt');
 console.log(singleton2.name);//杨仲鑫
 
 console.log(singleton == singleton2);
