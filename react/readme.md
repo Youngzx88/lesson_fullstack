@@ -59,3 +59,32 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 ```javascript
 export const yzx = '杨仲鑫';//直接往外丢需要这样export
 ```
+
+### 9.style-components是使css实现模块化的
+- npm install styled-components
+- 全局样式
+```jsx
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+body {
+    line-height: 1;
+}
+`
+export default GlobalStyle;
+
+```
+- 在对应的组件内使用
+```jsx
+import  GlobalStyle from "./style.js";
+
+ReactDOM.render(
+  
+    <>
+      <其他组件>
+      <GlobalStyle/>
+    </>,
+  document.getElementById('root')
+);
+
+```
