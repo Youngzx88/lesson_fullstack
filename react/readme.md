@@ -54,8 +54,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 - main.jsx引入App从react中解构出useState
 - 把变量的修改监听到setxxx,改变的时候实时渲染
 ### 8.export
-- 一个jsx只能由一个默认export
-- 需要解构的export要在jsx中直接export
+- 一个jsx只能有一个默认export
+- 需要解构的export要在jsx中直接export，不能用默认的export default
 ```javascript
 export const yzx = '杨仲鑫';//直接往外丢需要这样export
 ```
