@@ -100,4 +100,88 @@ newObj.d === anotherFunction; // true
 
 
 #### 3.3.5、属性描述符
-?
+- ES5之前没有检测属性特性的方法
+- ES5开始有了`getOwnPropertyDescription`方法
+```js
+myobj={
+    a:2
+}
+Object.getOwnPropertyDescriptor(myobj,"a");
+//{ value: 2, writable: true, enumerable: true, configurable: true }
+```
+- 除此之外，我们还可以通过`Object.defineProperty()`来添加一个新的属性或修改一个已有的属性
+```js
+Object.defineProperty(myobj,'a',{
+    enumerable:false
+})
+console.log(myobj.a);//这样仍然可以正常访问，只是不让在循环中遍历了
+for(let key in myobj){
+    console.log(key);//无法输出,甚至连这个循环都进不去
+    console.log('=')
+}
+```
+1. writable可写
+    - 决定是否可以修改属性的值
+    - 非严格模式下writable为false无法修改属性的值
+    - 严格模式下会直接报错
+2. enumerable可枚举
+    - 为false不会出现在枚举当中，仍然可以正常访问。
+3. configurable可配置
+    - 修改configurable为false不论是否处于严格模式都无法再用defineProperty修改属性了
+    - 所以把configurable设置为false可以视为单向操作
+    - 有一个例外则是，即使configurable为false，我们仍然可以把writable由true改为false,但是无法从false改为true
+    - 除了禁止修改甚至会禁止删除
+
+#### 3.3.6、不变性
+- 有时我们想对象或者属性不能被改变，可以用一些api
+- 但是这些api都是浅层不变性，只会影响目标对象和他的直接属性
+- 如果目标对象引用了其他对象(数组，对象，函数，等),其他对象内容不受影响,仍然是可变的
+- ps: js当中很少需要深不可变性，有些特殊情况可能需要，但是我们也可以退一步重新思考程序设计
+
+> 不可变性的举例
+1. 对象常量
+    - 给writable设置flase
+2. 禁止扩展
+    - 禁止一个对象添加新属性并保留已有属性，Object.preventExtension();
+3. 密封
+    - Object.seal();
+    - 这个方法实际上会在一个现有的对象上调用Object.preventExtensions()并把所有现有属性标记为configurable:false
+4. 冻结
+    - Object.freeze()会创建一个冻结对象
+    - 实际是调用Object.seal(),并把数据访问属性标记为writable:false;
+    - 这个方法是可以应用在对象级别上的最高不可变性，浅不可变性
+    - 如果想达到深不可变性，就要遍历对象并给每个对象用这个方法，但是这样可能会无意间让一些共享方法被冻结
+
+#### 3.3.7、[[Get]]
+1. 当你通过obj.x进行属性访问，做的不仅仅是在myobj中查找名字为x的属性
+2. 实际上是执行了get操作，首先会在对象中查找是否有同名属性，找到就返回
+3. 没有找到同名对象就去原型链上找
+4. 无论如何都没找到就返回undefined
+```js
+var obj ={
+    a:undefined;
+}
+obj.a;//undefined
+obj.b;//undefined
+//思考一下背后的区别
+```
+#### 3.3.8、[[put]]
+- put被触发不仅仅是给对象的属性赋值这么简单
+1. 属性是否访问描述符？是并且存在setter就调用setter
+2. 属性数据描述符中是否false？是，非严格模式下静默失败，严格模式抛出TypeError异常
+3. 都不是，将该值设置为属性的值
+- ps：如果对象中没有这个属性，put的操作更加复杂，讨论prototype的时候补充
+### 3.3.9、Getter和Setter
+- Getter是一个隐藏函数，会在获取属性值的时候调用
+- Setter是一个隐藏函数，会在设置属性值时调用
+- Getter和Setter最好成对出现！
+#### 3.3.10、存在性
+- 前面说到如果对象中某个属性的值就为undefined，如何判断这个属性存不存在？
+    1. ('a' in obj)
+    2. obj.hasOwnProperty();
+    3. 这两个的区别在于hasOwnProperty只会检查对象中的属性，不会检查原型链，而in方法会检查原型链及对象
+    4. Object.prototype.hasOwnProperty.call(obj,"a");
+- ps:看上去in操作符是检查容器内是否有某个值，实际上检查的是属性名
+- eg:3 in [3,4,5];//false,因为[3,4,5]当中的属性名为0,1,2
+
+### 3.4、遍历
