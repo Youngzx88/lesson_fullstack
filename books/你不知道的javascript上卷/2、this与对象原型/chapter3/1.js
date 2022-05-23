@@ -20,3 +20,14 @@ for(let key in myobj){
     console.log('=')
 }
 console.log(Object.getOwnPropertyDescriptor(myobj,"a"));
+
+
+var arr = [4,5,6];
+for(x in arr){
+    console.log(arr[x]);
+}
+
+var arr2 = [4,5,6];
+for(x of arr2){
+    console.log(x);
+}

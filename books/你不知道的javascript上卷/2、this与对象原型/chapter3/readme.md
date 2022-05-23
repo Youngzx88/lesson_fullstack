@@ -184,4 +184,29 @@ obj.b;//undefined
 - ps:看上去in操作符是检查容器内是否有某个值，实际上检查的是属性名
 - eg:3 in [3,4,5];//false,因为[3,4,5]当中的属性名为0,1,2
 
+- for in循环有时候会产生出乎意料的结果，因为这种枚举不仅会包含所有数值索引，还会包含所有可枚举属性，最好只在`对象`上用，遍历数组还是用传统的`for循环`
 ### 3.4、遍历
+- for in 包含遍历对象的可枚举属性列表(包括原型链)，for in是拿不到`属性值`的，,只能拿到`属性下标`
+```js
+var arr = [4,5,6];
+for(x in arr){
+    console.log(arr[x]);
+}
+```
+- for of可以直接拿到值
+```js
+var arr2 = [4,5,6];
+for(x of arr2){
+    console.log(x);
+}
+```
+- 常用的for循环实际上并不是在遍历值，而是在遍历下标来指向值，如myarray[i]
+- ES5增加了一些数组的辅助迭代器，`forEach()`,`every()`,`some()`。
+
+- 有东西没看懂
+
+### 3.5、小结
+- js有对象字面量和构造形式
+- js基本数据类型Number、String、Boolean、Null、undefined、object、symbol、bigInt；复杂数据类型object
+- 对象的特性，可以通过属性描述符来控制，eg：writable。configurable；还可以通过冻结来设置对象的不可变性级别
+- 可以使用ES6的for of语法来遍历数据结构，for of会寻找内置或自定义的对象并调用next方法来遍历数据值
