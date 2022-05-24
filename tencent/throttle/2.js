@@ -12,12 +12,11 @@ Function.prototype.call2 = function(thisObj,...args){
     thisObj = args[0]?args[0]:null;
     args.shift(1);
     console.log(args);
-
 }
 function func(){
 
 }
 func.call2(yzx,1,2,3,4,5);
-console.log(func.__proto__);
-console.log(func instanceof Function);
-console.log(Function);
+// console.log(func.__proto__);
+// console.log(func instanceof Function);
+// console.log(Function);
