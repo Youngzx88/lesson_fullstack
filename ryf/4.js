@@ -23,7 +23,7 @@ let cat1 = new Cat('Tom','黑色');
 let cat2 = new Cat('小黑','灰色');
 
 console.log(cat1.hasOwnProperty('name'),cat1.hasOwnProperty('type'));//true false
-//首先到ownProperties去查找，找不到再去原型上去查找
+//首先到hasownProperties去查找，找不到再去原型上去查找
 //js 什么语法来实现的呢?__protot__只要在原型对象上，也可以直接调用
 
 console.log(cat2.type);//猫科动物
