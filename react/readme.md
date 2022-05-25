@@ -92,7 +92,9 @@ ReactDOM.render(
 ### 10.数据一般在父组件声明
 - 在父组件声明可以通过参数传至多个子组件，并达到数据同步的效果
 ```jsx
+// 父组件传参数
  <Main users={users}/>
+// 子组件接收参数
  const Main = ({users}) => {
   return (
     <div>
