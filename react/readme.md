@@ -88,3 +88,48 @@ ReactDOM.render(
 );
 
 ```
+
+### 10.数据一般在父组件声明
+- 在父组件声明可以通过参数传至多个子组件，并达到数据同步的效果
+```jsx
+ <Main users={users}/>
+ const Main = ({users}) => {
+  return (
+    <div>
+      Main
+      <ul>
+        {/* user.name有重名 */}
+        {users.map(user => <li key={user.id}>{user.name} - {user.age}</li>)}{/*每个map需要有一个唯一的key，最好用id来表示*/}
+      </ul>
+    </div>
+  )
+}
+```
+
+### 11.useEffect
+- 如果用useState
+```jsx
+//1.setUsers一旦发生状态变化会重新渲染整个页面，会不停重新渲染页面，执行setTimeout
+setTimeout(()=>{
+  //用users.push后，setUsers(users)不起作用，因为这个时候users已经是不变的了，要在setUsers里面变化才能检测
+  setUsers([...users,{
+      name:'李老師',
+      age:10,
+      id:4
+    }])
+},1000)
+```
+- Component useEffect代表onDOMContentLoaded表示组件挂载上去了
+```jsx
+//2.useEffect:Component useEffect代表onDOMContentLoaded表示组件挂载上去了
+ useEffect(()=>{
+    // console.log('组件加载好了');
+    setTimeout(()=>{
+      setUsers([...users,{
+        name:'李老師',
+        age:10,
+        id:4
+      }])
+    },2000)
+  },[])
+```
