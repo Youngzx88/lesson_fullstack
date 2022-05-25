@@ -25,6 +25,26 @@ void quick_sort(int q[], int l, int r)
     quick_sort(q, l, j), quick_sort(q, j + 1, r);
 }
 ```
+```js
+function quick_sort(q, l, r)
+{
+    if (l >= r) return;
+
+    var i = l - 1, j = r + 1, x = q[l + r >> 1];
+    while (i < j)
+    {
+        do i ++ ; while (q[i] < x);
+        do j -- ; while (q[j] > x);
+        if (i < j) {
+            var temp;
+            temp = q[i];
+            q[j] = q[i];
+            q[i] = temp
+        };
+    }
+    quick_sort(q, l, j), quick_sort(q, j + 1, r);
+}
+```
 
 ## 785题目、快速排序
 给定你一个长度为 n的整数数列。
