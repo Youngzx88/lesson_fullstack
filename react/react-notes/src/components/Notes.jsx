@@ -30,7 +30,7 @@ const Notes = () => {
     
 
     const createEntity = () => {
-
+        
     }
 
     // useEffect()
@@ -45,8 +45,8 @@ const Notes = () => {
             .then((collection) => {
                 // console.log(collection);
                 // collection.insert([
-                //     {body: 'hello ~'},
-                //     {body: '你好'}
+                //     {body: '芜湖 ~'},
+                //     {body: 'loremloremloremloremloremloremlorem'}
                 // ])
                 const entities = collection.chain()
                     .find() // select * from orderby...

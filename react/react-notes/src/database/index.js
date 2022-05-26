@@ -26,7 +26,7 @@ function databaseInitialize(){
 
 //3. select 加载一个集合(表) 供其他模块调用 参数是表名
 export function loadCollection(collection){
-    return new Promise(resolve =>{//查询需要事件，用异步封装
+    return new Promise(resolve =>{//查询需要时间，用异步封装
         db.loadDatabase({},()=>{
             const _collection = db.getCollection(collection)
                 || db.addCollection(collection)
