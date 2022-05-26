@@ -1,4 +1,0 @@
-- 异步相关 
-    - sleep函数，可以让程序等一段时间，再往下执行
-    - promise通用的异步同步化解决方案，then
-- async awaite es7提供
