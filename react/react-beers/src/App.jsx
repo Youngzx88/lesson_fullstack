@@ -2,6 +2,7 @@ import { useState,useEffect } from 'react'
 import Header from './Header'
 import Loader from './Loader'
 import Results from './Results'
+import 'weui'
 
 function App() {
   //数据驱动的界面

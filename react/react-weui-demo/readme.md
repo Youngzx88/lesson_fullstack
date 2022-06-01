@@ -16,3 +16,6 @@
     1. 日常开发模式
     2. 前端 | 后端 -》前端发送请求，后端数据以api的方式(方式 Method + url), json是数据格式
     3. 安装一下axios(替代fetch)
+
+- weui css框架 npm i
+- react-weui weui组件化能流利从css -> css+js界面组件
