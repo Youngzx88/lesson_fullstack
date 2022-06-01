@@ -94,7 +94,7 @@ ReactDOM.render(
 ```jsx
 // 父组件传参数
  <Main users={users}/>
-// 子组件接收参数
+// 子组件接收参数 在参数中解构出users
  const Main = ({users}) => {
   return (
     <div>
@@ -134,4 +134,53 @@ setTimeout(()=>{
       }])
     },2000)
   },[])
+```
+
+### 12.axios
+- 使用axios替代fetch
+```jsx
+(async function(){
+        const data = await axios.get('https://www.fastmock.site/mock/f9755e3a584fdb2f805495e4308be03d/beers/list')
+        setBeers(data.data.beers);
+        setLoading(false);
+})() 
+```
+
+### 13.Lokijs
+```js
+import Loki from 'lokijs'
+
+// 增删改查
+//1. 建数据库 notes数据库    
+//2. 建数据库 连接数据库 db代表着数据库对象
+//3. 建个表/打开表
+//4. CRUD操作
+
+//1. 建库（库的默认配置）
+export const db = new Loki('notes',{
+    autoload: true,
+    autoloadCallback: databaseInitialize,
+    autosave: true,
+    autosaveInterval:3000,
+    persistenceMethod:'localStorage'
+})
+//2. 初始化库（建一个表）
+function databaseInitialize(){
+    //数据库初始化
+    const notes = db.getCollection('notes')//数据库
+    if(notes === null){
+        db.addCollection('notes')//创建一个表
+    }
+}
+
+//3. select 加载一个集合(表) 供其他模块调用 参数是表名
+export function loadCollection(collection){
+    return new Promise(resolve =>{//查询需要时间，用异步封装
+        db.loadDatabase({},()=>{
+            const _collection = db.getCollection(collection)//getcollection就是查
+                || db.addCollection(collection)
+            resolve(_collection);
+        })
+    })
+}
 ```
