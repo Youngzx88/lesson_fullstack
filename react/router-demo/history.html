@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section class="wrap">
+        <div class="anv">
+            <li><a href="javascript:;" data-path="index">首页</a></li>
+            <li><a href="javascript:;" data-path="news">新闻</a></li>
+            <li><a href="javascript:;" data-path="about">关于</a></li>
+        </div>
+    </section>
+    <div id="router" class="router">
+            
+    </div>
+</body>
+<script>    
+    (function(){
+        // 作用域？立即执行函数：不去污染全局
+        const routerEle = document.getElementById('router');
+        routerEle.innerHTML = '<p>显示内容区域</p>';
+        //因为document.query是伪数组，展开再包装，就可以用数组api了
+        [...document.querySelectorAll('a')].forEach(
+            link => link.addEventListener('click',function(){
+                var text = this.innerText;
+                // console.log(text)
+                var url = this.dataset.path;
+                routerEle.innerHTML = text;
+                // console.log(url);
+                // h5 history API
+                history.pushState(null,null,'#/' + url);//页面的url改变，让页面变成了单页应用
+            })
+        )
+
+        //前后切换网页
+        window.addEventListener('popstate',function(e){
+            console.log(e)
+        })
+        // window.onhashchange = function(event){
+        //     console.log(event);
+        // }
+    })()
+</script>
+</html>

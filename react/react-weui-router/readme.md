@@ -1,6 +1,6 @@
 - react全家桶
     1. react-router;react;react-dom(后面两个项目初始化的时候就已经安装了)
-    2. npm i react-royter react-router-dom
+    2. npm i react-router react-router-dom
         - http://localhost:3000/users/100 id为100的用户小家
         - /users/:id params
         - /users?id=1 querystring
