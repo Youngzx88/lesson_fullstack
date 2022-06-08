@@ -39,7 +39,7 @@
 ### 5.2、类
 - js中类其实也就是对象，js中只有对象
 
-### 5.2.1、"类"函数
+#### 5.2.1、"类"函数
 - 多年以来js一直在模仿类
 - 最直接的解释就是通过调用`new Foo()`创建的每个对象将最终链接到这个`Foo.prototype`对象
     ```javascript
@@ -55,6 +55,20 @@
 
 - 继承意味着复制操作，js默认不会复制对象的属性，相反会在两个对象之间创建一个关联
 
-### 5.2.2、构造函数
-
-### 5.2.3、技术
+#### 5.2.2、构造函数
+#### 5.2.3、技术
+- Foo.prototype默认有一个公有并不可枚举的属性`.constructor`,这个谁能够引用的是对象关联的函数，本例中是Foo
+- 看起来`a.constructor===Foo`意味着a确实有一个指向`Foo.constructor`属性引用,实际上`.constructor`同样被委托给了`Foo.prototype`,而`Foo.prototype.constructor`默认指向`Foo`
+- 综上`.constructor`并不是一个不可变的属性,它虽然不可枚举但是值是可以被修改的，所以`.constructor属性`引用的目标可能和我们想象的完全不同，尽量不要使用
+### 5.3、(原型)继承
+- 我们创建了一个新的`Bar.prototype`对象并关联到`Foo.prototype`  
+    ```js
+        Bar.prototype = Object.create(Foo.prototype)
+    ```
+- 下面显示两种常见的错误
+    1. Bar.prototype = Foo.prototype;//和我们想象的机制不同，不会创建新对象,而是让Bar.prototype直接引用Foo.prototype
+    2. Bar.prototype = new Foo();//构造函数带来的传参会影响到Bar的"后代"
+- ES6的新做法，标准且可靠的修改对象的`prototype`
+    ```js
+        Object.setPrototypeOf(Bar.prototype,Foo.prototype)
+    ```
