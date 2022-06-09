@@ -33,7 +33,11 @@ const todos = [
 ]
 // delay 函数
 const delay = time => new Promise(resolve => setTimeout(resolve, time));
-// withDelay(function() {})  return  async  函数
+// withDelay(function() {})  ->  return  async  函数
+//withDelay:
+//1. fn 是 (params=>{})返回的是一个promise
+//2....args是query和tab
+//3.执行fn(...args)相当于返回一个promise,执行fn的意思
 const withDelay = fn => async (...args) => {
     await delay(1000);
     return fn(...args)
