@@ -33,11 +33,7 @@ const todos = [
 ]
 // delay 函数
 const delay = time => new Promise(resolve => setTimeout(resolve, time));
-// withDelay(function() {})  ->  return  async  函数
-//withDelay:
-//1. fn 是 (params=>{})返回的是一个promise
-//2....args是query和tab
-//3.执行fn(...args)相当于返回一个promise,执行fn的意思
+// withDelay(function() {})  return  async  函数
 const withDelay = fn => async (...args) => {
     await delay(1000);
     return fn(...args)
@@ -47,27 +43,30 @@ const withDelay = fn => async (...args) => {
 
 export const fetchTodos = withDelay(params => {
     // console.log(params)
-    const {query,tab} = params;
-    // console.log(query,tab); 
-    let result = todos
-    if(tab){
-        switch(tab){
-            case "finished":
+    const { query, tab } = params
+    console.log(query, tab, '---------------')
+    // console.log(query, tab)
+    let result = todos;
+    
+    if (tab) {
+        switch (tab) {
+            case "已完成":
                 result = result.filter(todo => todo.finished === true)
                 break;
-            case "unfinished":
+            case "未完成":
                 result = result.filter(todo => todo.finished === false)
-                break;
+                break;   
             default:
                 break;
         }
     }
-    if(query){
-        result = result.filter(todo => todo.text.includes(query));
+    if (query) {
+        result = result.filter(todo => todo.text.includes(query))
     }
-    //promise 类？ resolve是promise类的静态方法！
-    //这样返回：一般用于返回结果的promise化，可以then
+    // Promise 类 resolve 静态方法
+    // Promise.all 返回一个fullfiled 的promise 实例 
+    // 一般用于  返回结果的promise 化 
     return Promise.resolve({
-        tab,result
+        tab, result
     })
 })
