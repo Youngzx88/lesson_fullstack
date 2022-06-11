@@ -20,7 +20,6 @@
 //     //     console.log('-----------')
 //     //     gd.drawImage(img, 0, 0)
 //     // }
-//     // document.body.appendChild(img);
 // }
 
 //减少闭包空间的内存开销
@@ -32,6 +31,12 @@ function  initCanvas() {
     img.src="https://img.36krcdn.com/20220609/v2_cfb63111b0584ca5b97c4c0bb5006f69_img_jpg"
     img.onload = function(){
         gd.drawImage(img, 0, 0)
+    }
+    //内部没有子函数
+}
+function initEvent(){
+    canvas.onClick = function(){
+        
     }
 }
 initCanvas();
