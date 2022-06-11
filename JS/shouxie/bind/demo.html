@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // class Box{
+        //     // private name = 'blue' js中没有这种写法
+        //     // 用闭包来实现
+        // }
+
+        //立即执行函数 是闭包吗？
+        (function(){
+            let name = '小杨'
+            //间接的实现了属性的私有
+            class Box{
+                get name(){
+                    return `名叫${name}`
+                }
+                set name(val){
+                    name = val;
+                }
+            }
+        })()
+        let box = new Box();
+        box.name="小驴"
+        box.get();
+    </script>
+</body>
+</html>

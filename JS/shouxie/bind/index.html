@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!-- html5 画布 -->
+<canvas id="demo"></canvas>
+<script>
+// function  initCanvas() {
+//     let canvas = document.querySelector('#demo');
+//     let gd = canvas.getContext('2d') // 二维绘图 绘图句柄
+//     let img = new Image(); //  
+//     img.src="https://img.36krcdn.com/20220609/v2_cfb63111b0584ca5b97c4c0bb5006f69_img_jpg"
+//     gd.drawImage(img,0,0)
+//     // img.onload = function() {
+//     //     console.log('-----------')
+//     //     gd.drawImage(img, 0, 0)
+//     // }
+//     // document.body.appendChild(img);
+// }
+
+//减少闭包空间的内存开销
+let canvas = document.querySelector('#demo');
+function  initCanvas() {
+    let canvas = document.querySelector('#demo');
+    let gd = canvas.getContext('2d') // 二维绘图 绘图句柄
+    let img = new Image(); //  
+    img.src="https://img.36krcdn.com/20220609/v2_cfb63111b0584ca5b97c4c0bb5006f69_img_jpg"
+    img.onload = function(){
+        gd.drawImage(img, 0, 0)
+    }
+}
+initCanvas();
+</script>
+</body>
+</html>
