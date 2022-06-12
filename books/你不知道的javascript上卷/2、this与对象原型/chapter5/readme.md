@@ -72,3 +72,8 @@
     ```js
         Object.setPrototypeOf(Bar.prototype,Foo.prototype)
     ```
+- 检查“类”的关系
+    - 检查一个实例的继承先祖(js种的委托关联),通常被成为内省(或者反射)；那么如何通过内省来找到祖先呢？
+    - 第一种:站在类的角度,a instanceof Foo,`instanceof`会回答在a的整条原型链种是否有Foo.prototype指向的对象?,但是只能处理对象与函数(.prototype)之间的关系，而不能处理对象与对象之间的关系
+        - ps：如果使用内置的`bind`函数来生成一个硬绑定函数，该函数是没有`prototype`属性的，这样使用`instanceof`目标函数的`prototype`会代替硬绑定函数的`prototype`
+    - 
