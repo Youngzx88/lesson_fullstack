@@ -9,14 +9,14 @@ const Modal = (props) => {
     // const {visible,title,children} = props
     //2.第二种方式控制是否显示(外面可以传一个true/false，并且自己也可以控制组件的关闭)
     const {visible:show,title,children} = props
-    const {onclose,onConfirm} = props
+    const {onClose,onConfirm} = props
     const [visible,setvisible] = useState(false)
     useEffect(()=>{
         setvisible(show)
     },[show])
     const closeModal = () =>{
         setvisible(false)
-        onclose && onclose()
+        onClose && onClose()
     }
     const confirm = () =>{
         setvisible(false)
@@ -24,11 +24,12 @@ const Modal = (props) => {
     }
     const maskClick = () =>{
         setvisible(false)
-        onclose && onclose()
+        onClose && onClose()
     }   
 
     return (
-        visible && <div className="modal-wrapper">
+        visible && 
+        <div className="modal-wrapper">
           <div className="modal">
             <div className="modal-title">{title}</div>
             <div className="modal-content">{children}</div>

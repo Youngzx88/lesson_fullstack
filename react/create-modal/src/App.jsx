@@ -25,7 +25,7 @@ function App() {
           </div>
       </Modal>
       <button onClick={()=>setVisible(true)}>click here</button>
-    </div>
+    </div> 
   )
 }
 
