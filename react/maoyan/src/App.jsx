@@ -23,11 +23,9 @@ function App() {
   })
 
   useEffect(() => {
-    
     (async ()=>{
       setShowLoading(true)
       let {data} = await getContestData()
-      console.log(data)
       setList([
         ...data
       ])
@@ -43,9 +41,8 @@ function App() {
 
   return (
     <div className="App">
-      <Contest data={list}/>
-      <a href="#" className={classnames('item', {current:tab == 'all'})}>全部</a>
-      <Toast  icon="success-no-circle" show={showLoading}>加载中...</Toast>
+      <Contest data={list} tab={tab}/>
+      <Toast  icon="loading" show={showLoading}>加载中...</Toast>
     </div>
   )
 }

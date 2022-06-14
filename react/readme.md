@@ -184,3 +184,22 @@ export function loadCollection(collection){
     })
 }
 ```
+
+### 14.动态类名
+- 多个类名引入classnames
+```jsx
+const ContestTab = () =>{
+    const [tab, setTab] = useState('all');
+    const [loading, setLoading] = useState(true)
+    const changeTab = (tab)=>{
+        setTab(tab)
+    }
+    return (
+        <ContestTabWrapper>
+            <a href="#" className={tab == 'all'?'current':''}  onClick={changeTab.bind(null, 'all')}>全部</a>
+            <a href="#" className={tab == 'dj'? 'current':''} onClick={changeTab.bind(null, 'dj')}>电竞赛事</a>
+            <a href="#" className={tab == 'sport'?'current':''} onClick={changeTab.bind(null, 'sport')}>体育赛事</a>
+        </ContestTabWrapper>
+    )
+}
+```

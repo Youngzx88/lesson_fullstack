@@ -13,7 +13,6 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-weui": "^1.2.3",
-    "style-components": "^0.1.0",
     "styled-components": "^5.3.5",
     "weui": "^2.5.8"
   },

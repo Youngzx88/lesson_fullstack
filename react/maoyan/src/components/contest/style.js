@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 export const ContestWrapper = styled.div`
     height: 50px;
-    background-color: blue;
     h2{
         font-size: 20px;
     }
@@ -20,5 +19,7 @@ export const TabItem = styled.li`
 `
 
 export const NoData = styled.div`
-
+    display: flex;
+    flex-direction: column;
+    text-align:center;
 `
