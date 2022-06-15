@@ -43,6 +43,8 @@ form {
 h1, h2, h3, h4, h5, h6 {
     font-size: 100%;
     font-weight: normal;
+}#anony-sns .albums .pic img {
+    width: 170px;
 }
 
 .mod {
@@ -277,8 +279,7 @@ h2 {
 }
 
 .mod {
-    width: auto;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
 #anony-sns .albums {
@@ -294,11 +295,15 @@ h2 {
     margin: -10px 0 0 -10px;
 }
 
-#anony-sns .albums {
-    float: left;
-    width: 350px;
-    margin-right: 30px;
-    color: #999;
+#anony-sns .albums li {
+    display: inline-block;
+    zoom: 1;
+    letter-spacing: normal;
+    word-spacing: normal;
+    width: 170px;
+    vertical-align: top;
+    font-size: 12px;
+    margin: 10px 0 0 10px;
 }
 
 #anony-sns .albums .pic {
@@ -309,38 +314,4 @@ h2 {
     overflow: hidden;
     vertical-align: middle;
     white-space: nowrap;
-}
-
-#anony-sns .albums .pic img {
-    width: 170px;
-}
-
-a img {
-    border-width: 0;
-    vertical-align: middle;
-}
-fieldset, img {
-    border: 0;
-}
-
-#anony-sns .notes {
-    overflow: hidden;
-    zoom: 1;
-    color: #666;
-}
-
-#anony-sns .notes .first {
-    margin-top: 0;
-}
-
-#anony-sns .notes li {
-    word-wrap: break-word;
-}
-
-#anony-sns .notes .author {
-    color: #999;
-}
-
-#anony-sns .notes p {
-    margin: 0;
 }

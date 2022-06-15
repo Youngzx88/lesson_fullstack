@@ -203,3 +203,10 @@ const ContestTab = () =>{
     )
 }
 ```
+
+### 15.实现input双向绑定
+- 正常写input无法写入
+- 绑定一个onChange函数并用useState动态的修改其内容的值
+```jsx
+  <input value={filter} onChange={(e) => setFilter(e.target.value)} />
+```
