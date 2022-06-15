@@ -52,6 +52,17 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 35px;
 }
 
+a img {
+    border-width: 0;
+    vertical-align: middle;
+}
+
+fieldset, img {
+    border: 0;
+}
+
+
+
 /* 业务样式 */
 #douban-logo{
     display: inline-block;
@@ -224,11 +235,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: -4px;
 }
 
-.mod {
-    width: auto;
-    margin-bottom: 30px;
-}
-
 h2 {
     font: 15px Arial, Helvetica, sans-serif;
     color: #072;
@@ -266,57 +272,12 @@ h2 {
     text-overflow: ellipsis;
 }
 
-    /*zoom为1是什么意思*/
 .section .main {
     overflow: hidden;
+    zoom: 1;
 }
 
 .mod {
-    margin-bottom: 30px;
-}
-
-
-#anony-sns .albums {
-    float: left;
-    width: 350px;
-    margin-right: 30px;
-    color: #999;
-    font-size: 0;
-    letter-spacing: -0.31em;
-}
-
-#anony-sns .albums ul {
-    margin: -10px 0 0 -10px;
-}
-
-#anony-sns .albums li {
-    display: inline-block;
-    zoom: 1;
-    letter-spacing: normal;
-    word-spacing: normal;
-    width: 170px;
-    vertical-align: top;
-    font-size: 12px;
-    margin: 10px 0 0 10px;
-}
-
-#anony-sns .albums .pic {
-    display: inline-block;
-    zoom: 1;
-    width: 170px;
-    max-height: 170px;
-    overflow: hidden;
-    vertical-align: middle;
-    white-space: nowrap;
-}
-
-#anony-sns .albums .pic img {
-    width: 170px;
-}
-a img {
-    border-width: 0;
-    vertical-align: middle;
-}
-fieldset, img {
-    border: 0;
+    width: auto;
+    margin-bottom: 35px;
 }
