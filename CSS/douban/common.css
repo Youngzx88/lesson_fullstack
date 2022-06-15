@@ -45,7 +45,6 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
 }
 
-
 .mod {
     width: auto;
     *zoom: 1;
@@ -280,4 +279,68 @@ h2 {
 .mod {
     width: auto;
     margin-bottom: 35px;
+}
+
+#anony-sns .albums {
+    float: left;
+    width: 350px;
+    margin-right: 30px;
+    color: #999;
+    font-size: 0;
+    letter-spacing: -0.31em;
+}
+
+#anony-sns .albums ul {
+    margin: -10px 0 0 -10px;
+}
+
+#anony-sns .albums {
+    float: left;
+    width: 350px;
+    margin-right: 30px;
+    color: #999;
+}
+
+#anony-sns .albums .pic {
+    display: inline-block;
+    zoom: 1;
+    width: 170px;
+    max-height: 170px;
+    overflow: hidden;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#anony-sns .albums .pic img {
+    width: 170px;
+}
+
+a img {
+    border-width: 0;
+    vertical-align: middle;
+}
+fieldset, img {
+    border: 0;
+}
+
+#anony-sns .notes {
+    overflow: hidden;
+    zoom: 1;
+    color: #666;
+}
+
+#anony-sns .notes .first {
+    margin-top: 0;
+}
+
+#anony-sns .notes li {
+    word-wrap: break-word;
+}
+
+#anony-sns .notes .author {
+    color: #999;
+}
+
+#anony-sns .notes p {
+    margin: 0;
 }
