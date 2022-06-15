@@ -14,13 +14,34 @@ const Cart = () => {
     )
     const [total, setTotal] = useState(0)
     const [checkedAll, setCheckedAll] = useState(false)
-    const onCheckedChange = () => {
+    const onCheckedChange = (item) => {
+        //不用map用findIndex
+        let idx = cartData.findIndex(data=>item.id === data.id)
+        // console.log(idx)
+        cartData[idx].checked = !cartData[idx].checked
+        setCartData([
+            ...cartData
+        ])
     }
-    const onWrapCheckedAllChange = () => {
+    const onWrappCheckedChange = () =>{
+        let newData = cartData.map((item) =>{
+            item.checked = !checkedAll
+            return item
+        })
+        setCartData([
+            ...newData
+        ])
     }
     useEffect(() => {
         // mounted
         // update 
+        let totalPrice = cartData
+                            .filter((item) => item.checked)
+                            .reduce((prev,item) => {
+                                return prev+item.price
+                            },0)
+        setTotal(totalPrice)
+        setCheckedAll(cartData.every((item)=>item.checked==true))                   
     }, [cartData])
     const Footer = (
         <div className="footer">
@@ -28,7 +49,7 @@ const Cart = () => {
                 <input 
                     checked={checkedAll}
                     type="checkbox" 
-                    onChange={onWrapCheckedAllChange}
+                    onChange={onWrappCheckedChange}
                 />
                 全选
             </div>
