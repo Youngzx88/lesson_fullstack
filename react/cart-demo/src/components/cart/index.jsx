@@ -23,6 +23,7 @@ const Cart = () => {
             ...cartData
         ])
     }
+    // map遍历每一个元素并把每个item设置为与checkAll相反的状态，更新购物车
     const onWrappCheckedChange = () =>{
         let newData = cartData.map((item) =>{
             item.checked = !checkedAll
@@ -32,11 +33,13 @@ const Cart = () => {
             ...newData
         ])
     }
+    // 用useEffect维护carData的更新，setTotal，setCheckAll
     useEffect(() => {
         // mounted
         // update 
         let totalPrice = cartData
                             .filter((item) => item.checked)
+                            // prev是上一次执行的结果，item是当前元素
                             .reduce((prev,item) => {
                                 return prev+item.price
                             },0)

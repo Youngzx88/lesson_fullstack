@@ -108,8 +108,8 @@ ReactDOM.render(
 }
 ```
 
-### 11.useEffect
-- 如果用useState
+### 11.useState
+- useState常用于更新组件
 ```jsx
 //1.setUsers一旦发生状态变化会重新渲染整个页面，会不停重新渲染页面，执行setTimeout
 setTimeout(()=>{
@@ -121,6 +121,7 @@ setTimeout(()=>{
     }])
 },1000)
 ```
+### 11.useEffect
 - Component useEffect代表onDOMContentLoaded表示组件挂载上去了
 ```jsx
 //2.useEffect:Component useEffect代表onDOMContentLoaded表示组件挂载上去了
@@ -138,6 +139,7 @@ setTimeout(()=>{
 
 ### 12.axios
 - 使用axios替代fetch
+- 一般封装在api文件夹中，方便管理数据源与数据接口
 ```jsx
 (async function(){
         const data = await axios.get('https://www.fastmock.site/mock/f9755e3a584fdb2f805495e4308be03d/beers/list')
@@ -208,5 +210,14 @@ const ContestTab = () =>{
 - 正常写input无法写入
 - 绑定一个onChange函数并用useState动态的修改其内容的值
 ```jsx
-  <input value={filter} onChange={(e) => setFilter(e.target.value)} />
+  const [inputvalue,setInputvalue] = useState('')
+  return (
+    <div className="App">
+         <input value={inputvalue} onChange={(e) => setInputvalue(e.target.value)}/>
+    </div>
+  )
 ```
+- 或者用bind，当点击时，函数才会调用
+  ```jsx
+  onChange={onCheckedChange.bind(null,item)}
+  ```
