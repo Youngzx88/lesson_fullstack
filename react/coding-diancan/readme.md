@@ -11,3 +11,17 @@
     2. BOM location.pathname第一个版本
     3. useLocation
     4. 封装配置文件PageTitle
+
+- footer
+    1. npm i font-awesome@4.7.0:方便，但是没有定制性
+    2. 先快实现，再慢优化
+    3. 放在assets/font
+
+- tabbar底栏组件
+    1. 属于App 不属于任何一个页面组件
+    2. Link location active 
+    3. flex：1 + flex-direction
+
+- 切页面之前移动端先自适应页面
+    - html+fontsize动态计算
+    - 不要用px，多用rem

@@ -205,7 +205,18 @@ const ContestTab = () =>{
     )
 }
 ```
-
+- 根据路径生成动态类名
+```jsx
+  const {pathname} = useLocation()
+    <Link to="/home" className={(classnames({active:pathname=='/home'}))}>
+      <i className='fa fa-home'></i>
+      <span>首页</span>
+    </Link>
+    <Link to="/find" className={(classnames({active:pathname=='/find'}))}>
+      <i className='fa fa-podcast'></i>
+      <span>发现</span>
+    </Link>
+```
 ### 15.实现input双向绑定
 - 正常写input无法写入
 - 绑定一个onChange函数并用useState动态的修改其内容的值
