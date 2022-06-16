@@ -315,3 +315,29 @@ h2 {
     vertical-align: middle;
     white-space: nowrap;
 }
+
+#anony-sns .notes {
+    overflow: hidden;
+    zoom: 1;
+    color: #666;
+}
+
+#anony-sns .notes .first {
+    margin-top: 0;
+}
+#anony-sns .notes li {
+    word-wrap: break-word;
+}
+
+#anony-sns .notes .author {
+    color: #999;
+}
+
+#anony-sns .notes p {
+    margin: 0;
+}
+
+#anony-sns .notes li {
+    margin-top: 12px;
+    word-wrap: break-word;
+}
