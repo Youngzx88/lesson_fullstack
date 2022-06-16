@@ -34,7 +34,14 @@ export default function Header(props) {
   //     setTitle(_title);
   // })
 
-
+    //4.封装成配置文件
+    const [title,setTitle] = useState('饿了么')
+    const {pathname='/'} = useLocation()
+    useEffect(()=>{
+        let _title = pageTitle[pathname] || ''
+        setTitle(_title);
+    })
+  
   return (
     <div>
         <header>{title}</header>
