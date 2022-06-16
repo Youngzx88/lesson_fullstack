@@ -74,6 +74,29 @@
     ```
 - 检查“类”的关系
     - 检查一个实例的继承先祖(js种的委托关联),通常被成为内省(或者反射)；那么如何通过内省来找到祖先呢？
-    - 第一种:站在类的角度,a instanceof Foo,`instanceof`会回答在a的整条原型链种是否有Foo.prototype指向的对象?,但是只能处理对象与函数(.prototype)之间的关系，而不能处理对象与对象之间的关系
+    1. 第一种:站在类的角度,a instanceof Foo,`instanceof`会回答在a的整条原型链种是否有Foo.prototype指向的对象?,但是只能处理对象与函数(.prototype)之间的关系，而不能处理对象与对象之间的关系
         - ps：如果使用内置的`bind`函数来生成一个硬绑定函数，该函数是没有`prototype`属性的，这样使用`instanceof`目标函数的`prototype`会代替硬绑定函数的`prototype`
-    - 
+    2. 第二种:`Foo.prototype.isPrototypeOf(a)`
+        - isPrototypeOf回答的问题是：在a的整条原型链中是否出现过Foo.prototype
+        - 甚至不需要函数，两个对象之间也可以，`b.isPrototypeOf(a)`
+    3. 也可以获得某个对象的`Prototype链`:`Object.getPrototypeof(a)`
+    4. `__proto__` :这个其实也是存在于Object.prototype上的方法，并且不可枚举
+
+## 5.4、对象关联
+> Prototype机制就是存在于对象中的一个内部链接，他会引用其他对象
+- 这个链的作用是:如果在对象上没有找到需要的属性或者方法引用，引擎就会继续在prototype关联的对象上进行查找。同理，如果在后者也没有找到需要的引用，就会继续查找他的prototype，这一系列的对象链接被称为"原型链"
+### 5.4.1、创建关联
+- Object.create()
+    1. 这个方法会创建一个新对象，并把它关联到我们指定的对象上，这样我们就可以充分发挥原型的机制，并且避免new带来的constructor和prototype影响
+    2. 这个方法是ES5新出的方法，我们往往需要一个polyfill
+        ```js
+        if(!Object.create){
+            Object.create = function(o){
+                function F (){
+                    F.prototype = o;
+                    return new F();
+                }
+            }
+        }
+        ```
+### 5.4.2
