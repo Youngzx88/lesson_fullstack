@@ -5,7 +5,7 @@ import classnames from 'classnames'
 
 export default function Footer() {
   const {pathname} = useLocation()
-  
+  if(['/cities'].indexOf(pathname) != -1) return
   return (
     <FooterWrapper>
       <Link to="/home" className={(classnames({active:pathname=='/home'}))}>
