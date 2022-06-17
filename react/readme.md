@@ -18,12 +18,10 @@
             1. src js开发目录
             2. main.jsx入口文件
             3. 文件后缀为jsx的时候，react
-
 #### 4.理解命令
 - npm run dev 本地电脑
 - npm run build 编译 打包 多一个dist目录 -》结果打包
 - 上线 阿里云 买台服务器 公有IP
-
 ### 5.什么是JSX
 - 可以在JS里声明的xml，html是xml的一种 ： js + xml = jsx
 - xml介绍自己
@@ -232,3 +230,18 @@ const ContestTab = () =>{
   ```jsx
   onChange={onCheckedChange.bind(null,item)}
   ```
+
+  ### 16.严格校验参数prop-types
+  - 不用给组件参数传默认值
+    ```jsx
+    export default function Banners({banners=[]}) 
+    ```
+  - prop-types
+    ```jsx
+    Banners:propTypes = {
+      banners:propTypes.array.isRequired
+    }
+    ```
+
+  ### 17.幻灯片插件
+  - npm install swiper@4.5.0

@@ -42,3 +42,36 @@
         ```
     4. 子组件不做数据请求，都放在父组件中，父组件通过参数传递修改状态
     5. 子组件不做复杂状态，用props传递
+
+- 幻灯片功能
+    1. 使用了Swiper
+    2. 全局引用css
+    3. 固定的html结构
+        - `.swiper-container>.swiper-wrapper>.swiper=slide{n}`
+        - `.swiper-pagination`分页
+    4. 组件挂在以后,useeffect
+        - 实例化幻灯片功能 `new Swiper('.btn-swiper')`
+    ```jsx
+    export default function Banners({banners}) {
+    useEffect(()=>{
+        new Swiper('.btn-banners',{
+        loop:true,
+        pagination:{
+            el:'.swiper-pagination'
+        }
+
+        })
+    })
+    return (
+        <BannersWrapper>
+        <div className="btn-banners swiper-container">
+            <div className="swiper-wrapper">
+            <div className="swiper-slide">1</div>
+            <div className="swiper-slide">2</div>
+            </div>
+            <div className="swiper-pagination"></div>
+        </div>
+        </BannersWrapper>
+        )
+    }
+    ```

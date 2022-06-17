@@ -11,7 +11,7 @@ export default function Home() {
   useEffect(()=>{
     (async()=>{
       let {data} = await getBanners()
-      
+      setBanners(data)
     })()
   })
 

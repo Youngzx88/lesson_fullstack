@@ -11,11 +11,13 @@
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "font-awesome": "^4.7.0",
+    "prop-types": "^15.8.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "swiper": "^4.5.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
