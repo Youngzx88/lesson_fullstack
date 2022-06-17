@@ -23,5 +23,22 @@
     3. flex：1 + flex-direction
 
 - 切页面之前移动端先自适应页面
-    - html+fontsize动态计算
-    - 不要用px，多用rem
+    1. html+fontsize动态计算
+    2. 不要用px，多用rem
+
+- 城市选择功能(路由参数传递)
+    1. city.json 接口提供 下一个版本使用配置文件
+    2. 接口都放在api request下，方便管理
+    3. link to 复杂版本 接受一个对象
+        ```jsx
+        // queryString 通过参数search传递
+            return <Link className="city_name" to={{pathname:"/home"||'/',search:`name=${item.nm}`}} key={item.id}>
+                        {item.nm}
+                    </Link>
+
+        // 另一边用import { useSearchParams } from 'react-router-dom'拿到对应的参数
+        const [search] = useSearchParams();
+        const cityName = search.get(`name` || '');
+        ```
+    4. 子组件不做数据请求，都放在父组件中，父组件通过参数传递修改状态
+    5. 子组件不做复杂状态，用props传递
