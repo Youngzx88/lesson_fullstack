@@ -341,3 +341,75 @@ h2 {
     margin-top: 12px;
     word-wrap: break-word;
 }
+
+.section:nth-child(3n) {
+    padding: 40px 0 20px;
+    background: #f7f7f7;
+}
+
+.section .sidenav {
+    float: left;
+    width: 100px;
+    margin-right: 20px;
+}
+
+#anony-time .section-title a {
+    color: #494949;
+}
+
+.section-title a:link, .section-title a:visited {
+    font-size: 24px;
+}
+
+.section .side {
+    float: right;
+    width: 265px;
+    margin-left: 30px;
+}
+
+#anony-time .time-list li {
+    display: inline-block;
+    width: 100px;
+    vertical-align: top;
+    margin-right: 60px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#anony-time .time-list li .cover {
+    display: block;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+#anony-time .time-list li .cover:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+    background-image: linear-gradient(to bottom,rgba(0,0,0,0) 0%,transparent 50%,rgba(0,0,0,0.2) 100%);
+}
+
+#anony-time .time-list li img {
+    width: 100px;
+    height: 141px;
+}
+
+#anony-time .time-list li .title {
+    color: #333333;
+    font-size: 13px;
+    line-height: 1.38;
+}
+
+#anony-time .time-list li .type {
+    color: #999999;
+    line-height: 1;
+    margin-top: 10px;
+    display: block;
+}
+
+
