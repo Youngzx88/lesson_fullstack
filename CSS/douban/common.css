@@ -412,4 +412,41 @@ h2 {
     display: block;
 }
 
+#anony-movie a:link, #anony-movie a:visited {
+    color: #27a;
+}
 
+.side-links {
+    margin-bottom: 40px;
+}
+
+.side-links li {
+    position: relative;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+
+.tags li {
+    width: 4em;
+    margin-top: 4px;
+    text-align: left;
+}
+
+.list li {
+    display: inline-block;
+    zoom: 1;
+    width: 24.8%;
+    vertical-align: top;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: normal;
+    word-spacing: normal;
+}
+.tags ul {
+    margin-top: -4px;
+}
+.list {
+    font-size: 0;
+    letter-spacing: -.31em;
+}
