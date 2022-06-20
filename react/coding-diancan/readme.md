@@ -90,3 +90,18 @@
     3. `styled-components`生成`hash`类名：样式又上去了，但绝对不重复
     4. 最外层就好，内层会通过`外层.内层类名`即可
     5. 在jsx中直接写`className`就没有这个效果，可以通过类似`styled components`等`css in js`的第三方库
+
+- 开发套路及最佳方案
+    1. 接口都放在api目录下
+    2. 接口请求在路由级别组件发生，子组件不要去做
+    3. 子组件只负责jsx提供和style-components css in js
+
+- 延迟加载路由组件
+    1. 引入文件，还会执行
+    2. 只需要首页一个组件就好
+    3. 如果加载少一点，首页打开肯定很快，但是路由配置会配置所有路由
+    4. react-router提供了延迟加载路由的功能
+
+- antd-mobile
+    - antd的移动版，手机栈
+    1. NavBar

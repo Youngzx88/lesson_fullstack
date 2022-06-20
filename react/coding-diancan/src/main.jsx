@@ -8,6 +8,7 @@ import './assets/styles/reset.css'
 // import './assets/font/iconfont.css'
 import './modules/rem'  // 自适应
 import 'swiper/dist/css/swiper.min.css'
+import 'antd-mobile/dist/antd-mobile.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
