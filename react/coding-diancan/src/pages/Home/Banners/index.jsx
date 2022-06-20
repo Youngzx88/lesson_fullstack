@@ -12,7 +12,7 @@ export default function Banners({banners}) {
         el:'.swiper-pagination'
       }
     })
-  })
+  },[])
   const renderBtnBannersPage1 = () =>{
     let items = banners.slice(0,10);
     return items.map(item=>{
