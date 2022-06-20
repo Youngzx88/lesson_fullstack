@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+// import { } from './style'
 
-export default function Find() {
-  return (
-    <div>
-        Find
-    </div>
-  )
+const Find = () => {
+    return (
+        <div>
+            Find
+        </div>
+    )
 }
+
+export default Find

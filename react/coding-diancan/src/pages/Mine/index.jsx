@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+// import { } from './style'
 
-export default function Mine() {
-  return (
-    <div>
-        Mine
-    </div>
-  )
+const Mine = () => {
+    return (
+        <div>
+            Mine
+        </div>
+    )
 }
+
+export default Mine

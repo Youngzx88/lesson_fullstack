@@ -1,9 +1,12 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+// import { } from './style'
 
-export default function Order() {
-  return (
-    <div>
-        Order
-    </div>
-  )
+const Order = () => {
+    return (
+        <div>
+            Order
+        </div>
+    )
 }
+
+export default Order

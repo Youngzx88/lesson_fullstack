@@ -4,14 +4,13 @@ import Swiper from 'swiper'
 
 export default function SetMeal() {
     useEffect(() => {
-        new Swiper('.home_info_banners',{
-            loop:true,
-            autoplay:{
-                delay:1000
-            },
-            EffectFade:true
+        new Swiper('.home_info_banners', {
+            loop: true,
+            autoplay: {
+                delay: 3000
+            }
         })
-    },[])
+    }, [])
   return (
     <Wrapper>
         <div className="home_info_img">

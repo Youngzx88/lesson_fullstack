@@ -4,5 +4,5 @@ export const pageTitle = {
     '/home': '首页',
     '/order': '订单',
     '/find': '发现',
-    '/mine': '我的'
+    '/mine': '我的',
 }
