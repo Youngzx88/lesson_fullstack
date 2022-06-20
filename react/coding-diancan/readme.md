@@ -14,14 +14,14 @@
     4. 封装配置文件PageTitle
 
 - footer
-    1. npm i font-awesome@4.7.0:方便，但是没有定制性
+    1. `npm i font-awesome@4.7.0`:方便，但是没有定制性
     2. 先快实现，再慢优化
-    3. 放在assets/font
+    3. 放在`assets/font`
 
 - tabbar底栏组件
     1. 属于App 不属于任何一个页面组件
-    2. Link location active 
-    3. flex：1 + flex-direction
+    2. `Link location active `
+    3. `flex：1 + flex-direction`
 
 - 切页面之前移动端先自适应页面
     1. html+fontsize动态计算
@@ -82,7 +82,7 @@
     2. 首页面 一摸一样 但又不用完全实现所有功能
     3. 不重要的功能 切页面
     4. 不要让动态部分撑开页面的感觉，给固定高度
-    5. styled-components生成的类名为什么乱码
+    5. styled-components生成的类名为什么`乱码`
 
 - css in js类名逻辑
     1. 多人协作的时候，类名有概率发生冲突
@@ -94,14 +94,23 @@
 - 开发套路及最佳方案
     1. 接口都放在api目录下
     2. 接口请求在路由级别组件发生，子组件不要去做
-    3. 子组件只负责jsx提供和style-components css in js
+    3. 子组件只负责jsx提供和style-components `css in js`
 
 - 延迟加载路由组件
     1. 引入文件，还会执行
     2. 只需要首页一个组件就好
     3. 如果加载少一点，首页打开肯定很快，但是路由配置会配置所有路由
-    4. react-router提供了延迟加载路由的功能
+    4. `react-router`提供了延迟加载路由的功能
 
-- antd-mobile
-    - antd的移动版，手机栈
-    1. NavBar
+- `antd-mobile`
+    - antd的`移动版`，手机栈
+    1. `NavBar`
+
+- 单页应用tabbar不显示功能开发及调试
+    1. 有些二级页面，不需要tabbar
+    2. 完全匹配 vs 部分匹配
+        - 正则 `/^\/([\w]+)\/`
+        - 动态路由
+    3. bug过程 `forEach`来做的 每一项都有一个执行函数，return不会终止外部函数运行,断点调试，反馈代码的执行
+    4. `indexOf`
+    5. 项目记录最好有一个断点调试说明

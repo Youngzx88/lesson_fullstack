@@ -18,22 +18,4 @@
 
     }
     return false
-
-    // arr.forEach(item => {
-    //     if (item === path) {
-    //         return true
-    //     }
-    //     if (path.lastIndexOf('/') !== 0) {
-    //         // 正则 path 的第二个/ 前面的部分
-    //         //  / 转译：\/
-    //         // [\w] 一个字符
-    //         // [\w+] 一个或多个
-    //         const reg = /^(\/[\w]+)\//;
-    //         // console.log(path.match(reg))
-    //         const matchArr = path.match(reg)
-    //         const partlyPath = matchArr[1] ? matchArr[1] : ''
-    //         if (partlyPath) return partlyPath === item;
-    //     }
-    //     return false
-    // })
 }
