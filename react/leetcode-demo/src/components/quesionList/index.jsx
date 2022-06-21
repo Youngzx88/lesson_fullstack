@@ -1,8 +1,7 @@
 import React, { useState,useEffect } from 'react'
-import { List } from 'antd'
+import { Table} from 'antd'
 import { QList } from './style'
-import { getQuesionList } from '../../api/request'
-import QuestionItem from './QuestionItem/QuestionItem'
+import { getQuesionList,columns } from '../../api/request'
 
 export default function QuestionList() {
     const [qlist,setQlist] = useState([])
@@ -14,22 +13,15 @@ export default function QuestionList() {
     })
     return (
         <QList>
-            <List 
-                bordered
-                // header={Header}
-                dataSource={qlist}
-                split={true}
-                renderItem={item => {
-                    return (
-                    <List.Item>
-                        {/* 要给item再套一层组件写样式 */}
-                        <QuestionItem
-                            item = {item}
-                        />
-                    </List.Item>
-                    )
-                }}
-                />
+            <Table
+             dataSource={qlist} 
+             columns={columns} 
+             rowClassName={(record, index) => {
+                let className = 'light-row';
+                if (index % 2 === 1) className = 'dark-row';
+                return className;
+            }}
+            />;
         </QList>
     )
 }
