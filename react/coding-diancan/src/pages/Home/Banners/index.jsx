@@ -16,7 +16,6 @@ export default function Banners({banners}) {
 
     const renderBtnBannersPage1 = () => {
         let items = banners.slice(0, 10);
-        console.log(items)
         return items.map(item => {
             return (
                 <Link 
