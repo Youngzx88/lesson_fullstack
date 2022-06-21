@@ -52,6 +52,11 @@
         - `.swiper-pagination`分页
     4. 组件挂在以后,useeffect
         - 实例化幻灯片功能 `new Swiper('.btn-swiper')`
+    5. 遇到的问题
+        - pagination分页不好使
+        - Swiper被实例化多次
+        - 使用useEffect第二个参数[]搞定，只会执行一次
+        - 全局变量Swiper在实例化前，判断一下
     ```jsx
     export default function Banners({banners}) {
     useEffect(()=>{

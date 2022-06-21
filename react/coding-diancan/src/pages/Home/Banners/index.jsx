@@ -5,14 +5,18 @@ import Swiper from 'swiper'
 import { Link } from 'react-router-dom'
 
 export default function Banners({banners}) {
+    let swiper = null;
     useEffect(() => {
+        if(swiper){
+            return
+        }
         new Swiper('.btn-banners', {
             loop: true,
             pagination: {
                 el: '.swiper-pagination'
             }
-        })
-    })
+        })  
+    },[])
 
     const renderBtnBannersPage1 = () => {
         let items = banners.slice(0, 10);
