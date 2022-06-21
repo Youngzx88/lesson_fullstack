@@ -122,3 +122,7 @@
     3. routes/index.jsx路由地图
     4. 组件化思维，封装成组件就可以抽离
     5. 首页干净了，layout没有污染他
+
+- antd-mobile 升级
+    1. npm remove antd-mobile移除
+    2. npm install antd-mobole@latest
