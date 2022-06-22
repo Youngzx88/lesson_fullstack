@@ -8,7 +8,6 @@ export default function All() {
   return (
     <Wrapper>
         <Left_side>
-            <Nav/>
             <QuestionList/>
         </Left_side>
         <Right_side>

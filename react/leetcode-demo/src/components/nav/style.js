@@ -1,13 +1,14 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-    width: 858px;
-    height: 40px;
+    width: 60%;
+    height: 50px;
     padding: 12px;
     top: 0;
     left: 0;
     bottom: 0;
     margin: 30px auto;
+    margin-left: 120px;
 `
 
 

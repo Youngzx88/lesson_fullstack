@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
     display: flex;
     .listStatus{
         width: 50px;
-        margin-left:40px;
     }
     .listTitle{
         width: 185px;
