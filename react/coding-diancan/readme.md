@@ -6,6 +6,10 @@
 - 页面layout
     1. 页面级别组件共享布局方案
         - header + 动态路由组件(Routes,Route,Path) + footer
+    2. 二级路由layout升级用`outlet`:一级路由children部分可以设置多二级路由
+        - context上下文环境
+            - Route.context
+            - path -> 二级路由 Order
 
 - header组件的版本化及配置
     1. 页面中layout固定功能，不属于页面组件的内部，属于layout
@@ -107,6 +111,7 @@
     3. 如果加载少一点，首页打开肯定很快，但是路由配置会配置所有路由
     4. `react-router`提供了延迟加载路由的功能
     5. `React.lazy` 非首页及其他页面组件路由延迟按需加载(切换到路由)加载`const  Mine = lazy(()=>import('./pages/Mine'))`
+    6. 要在路由引入外包裹一层`<Suspense> <div>loading</div></Suspense>`表示正在加载中
 
 - `antd-mobile`
     - antd的`移动版`，手机栈
@@ -128,6 +133,7 @@
     4. 组件化思维，封装成组件就可以抽离
     5. 首页干净了，layout没有污染他
 
+
 - antd-mobile 升级
     1. npm remove antd-mobile移除
     2. npm install antd-mobole@latest
@@ -141,3 +147,10 @@
         }
     }
     ```
+
+- useParams(): home/:id,找到id
+- useSearchParams：home/?id,得到？后的id
+
+- NavLink比Link更专业
+    1. 点击的时候会默认加上active类名
+    2. 二级路由里面，useEffect+NavLink

@@ -8,7 +8,6 @@ import HomeDetailNav from '@/components/HomeDetailNav'
 // import HomeDetailNav from '../../components/HomeDetailNav'
 
 export default function HomeDetail() {
-    // console.log('-----------------')
     // 点击返回上一个页面
     const navigate = useNavigate()
     let { id } = useParams()
@@ -20,8 +19,8 @@ export default function HomeDetail() {
     }
 
     useEffect(()=>{
-        console.log('----------------')
-    })
+        navigate(`/homedetail/${id}/order`)
+    },[])
 
     return (
         <Wrapper>
@@ -60,7 +59,7 @@ export default function HomeDetail() {
                     </div>
                     <p>公告：本店香锅不单炒，套餐必点！单加菜品需与套餐同时点</p>
                 </div>
-                <HomeDetailNav />
+                <HomeDetailNav id={id}/>
                 <Outlet />
             </div>
         </Wrapper>
