@@ -1,16 +1,16 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-    width: 500px;
-    height: 50px;
-    margin-left: 50px;
-    margin-top: 30px;
+    width: 858px;
+    height: 40px;
+    padding: 12px;
+    margin: 30px auto;
 `
 
 
 export const NavItem = styled.div`
     border-radius: 9999px;
-    width: 80px;
+    width: 90px;
     height: 50px;
     margin-right: 5px;
     background-color: #f2f3f4;
