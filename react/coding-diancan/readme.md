@@ -154,3 +154,7 @@
 - NavLink比Link更专业
     1. 点击的时候会默认加上active类名
     2. 二级路由里面，useEffect+NavLink
+
+- 代码中要展示抽象封装和设计的能力
+    1. routerConfig
+    2. 复杂jsx的展示封装，函数化插入，有利于代码的可读性
