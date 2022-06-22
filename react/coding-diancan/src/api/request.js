@@ -1,16 +1,13 @@
 import axios from 'axios'
 
-export const getCities = () =>
+export const getCities = () => 
     axios.get('https://www.fastmock.site/mock/fc09142a9029fcb292822d4ee872f52b/beers/cities')
 
-
-export const getBanners = () =>
+export const getBanners = () => 
     axios.get('https://www.fastmock.site/mock/fc09142a9029fcb292822d4ee872f52b/beers/banners')
 
-
-export const getRestaurants = () =>
+export const getRestaurants = () => 
     axios.get('https://www.fastmock.site/mock/fc09142a9029fcb292822d4ee872f52b/beers/restaurants')
 
-
-export const getHomeDetailOrder = () =>
-axios.get('https://www.fastmock.site/mock/fc09142a9029fcb292822d4ee872f52b/beers/dinner_order')
+export const getHomeDetailOrder = () => 
+    axios.get('https://www.fastmock.site/mock/fc09142a9029fcb292822d4ee872f52b/beers/dinner_order')

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const BannersWrapper = styled.div`
-/* 写死高度，不让数据出来前，下面的模块往下掉，固定住 */
-/* 不写px  */
 height: 1.582rem;
 .btn_banners{
     width:100%;

@@ -1,33 +1,33 @@
-// css in js
 import styled from 'styled-components'
 export const Wrapper = styled.div`
  .detail-left{
- height: 0.5rem;
- background: blue;
+    height: 0.5rem;
+    background: blue;
  }
  .detail-title{
- padding: .8rem 0 0;
- padding: 8vw 0 0;
- position: relative;
- display: -webkit-flex;
- display: flex;
- -webkit-flex-direction: column;
- flex-direction: column;
- -webkit-align-items: center;
- align-items: center;
- background-color: #fff;
+    padding: .8rem 0 0;
+    padding: 8vw 0 0;
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+    background-color: #fff;
  }
  .detail-title-box{
- padding: .8rem 0 0;
- padding: 8vw 0 0;
- position: relative;
- display: -webkit-flex;
- display: flex;
- -webkit-flex-direction: column;
- flex-direction: column;
- -webkit-align-items: center;
- align-items: center;
- background-color: #fff;
+    padding: .8rem 0 0;
+    padding: 8vw 0 0;
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+    background-color: #fff;
+
  .detail-title-img{
  width: 2rem;
  width: 20vw;
@@ -210,4 +210,4 @@ export const Wrapper = styled.div`
  white-space: nowrap;
  }
 }
-`
+ `

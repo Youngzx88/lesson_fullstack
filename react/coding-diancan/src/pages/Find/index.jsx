@@ -1,15 +1,12 @@
-/*
- * @Date         : 2022-06-16 20:21:49
- * @LastEditors  : colinlala
- * @LastEditTime : 2022-06-16 20:24:01
- * @description  : 
- */
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+// import { } from './style'
 
-export default function Find() {
-  return (
-    <div>
-      Find
-    </div>
-  )
+const Find = () => {
+    return (
+        <div>
+            Find
+        </div>
+    )
 }
+
+export default Find

@@ -1,15 +1,12 @@
-/*
- * @Date         : 2022-06-16 20:22:15
- * @LastEditors  : colinlala
- * @LastEditTime : 2022-06-16 20:24:09
- * @description  : 
- */
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+// import { } from './style'
 
-export default function Mine() {
-  return (
-    <div>
-      Mine
-    </div>
-  )
+const Mine = () => {
+    return (
+        <div>
+            Mine
+        </div>
+    )
 }
+
+export default Mine

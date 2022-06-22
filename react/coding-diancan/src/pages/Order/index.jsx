@@ -1,15 +1,12 @@
-/*
- * @Date         : 2022-06-16 16:07:40
- * @LastEditors  : colinlala
- * @LastEditTime : 2022-06-16 16:08:02
- * @description  : 
- */
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+// import { } from './style'
 
-export default function Order( ){
-  return (
-    <div>
-      Order
-    </div>
-  )
+const Order = () => {
+    return (
+        <div>
+            Order
+        </div>
+    )
 }
+
+export default Order

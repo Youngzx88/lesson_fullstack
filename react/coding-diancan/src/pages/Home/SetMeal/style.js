@@ -73,6 +73,5 @@ export const Wrapper = styled.div`
         background: rgba(20, 20, 20,.7);
         color: #fff;
     }
-}
-
+}    
 `

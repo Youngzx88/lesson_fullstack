@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 
-
 export const Wrapper = styled.div`
-    .navbar{
+.navbar{
     height: 35px;
     background:#fff;
     border-bottom: 1px solid #ccc;
@@ -36,5 +35,4 @@ export const Wrapper = styled.div`
         
     }
 }
-
 `
