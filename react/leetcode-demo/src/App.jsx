@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import {Routes,Route,Link} from 'react-router-dom'
-import Nav from './components/nav'
 import 'antd/dist/antd.css'
-import QuestionList from './components/quesionList'
+import All from './pages/All'
 
 function App() {
 
   return (
     <div className="App">
-      <Nav/>
+      <All/>
       <Routes>
         <Route path='/'></Route>
         <Route path='/all'></Route>
@@ -17,7 +16,6 @@ function App() {
         <Route path='/shell'></Route>
         <Route path='/concurrency'></Route>
       </Routes>
-      <QuestionList/>
     </div>
   )
 }

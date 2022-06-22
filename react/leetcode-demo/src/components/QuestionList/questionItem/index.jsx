@@ -11,7 +11,6 @@ export default function QuestionItem(props) {
             <div className="listAns">{ans}</div>
             <div className="listRate">{rate}</div>
             <div className="listItem">{difficulty}</div>
-        </Wrapper>
-            
+        </Wrapper>          
     )
 }

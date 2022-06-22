@@ -4,6 +4,9 @@ export const Wrapper = styled.div`
     width: 858px;
     height: 40px;
     padding: 12px;
+    top: 0;
+    left: 0;
+    bottom: 0;
     margin: 30px auto;
 `
 
@@ -12,7 +15,10 @@ export const NavItem = styled.div`
     border-radius: 9999px;
     width: 90px;
     height: 50px;
-    margin-right: 5px;
+    :not(:first-child){
+        margin-left: 16px;
+    }
+    /* margin-left: 16px; */
     background-color: #f2f3f4;
     text-align: center;
     line-height: 50px;

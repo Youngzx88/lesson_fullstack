@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from 'react'
 import { QList } from './style'
+import { List } from 'antd'
 import { getQuesionList } from '../../api/request'
 import QuestionItem from './questionItem'
-import { List } from 'antd'
 
 export default function QuestionList() {
     const [qlist,setQlist] = useState([])
