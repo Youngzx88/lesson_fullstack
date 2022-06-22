@@ -5,12 +5,24 @@ export default function SaleDetail({detail}) {
     const renderInfo = () => {
         return detail.map(item => (
             <div key={item.id}>
-                <a href="">
-                    <span>{item.name}</span>
+                <a onClick={()=>scrollToAnchor(item.id)}>
+                        <span>{item.name}</span>
                 </a>
             </div>
         ))
     }
+    
+    const scrollToAnchor = (anchorName) =>{
+        let anchorElement = document.getElementById(anchorName)
+        if(anchorElement){
+            // scrollIntoView双栏联动
+            anchorElement.scrollIntoView({
+                block: 'start',
+                behavior: 'smooth'
+            })
+        }
+    }
+
     const renderSaleSlide = () => {
         return detail.map((item, index) => {
             return (
