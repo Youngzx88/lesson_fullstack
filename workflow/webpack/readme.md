@@ -95,3 +95,23 @@
         ```
     11. js 和 css分离
         - `npm i mini-css-extract-plugin -D`
+
+    12. webpack全家桶
+        - webpack 5.73.0
+        - webpack-cli 4.10.0 命令行
+        - npm webpack npx -> node_modules/webpack-cli -> webpack 
+        - `webpack-dev-server` http server启动服务并加上http服务
+        ```js
+            "dev": "webpack-dev-server --mode=development --open",
+        ```
+
+    13. npm i @babel/cli/core @babel/preset-env @babel/preset-react -D
+    ```js
+                {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
+                ]
+            }
+    ```

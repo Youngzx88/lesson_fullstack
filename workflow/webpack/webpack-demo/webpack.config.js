@@ -35,13 +35,18 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     mode: 'development',
-    entry: './src/index.js',
+    entry: './src/index.jsx',
     output: {
         filename:'[name].[contenthash:8].js',
         path: path.join(__dirname,'dist')
     },
     module:{
         rules:[
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                loader: "babel-loader"
+            },
             {
                 test: /\.css$/,
                 use: [
@@ -50,6 +55,10 @@ module.exports = {
                 ]
             }
         ]
+    },
+    devServer:{
+        compress: true,
+        port: 1314
     },
     plugins: [
         new HtmlWebpackPlugin({
