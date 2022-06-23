@@ -1,1 +1,1 @@
-exports.toLowerCase = '1123'
+exports.toLowerCase = (str) => str.toLowerCase()

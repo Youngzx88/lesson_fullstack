@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')//使用commonjs模块化方案引入path
+const { CleanWebpackPlugin } = require('clean-webpack-plugin') 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 // console.log(__dirname)//__dirname项目的根路径:/Users/youngzx/Desktop/Code/lesson_fullstack/workflow/webpack/webpack-demo
 
@@ -35,20 +37,27 @@ module.exports = {
     mode: 'development',
     entry: './src/index.js',
     output: {
-        filename: 'bundle.js',
+        filename:'[name].[hash:8].js',
         path: path.join(__dirname,'dist')
     },
     module:{
         rules:[
             {
                 test: /\.css$/,
-                use:'css-loader'
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
+                ]
             }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html'
-        })    
+        }),
+        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash:8].css'
+        })
     ]
 }

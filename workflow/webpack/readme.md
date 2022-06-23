@@ -75,3 +75,23 @@
         - webpack有插件机制
         - npm i html-webpack-plugin -D 把index.html搬到dist目录下
         - 把打包结果bundle.js文件自动在html里引入
+        - npm i clean-webpack-plugin -D , 清除src下的所有其他不需要的文件
+            ```js
+            new CleanWebpackPulgin({
+            
+             })
+            ```
+
+    10. [name].[hash:8].js
+        - [] name原文件名 
+        - hash标志唯一的文件内容,只要改变了内容就会生成新的hash,否则绝对不变(缓存，如果更新了)
+        - 使用hash值创建版本号
+        - 浏览器本地缓存
+        ```js
+        output: {
+            filename:'[name].[hash:8].js',
+            path: path.join(__dirname,'dist')
+        },
+        ```
+    11. js 和 css分离
+        - `npm i mini-css-extract-plugin -D`
