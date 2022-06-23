@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+
 export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
@@ -23,4 +24,5 @@ export const Wrapper = styled.div`
         width: 80px;
         margin-left:40px;
     }
+
 `
