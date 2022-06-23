@@ -37,7 +37,7 @@ module.exports = {
     mode: 'development',
     entry: './src/index.js',
     output: {
-        filename:'[name].[hash:8].js',
+        filename:'[name].[contenthash:8].js',
         path: path.join(__dirname,'dist')
     },
     module:{
