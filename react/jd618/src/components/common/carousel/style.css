@@ -1,0 +1,21 @@
+.img-wrapper {
+    position: relative;
+}
+
+.img-wrapper .img-item {
+    width: 100%;
+    /* 375px  18.75 */
+    height: 17.5rem;
+}
+
+.img-wrapper .img-index {
+    position: absolute;
+    right: 0;
+    color: aliceblue;
+    font-size: 14px;
+    bottom: 0.75rem;
+    padding: 0.15rem 0.75rem 0.15rem 0.5rem;
+    background-color: #807d78;
+    border-bottom-left-radius: 0.75rem;
+    border-top-left-radius: 0.75rem;
+}

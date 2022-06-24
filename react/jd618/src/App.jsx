@@ -14,7 +14,7 @@ function App() {
   },[])
   return (
     <div className="App">
-        <div style={{paddingTop: '10px'}}>
+      <div className="pt10">
         {
           cardData.map(item => (
             <GoodsCard source={item} key={item.id} />
