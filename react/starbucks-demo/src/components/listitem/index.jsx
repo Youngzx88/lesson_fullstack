@@ -1,7 +1,7 @@
-import React,{useEffect} from 'react'
-import { Wrapper } from '../../pages/menu-list/style'
-import Item from '../item'
+import React,{useEffect,useState} from 'react'
+import { Wrapper } from './style'
 import { getMenu } from '../../api/request'
+import { List } from 'antd-mobile'
 
 export default function ListItem() {
   const [list,setList] = useState([])
@@ -13,13 +13,10 @@ export default function ListItem() {
       setList(data);
     })()
   })
+
   return (
     <Wrapper>
-        <Item data={list}/>
-        <Item />
-        <Item/>
-        <Item/>
-        <Item/>
+      
     </Wrapper>
   )
 }

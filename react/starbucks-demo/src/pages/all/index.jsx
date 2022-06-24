@@ -1,11 +1,11 @@
 import React from 'react'
 import { Wrapper } from './style.js'
-import MenuList from '../menu-list/index.jsx'
+import ListItem from '../../components/listitem'
 
 export default function All() {
   return (
     <Wrapper>
-        <MenuList></MenuList>
+        <ListItem></ListItem>
     </Wrapper>
   )
 }
