@@ -5,4 +5,5 @@ export const QList = styled.div`
     height: 50px;
     padding: 12px;
     margin-left: 120px;
+    float: left;
 `
