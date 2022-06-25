@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Wrapper } from './style'
 import { getMenu } from '../../api/request'
-import { List } from 'antd-mobile'
+import Item from '../item'
 
 export default function ListItem() {
   const [list, setList] = useState([])
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       const { data } = await getMenu()
-      // console.log(data)
       setList(data)
     })()
   })
 
-  return <Wrapper></Wrapper>
+  return (
+    <Wrapper>
+      <Item list={list} />
+    </Wrapper>
+  )
 }

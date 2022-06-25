@@ -1,11 +1,25 @@
 import React from 'react'
-import { Wrapper } from './style'
+import { Wrapper,Card } from './style'
 
-export default function Item({data}) {
-  // console.log(data)
-  return (  
+export default function Item( {list} ) {
+  const {id,status,title,goods} = list
+  return (
     <Wrapper>
-          Item
+        {list.map(
+            item => (
+              <Card key={item.id} >
+                <h3 className="title">{item.title}</h3>
+                <div className="preview circle">
+                    
+                </div>
+              </Card>
+            )
+        )
+        }
+        {/* <div className="id">
+          <div className="title"></div>
+          <div className="goods"></div>
+        </div> */}
     </Wrapper>
   )
 }
