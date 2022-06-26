@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import Menu from './components/menu'
-
+import './App.css'
+import Myorder from './components/myorder'
 function App() {
-
+  
   return (
     <div className="App">
-        <Menu/>
+      <Myorder/>
     </div>
   )
 }

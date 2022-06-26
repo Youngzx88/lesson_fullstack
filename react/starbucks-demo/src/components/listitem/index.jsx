@@ -1,30 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { Wrapper } from './style'
-import { getMenu } from '../../api/request'
-import Item from '../item'
+import React from 'react'
+import { Wrapper,GoodWrapper } from './style'
 
-// listitem里面遍历title，到item去遍历具体的数据
-export default function ListItem() {
-  const [list, setList] = useState([])
+const Good = ({item}) => (
+  <GoodWrapper>
+      <img src={item.img} alt=""/>
+      <div className="name">{item.goods}</div>
+  </GoodWrapper>
+)
 
-  useEffect(() => {
-    (async () => {
-      const { data } = await getMenu()
-      setList(data)
-    })()
-  })
-
+export default function ListItem({menuList}) {
   return (
     <Wrapper>
-      {list.map(
-        item => (
-          <>
-          <h3 className="title" key={item.id}>{item.title}</h3>
-          <Item list={list} />
-          </>
+      {
+        menuList.map(
+          (item)=>(
+            <Good key={item.id} item={item}/>
+          )
         )
-      )}
-      
+      }
     </Wrapper>
   )
 }
