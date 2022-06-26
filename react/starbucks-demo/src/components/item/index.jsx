@@ -8,7 +8,6 @@ export default function Item( {list} ) {
         {list.map(
             item => (
               <Card key={item.id} >
-                <h3 className="title">{item.title}</h3>
                 <div className="preview circle">
                     
                 </div>
