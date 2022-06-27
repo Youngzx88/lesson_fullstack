@@ -1,45 +1,33 @@
 import { useState, useEffect } from 'react'
-import logo from './logo.svg'
 import './App.css'
+import {connect} from 'react-redux'
 
-function App() {
+//子组件
+function App(props) {
+  console.log(props,'---------------')
+  let {singers,users} = props
   const [count, setCount] = useState(0)
   // 有了redux后，页面组件不再做数据管理
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      {
+        users.map(user => <div key={user.id}>{user.name}</div>)
+      }
     </div>
   )
 }
 
-export default App
+
+// state是redux负责的所有子仓数据
+// state由redux给我们的，状态树，以树来组织数据分仓
+const mapStateToProps = (state) =>{
+  return {
+    // 首页想要展示singer的数据
+      singers: state.singer.singers,
+      users: state.user.users
+
+  }
+}
+// connect是api，实现组件数据管理功能被收回，组件通过connect连上store，store来去管理数据
+//第一个参数：一个函数(把store中的状态以props的形式引到我们的组件中)
+export default connect(mapStateToProps)(App)
