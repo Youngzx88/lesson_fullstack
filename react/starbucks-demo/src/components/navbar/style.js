@@ -18,8 +18,6 @@ export const Wrapper = styled.div`
     display: block;
     -webkit-overflow-scrolling: touch;
     margin-bottom: -12px;
-    overflow-x: scroll;
-    
     white-space: nowrap;
     width: 100%;
     margin: 0;

@@ -13,10 +13,7 @@ export const GoodWrapper = styled.div`
   padding: 3px;
   display: inline-block;
   .good{
-    
-    /* display: flex;
     flex-direction: column;
-    justify-content: center; */
   }
   img{
     width: 100%;
@@ -24,10 +21,9 @@ export const GoodWrapper = styled.div`
     border-radius: 50%;
   }
   .name{
-    left: 28%;
     text-align: center;
     letter-spacing:2px;
-    font-weight: 400;
+    font-weight: 500;
   }
   
 `

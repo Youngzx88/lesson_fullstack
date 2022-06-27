@@ -1,17 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import logo from './logo.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-  useEffect(()=>{
-    fetch('http://localhost:3000/personalized')
-    .then(data=>data.json())
-    .then(data=>{
-      console.log(data)
-    })
-
-  },[])
+  // 有了redux后，页面组件不再做数据管理
   return (
     <div className="App">
       <header className="App-header">

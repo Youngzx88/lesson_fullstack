@@ -13,6 +13,7 @@ export default function Menu() {
 
   const Fn = (tabname) =>{
     setTab(tabname)
+    console.log(tabname)
   }
   useEffect(() => { 
     setLoading(true);
