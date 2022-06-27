@@ -1,10 +1,12 @@
 import React from 'react'
 import { Wrapper,GoodWrapper } from './style'
 
-const Good = ({item}) => (
-  <GoodWrapper>
-      <img src={item.img} alt=""/>
-      <div className="name">{item.goods}</div>
+const Good = ({goodItem}) => (
+  <GoodWrapper key={goodItem.id}>
+    <div className="good">
+      <img src={goodItem.img} alt=""/>
+      <div className="name">{goodItem.goods}</div>
+    </div>
   </GoodWrapper>
 )
 
@@ -14,7 +16,7 @@ export default function ListItem({menuList}) {
       {
         menuList.map(
           (item)=>(
-            <Good key={item.id} item={item}/>
+            <Good key={item.id} goodItem={item}/>
           )
         )
       }

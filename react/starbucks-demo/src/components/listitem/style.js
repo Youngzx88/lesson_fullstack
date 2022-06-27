@@ -6,16 +6,22 @@ export const Wrapper = styled.div`
 `
 
 export const GoodWrapper = styled.div`
-  width: 50%;
+  width: 43%;
+  height: 215px;
   box-sizing: border-box;
-  margin: 10px;
+  margin: 13px;
   padding: 3px;
-  display: flex;
+  display: inline-block;
+  .good{
+    
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
+  }
   img{
     width: 100%;
-    height: 100%;
+    height: calc(width);
     border-radius: 50%;
-
   }
   .name{
     left: 28%;
@@ -23,4 +29,5 @@ export const GoodWrapper = styled.div`
     letter-spacing:2px;
     font-weight: 400;
   }
+  
 `
