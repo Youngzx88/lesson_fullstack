@@ -29,9 +29,10 @@ export const Wrapper = styled.div`
     padding-right: 0px;
     padding-bottom: 3px;
     margin-right: 18px;
-    font-weight: 400;
     &.active{
       border-bottom: 3px solid rgb(0, 168, 98);
+      color: rgba(0, 0, 0, 0.87);
+      font-weight: 700;
     }
   }
   

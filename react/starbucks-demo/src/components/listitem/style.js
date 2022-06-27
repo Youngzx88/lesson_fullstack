@@ -18,6 +18,7 @@ export const GoodWrapper = styled.div`
   img{
     width: 100%;
     height: calc(width);
+    box-shadow: 0 1px 1px 1px rgb(0 0 0 / 12%);
     border-radius: 50%;
   }
   .name{

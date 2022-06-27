@@ -1,7 +1,7 @@
 import React,{useState,useEffect}from 'react'
 import { Wrapper } from './style.js'
 import NavBar from '../navbar/index.jsx'
-import { Tab, Toast } from 'react-weui'
+import { Toast } from 'react-weui'
 import {getMenuList} from '../../api/request'
 import ListItem from '../listitem'
 import EmptyItem from '../emptylist'
@@ -11,18 +11,18 @@ export default function Menu() {
   const [menuList,setMenuList] = useState([0])
   const [tab,setTab] = useState("全部")
 
-  const Fn = (tabname) =>{
-    setTab(tabname)
-    console.log(tabname)
+  const Fn = (tab) =>{
+    setTab(tab)
   }
+  
   useEffect(() => { 
     setLoading(true);
     (async()=>{
-      const {data} = await getMenuList({tab});
-      setMenuList(data)
+      const {remainlist} = await getMenuList({tab});
+      setMenuList(remainlist)
     })()
     setLoading(false)
-  },[])
+  },[tab])
   
   return (
     <Wrapper>
