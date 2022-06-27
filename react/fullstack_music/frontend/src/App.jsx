@@ -1,10 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  useEffect(()=>{
+    fetch('http://localhost:3000/personalized')
+    .then(data=>data.json())
+    .then(data=>{
+      console.log(data)
+    })
 
+  },[])
   return (
     <div className="App">
       <header className="App-header">
