@@ -20,6 +20,7 @@ export default function ListItem({menuList}) {
           )
         )
       }
+      {/* <span className="tips">实际产品以门店供应为准</span> */}
     </Wrapper>
   )
 }

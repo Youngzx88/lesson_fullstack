@@ -3,6 +3,14 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   width: 100%;
   background-color: #f7f7f7;
+  .tips{
+    display: inline-block;
+    width: 100%;
+    padding: 12px 0 0 24px;
+    margin-top: 48px;
+    color: rgba(0, 0, 0, 0.38);
+    font-size: 14px;
+  }
 `
 
 export const GoodWrapper = styled.div`
@@ -12,6 +20,9 @@ export const GoodWrapper = styled.div`
   margin: 13px;
   padding: 3px;
   display: inline-block;
+  .ad{
+    float: right;
+  }
   .good{
     flex-direction: column;
   }
@@ -22,9 +33,9 @@ export const GoodWrapper = styled.div`
     border-radius: 50%;
   }
   .name{
+    font-size: 16px;
     text-align: center;
     letter-spacing:2px;
     font-weight: 500;
   }
-  
 `

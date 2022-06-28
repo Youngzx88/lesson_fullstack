@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  padding: 16px;
-  width: 100%;
+  padding-left: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  width: 80%;
   height: 80px;
   font-family: "Gotham", Helvetica, Arial, "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   .nav-title{
@@ -13,6 +15,7 @@ export const Wrapper = styled.div`
   }
   .subcategories{
     width: 100%;
+    font-size: 16px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     display: block;
