@@ -2,9 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
   background-color: #f7f7f7;
-  padding-bottom: 200px;
   .tips{
     display: inline-block;
     width: 100%;
@@ -22,6 +20,7 @@ export const GoodWrapper = styled.div`
   margin: 13px;
   padding: 3px;
   display: inline-block;
+  
   .good{
     flex-direction: column;
   }
