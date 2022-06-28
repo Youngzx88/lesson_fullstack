@@ -33,6 +33,7 @@ export const Wrapper = styled.div`
       border-bottom: 3px solid rgb(0, 168, 98);
       color: rgba(0, 0, 0, 0.87);
       font-weight: 700;
+      transition: all 0.2s;
     }
   }
   

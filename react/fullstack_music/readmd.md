@@ -22,4 +22,7 @@ fullstack全栈
     1. 从`react-redux`中解构`Provider`，声明给应用添加数据管理功能
     2. `store`专有目录下，通过`createStore`创建仓库实例
     3. `createStore`方法接受`reducer`函数
-    4. 
+
+7. - reset
+    1. 使用syuled-components提供的createGlobalStyle 全局样式()
+   - adpter

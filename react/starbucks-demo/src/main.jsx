@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import 'weui'
 import 'react-weui/build/packages/react-weui.css'
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <App />
