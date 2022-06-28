@@ -4,7 +4,7 @@ export const FooterWrapper = styled.div`
     width: 100%;
     height: 50px;
     background: #fffeff;
-    position: sticky;
+    position: fixed;
     bottom: 0;
     left: 0;
     display: flex;

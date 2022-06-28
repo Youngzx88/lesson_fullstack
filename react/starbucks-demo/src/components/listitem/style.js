@@ -2,14 +2,16 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
+  height: 100vh;
   background-color: #f7f7f7;
+  padding-bottom: 200px;
   .tips{
     display: inline-block;
     width: 100%;
-    padding: 12px 0 0 24px;
     margin-top: 48px;
     color: rgba(0, 0, 0, 0.38);
     font-size: 14px;
+    /* margin-top: 100px; */
   }
 `
 
@@ -20,9 +22,6 @@ export const GoodWrapper = styled.div`
   margin: 13px;
   padding: 3px;
   display: inline-block;
-  .ad{
-    float: right;
-  }
   .good{
     flex-direction: column;
   }
@@ -38,4 +37,5 @@ export const GoodWrapper = styled.div`
     letter-spacing:2px;
     font-weight: 500;
   }
+
 `
