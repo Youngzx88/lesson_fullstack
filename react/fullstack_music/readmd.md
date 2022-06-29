@@ -1,4 +1,4 @@
-fullstack全栈
+# fullstack全栈
 1. 前端方向vite/js 工程化生成单页应用
 2. 后端使用 开源的Neteasecloud
     - 删除.git文件夹，防止git冲突
@@ -46,3 +46,23 @@ fullstack全栈
             interceptors.request.use()
 
             ```
+    - 组件数据管理功能被剥夺
+        1. redux数据管理更专业
+            - store，store/index.js
+            - reducer集合交给store
+            - combineReducers提供reducer
+            - 各个模块，文章，评论，用户模块
+            - reducer还可以多次运行
+            - dispatch一个他想要的action
+            - 页面会自动更新
+            - connect mapStateToProps获取状态，mapDispatchToProps触发状态的改变
+        2. mapStateToProps状态读操作
+        3. mapDispatchToProps写操作
+            - 状态不可修改，redux起因
+            - 有法可依
+            - dispatch getRankList 异步action redux-thunk支持
+                - data dispatch(changeRankList) 同步action
+            - dispatch({type:'',data})在action
+            - reducer根据type重新计算
+            - 状态发生改变，应用了状态的地方MVVM
+            

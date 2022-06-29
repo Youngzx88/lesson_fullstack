@@ -4,10 +4,12 @@ import { combineReducers } from "redux";
 import userReducer from './user';
 import singerReducer from './singer';
 import recommenReducer from './recommend'
+import rankReducer from './rank'
 // combineReducers接受所有reducer并进行对象配置 
 export default combineReducers({
     // key  取个名字 value 对应的reducer函数
     user: userReducer,
     singer: singerReducer,
-    recommend: recommenReducer
+    recommend: recommenReducer,
+    rank:rankReducer
 });
