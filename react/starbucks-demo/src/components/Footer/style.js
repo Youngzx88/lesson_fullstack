@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 export const FooterWrapper = styled.div`
-    width: 100%;
-    height: 50px;
+    width: 18.75rem;
+    height: 2.5rem;
     background: #fffeff;
     position: fixed;
     bottom: 0;
@@ -19,8 +19,8 @@ export const FooterWrapper = styled.div`
             background-color: #fff;
         }
         img{
-            width: 28px;
-            height: 28px;
+            width: 0.71428rem;
+            height: 0.71428rem;
         }
         span{
             font-size: 12px;
