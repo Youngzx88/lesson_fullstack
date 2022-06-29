@@ -1,11 +1,17 @@
+// 初始状态
 let defaultState = {
-  banners: [
-      {id:1, name: '邹元昊'}, 
-      {id:2, name: '周比畅'}, 
-  ]
-}
-const reducer = (state=defaultState) => {
-  return state
-}
+  banners: [],
+};
+// 化数组为一  生成唯一的当前状态
+const reducer = (state = defaultState, action) => {
+  switch (action.type) {
+    case "CHANGE_BANNER":
+      return {
+        ...state,
+        banners: action.data,
+      };
+  }
+  return state;
+};
 
-export default reducer
+export default reducer;
