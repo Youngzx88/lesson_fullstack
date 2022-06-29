@@ -1,10 +1,18 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {getBannerRequest} from '@/api/request'
+import { useEffect } from 'react'
 
 function Recommend(props) {
+  useEffect(()=>{
+    (async function(){
+      let res = await getBannerRequest();
+      console.log(res);
+    })()
+  },[])
   return (
     <div>
-        Rank
+        Recommend
     </div>
   )
 }

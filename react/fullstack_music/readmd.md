@@ -24,5 +24,25 @@ fullstack全栈
     3. `createStore`方法接受`reducer`函数
 
 7. - reset
-    1. 使用syuled-components提供的createGlobalStyle 全局样式()
+        1. 使用syuled-components提供的createGlobalStyle 全局样式()
    - adpter
+   - axios功能点
+        1. 网络请求千千万，api axios 把单例干
+        2. 统一了vue,react native，app三端的请求库
+        3. 每个请求，域名+端口 部分，没必要重复
+        4. 为了切换请求域名的需要
+        5. 拦截器`interceptors`:`interceptors.response.use`,`interceptors.request.use`
+            ```js
+            <!-- response做拦截，可以解构好axios传过来的数据，处理错误 -->
+            axiosInstance.interceptors.response.use(
+            res=> res.data,
+            err=>{
+                console.log(err,"网络错误啦")
+            }
+            )
+            <!-- request，可以设置一些登陆验证,登陆时服务器会给我们一个授权码，token
+                我们每次请求时，需要手工带上，通过拦截器，Authorization授权信息
+             -->
+            interceptors.request.use()
+
+            ```
