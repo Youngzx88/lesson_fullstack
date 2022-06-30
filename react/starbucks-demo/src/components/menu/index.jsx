@@ -9,7 +9,7 @@ import EmptyItem from '../emptylist'
 
 export default function Menu() {
   const [loading,setLoading]=useState(false);
-  const [menuList,setMenuList] = useState([0])
+  const [menuList,setMenuList] = useState([])
   const [tab,setTab] = useState("全部")
 
   const Fn = (tab) =>{
