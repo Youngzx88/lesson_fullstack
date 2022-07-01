@@ -5,16 +5,10 @@ import {getRankList} from '../../store/actionCreators'
 
 function Rank(props) {
   const {ranklist,getRankListDispatch} = props
-  // console.log(ranklist,'///')
   useEffect(()=>{
-    // 这样修改是没用滴
-    // setTimeout(()=>{
-    //     ranklist.push({id:2});
-    // },1000)
     getRankListDispatch()
-    console.log('||||||||||||||')
   },[])
-  console.log(ranklist,'jkhjkhkjh')
+  // console.log(ranklist,'jkhjkhkjh')
   return (
     <div>
         
