@@ -81,3 +81,14 @@
     - action对象固定格式 {type:}
     - type 方便我们把action为什么要改变记录下来
     - 从init-》到任何action状态,都是可被追溯的
+
+10. style-components
+    - 页面播放歌曲的动态高度，props传参
+    - ${函数} 函数的返回值
+    - 页面的播放状态
+
+11. 移动端一般必须better-scroll生成的scroll组件
+    1. 滚动体验更好
+    2. 下拉刷新，上拉加载更多
+    3. 是用来神三元封装的Scroll组件
+    4. 移动端加载更多的标配
