@@ -3,12 +3,9 @@
 // redux之后，UI更纯粹
 // 应用开发分成 UI + 数据管理
 
-import { getBannerRequest } from "../api/request"
-import { getRankListRequest } from "../api/request"
-import { getSingerRequest } from "../api/request"
+import { getBannerRequest,getRankListRequest, getSingerListRequest} from "../api/request"
 // store  redux defaultState -> action api 
 //                  -> reducer 重新计算 -> 通知connnect UI更新
-
 // action 函数
 export const changeBannerList = (data) => ({
     type:'CHANGE_BANNER',
@@ -23,28 +20,29 @@ export const getBannerList = () => {
     }
 }
 
+
 export const changeRankList = (data) => ({
     type:'CHANGE_RANKLIST',
     data
 })
-export const getRankList = () =>{
-    //api请求，异步
-    return (dispatch) =>{
-        getRankListRequest().then(data=>{
+export const getRankList = () => {
+    // api 异步
+    return (dispatch) => {
+        getRankListRequest().then(data => {
             const action = changeRankList(data.list)
+            // console.log(action,'...............',dispatch)
             dispatch(action)
-            // dispatch参数为{type:'修改tag',data},只有dispatch这种格式的对象，才能重新触发reducer
         })
     }
 }
 
 export const changeSingerList = (data) => ({
-    type:'CHANGE_SINGER',
+    type:'CHANGE_SINGERLIST',
     data
 })
 export const getSingerList = () =>{
-    return (dispatch) =>{
-        getSingerRequest().then(data=>{
+    return (dispatch) => {
+        getSingerListRequest().then(data => {
             const action = changeSingerList(data.artists)
             dispatch(action)
         })

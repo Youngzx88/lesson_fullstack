@@ -58,8 +58,8 @@ function App(props) {
 const mapStateToProps = (state) =>{
   return {
     // 首页想要展示singer的数据
-      singers: state.singer.singers,
-      users: state.user.users
+      // singers: state.singer.singers,
+      // users: state.user.users
 
   }
 }

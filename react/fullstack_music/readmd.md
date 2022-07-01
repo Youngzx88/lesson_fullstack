@@ -1,17 +1,21 @@
 # fullstack全栈
 1. 前端方向vite/js 工程化生成单页应用
+
 2. 后端使用 开源的Neteasecloud
     - 删除.git文件夹，防止git冲突
+
 3. 前端和后端怎么交流？
     - axios api -> 
     - frontend UI组件 需要数据(fastmock 假数据)  8080
     - backend api接口 3000
+
 4. react 全家桶到位
     - react组件化 Mvvm响应式
     - react-router路由
     - redux数据流管理
       - 前端 -》 api -》redux -》后端
       - npm i redux react-redux
+
 5. react是声明式的UI开发框架
     - 那么多的组件好复杂，好多API一样
     - 可以用组件来声明功能，更好读  
@@ -66,3 +70,14 @@
             - reducer根据type重新计算
             - 状态发生改变，应用了状态的地方MVVM
             
+8. 小项目没必要用redux
+    - 如果你在想要不要用redux，那就不要用
+    - 如果足够复杂，模块化reducer迁移到pages相应模块下，pages/store新的目录架构
+    - store中央src/store + 模块化 @pages/store{n}
+
+9. 修改状态有固定流程
+    - 属于actionCreators
+    - 一般标配两个action，一个同步，一个异步
+    - action对象固定格式 {type:}
+    - type 方便我们把action为什么要改变记录下来
+    - 从init-》到任何action状态,都是可被追溯的

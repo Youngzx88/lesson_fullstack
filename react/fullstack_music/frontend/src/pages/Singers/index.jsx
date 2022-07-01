@@ -1,30 +1,27 @@
-import React, { useEffect } from 'react'
-import {connect} from 'react-redux'
-import {getSingerList} from '../../store/actionCreators'
+import React,{useEffect} from 'react'
+import { connect } from 'react-redux'
+
+
 
 function Singers(props) {
-  const {singers,getSingerListDispatch} = props 
+  const { singerList } = props
   useEffect(()=>{
-    getSingerListDispatch();
+    
   },[])
-  console.log(singers,"====")
   return (
     <div>
         Singers
     </div>
   )
 }
-
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
   return {
-    singer: state.singer.singers
+    
   }
 }
-const mapDispatchToProps = (dispatch) =>{
-    return {
-      getSingerListDispatch(){
-        dispatch(getSingerList())
-      }
-  } 
+const maspDispatchToProps = (dispatch) => {
+  return {
+   
+  }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Singers)
+export default connect(mapStateToProps,maspDispatchToProps)(Singers)
