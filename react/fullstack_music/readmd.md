@@ -109,3 +109,17 @@
     3. recommend中，多个重要子组件，Slider等
     4. 给相对独立组件加memo，只要外界给他的props没有变，则不会更新
     5. 热更新，页面局部
+
+15. memo组件性能优化
+    1. 带props的子组件
+    2. 父组件数据复杂，多项改变状态的地方
+    3. 父组件改变没有影响到子组件
+
+16. styled-components原则
+    1. 最外层容器styled-components接管
+        - Wrapper/Container
+    2. List + ListItem
+
+17. 图片延迟加载
+    1. react-lazyload声明式组件LazyLoad + placeholder包住原来的图片
+    2. Scroll onScroll react-lazyload 去 forceCheck

@@ -1,19 +1,18 @@
 import * as actionTypes from './constants'
 
 const defaultState = {
-    playList:[],
+    playList: []
 }
-export default (state = defaultState , action)=>{
-    switch(action.type){
+
+export default (state=defaultState, action) => {
+    switch(action.type) {
         case actionTypes.SET_PLAYLIST:
             return {
                 ...state,
-                playList:action.data
+                playList: action.data
             }
             break;
         default:
             return state
-            // break;
     }
-
 }

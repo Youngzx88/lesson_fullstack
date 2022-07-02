@@ -1,33 +1,30 @@
 // 配置请求对象
-import axios from "axios";
+import axios from 'axios'
 // 本地调试 dev 开发阶段
 export const baseUrl = "http://localhost:3000";
-
 // product 阶段
-// https://www.fastmock.site/mock/d42a33041be6d65c4184abbecade8d1c/beers/banner
-
+// https://www.fastmock.site/mock/3f112f6cb2f621fc9c2dd6a14be19f38/beers/
 // 设计模式
 const axiosInstance = axios.create({
-  baseURL: baseUrl,
-});
+    baseURL: baseUrl
+})
 
-// 响应拦截器
-axiosInstance.interceptors.response.use(
-    res => res.data,
-    err => {
-        console.log(err,'网络错误')
-    }
-)
-// 请求拦截器
-// axiosInstance.interceptors.request.use(req =>{
-//     console.log('。。。。。。。。。。');
-//     req.code = '123123123'
+// 拦截器
+// axiosInstance.interceptors.request.use(req=>{
+//     console.log('开始请求....')
+//     let localToken = '11111212121';
 //     req.headers['Authorization'] = 
 //         "Bearer  " + localToken
 //     return req
-// },
+// }, 
 // err=>{
 
-// })
+// });
+axiosInstance.interceptors.response.use(
+    res => res.data,
+    err => {
+        console.log(err, '网络错误~~')
+    }
+)
 
-export { axiosInstance };
+export { axiosInstance }

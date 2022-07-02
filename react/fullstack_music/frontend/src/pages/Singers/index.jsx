@@ -1,27 +1,9 @@
-import React,{useEffect} from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 
-
-
-function Singers(props) {
-  const { singerList } = props
-  useEffect(()=>{
-    
-  },[])
+export default function Singers() {
   return (
     <div>
-        Singers
+      Singers
     </div>
   )
 }
-const mapStateToProps = (state) => {
-  return {
-    
-  }
-}
-const maspDispatchToProps = (dispatch) => {
-  return {
-   
-  }
-}
-export default connect(mapStateToProps,maspDispatchToProps)(Singers)
