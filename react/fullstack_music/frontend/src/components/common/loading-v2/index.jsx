@@ -12,6 +12,8 @@ const dance = keyframes`
     }
 `
 const Loading = styled.div`
+    position: absolute;
+    top: 50%;
     height: 10px;
     width: 100%;
     margin: auto;

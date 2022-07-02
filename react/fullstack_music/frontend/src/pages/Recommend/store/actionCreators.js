@@ -1,6 +1,6 @@
-import { 
+import {
     getBannerRequest,
-    getRecommendListRequest 
+    getRecommendListRequest
 } from '@/api/request'
 import * as actionTypes from './constants'
 
@@ -30,6 +30,12 @@ export const getRecommendList = () => {
     return (dispatch) => {
         getRecommendListRequest().then(data => {
             dispatch(changeRecommendList(data.result))
+            dispatch(changeEnterLoading(false))
         })
     }
 }
+
+export const changeEnterLoading = (data) => ({
+    type: actionTypes.CHANGE_ENTER_LOADING,
+    data
+})
