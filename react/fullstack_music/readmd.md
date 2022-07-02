@@ -90,5 +90,22 @@
 11. 移动端一般必须better-scroll生成的scroll组件
     1. 滚动体验更好
     2. 下拉刷新，上拉加载更多
-    3. 是用来神三元封装的Scroll组件
+    3. 是用了神三元封装的Scroll组件
     4. 移动端加载更多的标配
+
+12. 数据管理跨页面级别的组件
+    1. redux可以用来共享数据
+    2. 父子组件共享 props
+    3. 爷孙，难搞，redux connect 一下，跨层级
+
+13. redux架构思路
+    1. 数据管理和组件，在有了redux后，更是平级关系，/pages /store
+    2. 模块化数据管理，每个模块reducer+action 下放到页面路由模块中
+    3. 每个模块都提供index.js灵魂，所有的reducer，action，constants都一起export清单文件
+    
+14. react组件渲染原理
+    1. 挂载
+    2. 当状态更新时，mvvm，jsx从头到尾重新编译
+    3. recommend中，多个重要子组件，Slider等
+    4. 给相对独立组件加memo，只要外界给他的props没有变，则不会更新
+    5. 热更新，页面局部

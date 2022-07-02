@@ -1,22 +1,26 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { actionCreators } from './store/index'
-import { getBannerList } from "./store/actionCreators";
 import { Content } from './style'
-import Scroll  from '@/components/common/Scroll'
+import Scroll from '@/components/common/Scroll'
 import Slider from '@/components/slider'
 
+
 function Recommend(props) {
-  const { banners, getBannerDataDispatch } = props;
-  let songsCount = 2;
+  const { bannerList, songsCount } = props;
+  const { getBannerDataDispatch, getRecommendListDispatch } = props;
+  // let songsCount = 2;
   useEffect(() => {
     getBannerDataDispatch();
+    getRecommendListDispatch();
   }, []);
   return (
     <Content play={songsCount}>
       <Scroll className="list">
         <div>
-          <Slider bannerList={banners}></Slider>
+          <Slider bannerList={bannerList}>
+          </Slider>
+          {/* <RecommendList RecommendList={RecommendList} /> */}
         </div>
       </Scroll>
     </Content>
@@ -27,7 +31,9 @@ function Recommend(props) {
 // 对状态树的读操作
 const mapStateToProps = (state) => {
   return {
-    banners: state.recommend.banners,
+    bannerList: state.recommend.bannerList,
+    recommendList: state.player.playList.recommendList,
+    songsCount: state.player.playList.length
   };
 };
 // 
@@ -36,6 +42,9 @@ const mapDispatchToProps = (dispatch) => {
     getBannerDataDispatch() {
       dispatch(actionCreators.getBannerList());
     },
+    getRecommendListDispatch() {
+      dispatch(actionCreators.getRecommendList());
+    }
   };
 };
 

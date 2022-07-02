@@ -7,6 +7,7 @@ import { IconStyle } from "./assets/iconfont/iconfont";
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './store'
+import 'swiper/dist/css/swiper.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // 外面再包一层 数据管理功能   项目做大了， 企业里的财务
