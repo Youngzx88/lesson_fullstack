@@ -1,6 +1,6 @@
 import React,{ useState,useEffect } from 'react'
 import Footer from './components/Footer'
-import Menu from './components/menu'
+import Menu from './pages/menu/index'
 
 function App() {
   return (

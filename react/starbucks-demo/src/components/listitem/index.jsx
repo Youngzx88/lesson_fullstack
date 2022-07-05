@@ -10,15 +10,15 @@ const Good = ({goodItem}) => (
   </GoodWrapper>
 )
 
-export default function ListItem({menuList}) {
+export default function ListItem({menuList,tab}) {
   return (
     <Wrapper>
       {
-        menuList.map(
-          (item)=>(
-            <Good goodItem={item} key={item.id}/>
-          )
-        )
+        menuList.filter((item)=>{
+          return (item.title == tab || tab == '全部')
+        }).map((item)=>{
+          return <Good goodItem={item} key={item.id}/>
+        })
       }
       <div className="tips">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实际产品以门店供应为准。</div>
     </Wrapper>
