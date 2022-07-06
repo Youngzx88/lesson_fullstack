@@ -17,7 +17,6 @@ function Slider ({ bannerList }) {
             setSliderSwiper(sliderSwiper)
         }
     }, [bannerList.length, sliderSwiper])
-    console.log(bannerList, '///////')
     return (
         <SliderContainer>
             <div className="before"></div>

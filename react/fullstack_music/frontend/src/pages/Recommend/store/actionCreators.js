@@ -11,10 +11,8 @@ export const changeBannerList = (data) => ({
 // api请求 一定放在action中 
 export const getBannerList = () => {
     return (dispatch) => {
-        console.log('|||||||||||||||')
         getBannerRequest()
             .then(data => {
-                console.log(data.banners, '////')
                 const action = changeBannerList(data.banners);
                 dispatch(action)
             })
