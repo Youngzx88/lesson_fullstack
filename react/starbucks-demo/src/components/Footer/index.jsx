@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { FooterWrapper } from './style'
 import classnames from 'classnames'
 
 export default function Footer(props) {
     const { pathname } = useLocation()
+    useEffect(()=>{
+
+    },[pathname])
     return (
         <FooterWrapper>
             <Link to="/home" className={classnames({active:pathname == '/home' || pathname == '/' })}>

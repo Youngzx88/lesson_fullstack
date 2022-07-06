@@ -1,11 +1,17 @@
 import React,{ useState,useEffect } from 'react'
 import Footer from './components/Footer'
-import Menu from './pages/menu/index'
-
+import RoutesConfig from './routes'
+import { useNavigate } from 'react-router-dom'
 function App() {
+  const navigate = useNavigate();
+  useEffect(()=>{
+    navigate('/Menu')
+  },[])
+  
   return (
     <div className="App">
-        <Menu/>
+        {/* <Menu/> */}
+        <RoutesConfig/>
         <Footer/>
     </div>
   )
