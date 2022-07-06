@@ -155,4 +155,4 @@
     4. 初始时，show false 在内存，useEffect 节点挂在在浏览器上:show true
     5. classNames fly 
     6. fly-enter先立马上，opacity 0，translate: transfrom (100%,0,0)-》fly-enter-active
-    7. 
+    7. fly-exit 

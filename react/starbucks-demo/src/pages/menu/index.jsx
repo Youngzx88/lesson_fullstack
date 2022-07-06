@@ -9,9 +9,6 @@ import EmptyItem from '../../components/emptylist'
 
 
 function Menu(props) {
-  // const [loading,setLoading]=useState(false);
-  // const [menuList,setMenuList] = useState([])
-  // const [tab,setTab] = useState("全部")
   const {loading,menuList,tab} = props
   const {setMenuListDispatch,setTabDispatch} = props
   useEffect(()=>{
