@@ -6,6 +6,7 @@ import RouterConfig from './routes'
 
 // 子组件 
 function App(props) {
+  console.log(props, '---------');
   let { singers, users } = props
   const navigate = useNavigate()
   // 有了redux 后， 页面组件不再做数据管理 

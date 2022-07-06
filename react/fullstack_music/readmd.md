@@ -133,4 +133,26 @@
         - 跨模块共享状态没问题
     3. 热词
         - 建议
+
+19. 三元react风格
+    1. 命名风格
+        - api请求 ： getxxxRequest
+        - 页面级别组件中 getXXXDispatch
+        - action ： 异步 getxxx
+        - action ： 同步 changexxx
+        - actionTypes ： set_XXX
+    2. redux流程风格
+        - 分析页面，看透业务，网络请求和状态，XHR
+        - mapStateToProps需要哪些状态
+        - store模块 defaultStore
+        - reduce case 修改
+        - constants写完了
         - 
+20. CSSTransition页面交互组件
+    1. 给页面的路由切换带来动画效果
+    2. 来自react-transition-group
+    3. in + 私有的useState(show)
+    4. 初始时，show false 在内存，useEffect 节点挂在在浏览器上:show true
+    5. classNames fly 
+    6. fly-enter先立马上，opacity 0，translate: transfrom (100%,0,0)-》fly-enter-active
+    7. 

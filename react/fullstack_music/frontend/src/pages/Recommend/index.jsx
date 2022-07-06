@@ -2,18 +2,20 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { actionCreators } from './store/index'
 import { Content } from './style'
-import Scroll from '@/components/common/Scroll'
+import Scroll  from '@/components/common/Scroll'
 import Slider from '@/components/slider/'
 import RecommendList from '@/components/list/'
+// 延迟加载 滑倒哪里加载哪里
 import { forceCheck } from 'react-lazyload'
 import { EnterLoading } from '@/pages/Singers/style'
-import Loading from '@/components/common/loading-v2'
+import Loading  from '@/components/common/loading-v2/index'
 
 function Recommend(props) {
   const { bannerList, songsCount, recommendList, enterLoading } = props
   const { getBannerDataDispatch, getRecomendListDispatch } = props
   // let songsCount = 2;
   useEffect(() => {
+    console.log('?????????????????')
     getBannerDataDispatch();
     getRecomendListDispatch();
   }, [])
@@ -22,25 +24,20 @@ function Recommend(props) {
       <Scroll className="list" onScroll={forceCheck}>
         <div>
           <Slider bannerList={bannerList}></Slider>
-          <RecommendList recommendList={recommendList} />
+          <RecommendList recommendList={recommendList}/>
         </div>
       </Scroll>
-      {
-        enterLoading ?
-          <EnterLoading>
-            <Loading></Loading>
-          </EnterLoading> : null
-      }
+      { enterLoading ? <EnterLoading><Loading></Loading></EnterLoading> : null }
     </Content>
   )
 }
 // state 状态树
 const mapStateToProps = (state) => {
   return {
+    enterLoading:state.recommend.enterLoading,
     bannerList: state.recommend.bannerList,
     recommendList: state.recommend.recommendList,
-    songsCount: state.player.playList.length,
-    enterLoading: state.recommend.enterLoading
+    songsCount: state.player.playList.length
   }
 }
 const mapDispatchToProps = (dispatch) => {

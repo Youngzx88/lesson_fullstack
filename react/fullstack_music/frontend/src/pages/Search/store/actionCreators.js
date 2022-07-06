@@ -1,8 +1,8 @@
 import * as actionTypes from './constants'
 import{
-  getHotKetWordsRequest,
-  getSuggestListRequest,
-  getResultSongsListRequesr
+    getHotKeyWordsRequest,
+    getSuggestListRequest,
+    getResultSongsListRequest
 } from '@/api/request'
 
 const changeHotKeyWord = (data) =>({
@@ -24,3 +24,14 @@ export const changeEnterLoading = (data) =>({
     type: actionTypes.SET_ENTER_LOADING,
     data
 })
+
+export const getHotKeyWords = () =>{
+    return(dispatch) => {
+        getHotKeyWordsRequest()
+            .then(data=>{
+                let list = data.result.hots
+                dispatch(changeHotKeyWord(list))
+            }
+        )
+    }
+}

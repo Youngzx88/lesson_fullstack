@@ -6,8 +6,8 @@ const defaultState = {
     enterLoading: true
 }
 export default (state = defaultState, action) => {
-    switch (action.type) {
-        case actionTypes.CHANGE_BANNER:
+    switch(action.type) {
+        case actionTypes.CHANGE_BANNER: 
             return {
                 ...state,
                 bannerList: action.data
@@ -18,10 +18,10 @@ export default (state = defaultState, action) => {
                 recommendList: action.data
             }
         case actionTypes.CHANGE_ENTER_LOADING:
-            return {
-                ...state,
-                enterLoading: action.data
-            }
+                return {
+                    ...state,
+                    enterLoading: action.data
+                }
         default:
             return state
     }
