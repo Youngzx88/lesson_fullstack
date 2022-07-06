@@ -4,8 +4,10 @@ import { combineReducers } from "redux";
 // 地方
 import { reducer as recommendReducer } from '@/pages/Recommend/store/index'
 import { reducer as playerReducer } from '@/pages/Player/store/index'
+import { reducer as SearchReducer } from '@/pages/Search/store/index'
 
 export default combineReducers({
     recommend: recommendReducer,
-    player: playerReducer
+    player: playerReducer,
+    search: SearchReducer
 })

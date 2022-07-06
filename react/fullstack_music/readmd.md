@@ -123,3 +123,14 @@
 17. 图片延迟加载
     1. react-lazyload声明式组件LazyLoad + placeholder包住原来的图片
     2. Scroll onScroll react-lazyload 去 forceCheck
+
+18. 复杂组件业务分析
+    1. 这个阶段我们要刻意练习复杂组件
+        - 搜索
+        - 登录
+    2. redux的设计思路
+        - api请求的肯定redux了
+        - 跨模块共享状态没问题
+    3. 热词
+        - 建议
+        - 

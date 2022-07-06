@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Recommend from '@/pages/Recommend'
 const Singers = lazy(() => import('@/pages/Singers'));
 const Rank = lazy(() => import('@/pages/Rank'));
+const Search = lazy(()=> import('@/pages/Search'))
 
 const RouterConfig = () => {
     return (
@@ -13,6 +14,7 @@ const RouterConfig = () => {
                 <Route path="/recommend" element={<Recommend />} />
                 <Route path="/singers" element={<Singers />} />
                 <Route path="/rank" element={<Rank />} />
+                <Route path="/search" element={<Search />} />
             </Routes>
         </Suspense>
     )
