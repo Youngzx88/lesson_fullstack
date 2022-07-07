@@ -156,3 +156,28 @@
     5. classNames fly 
     6. fly-enter先立马上，opacity 0，translate: transfrom (100%,0,0)-》fly-enter-active
     7. fly-exit 
+
+21. 界面技巧
+    1. 带有后退，第二按钮 页面 弹性布局 flex align-items：center
+    2. input搜索用户体验：focus自动聚焦
+        - useRef() 生成一个对象：dom关联对象 `{current:null}`
+        - jsx dom `ref={refObj}`
+        - useEffect current 被关联成功了：从null-》真实对象
+        - `refobject.current.focus()`
+    3. 清除功能
+        - style-loader行内样式 display：动态
+
+22. useMemo用法 以及 吹牛指南：
+    1. input change事件需要debounce的
+    2. debounce 的计算结果 useMemo的前提条件，缓存计算结果
+    3. react父组件，有mvvm更新，通知所有的子组件
+    4. 组件是一个函数，函数要重新运行，jsx重新运行
+    5. debounce 只需要一次计算结果，结果缓存就好，没必要重新计算
+    6. 如useEffect如果万一计算结果过时了？第二个参数`[ handleQuery ]`本身不会变，表达对useMemo理解的地方
+
+23. 内外双修query
+    1. 页面级别组件query为action display作准备
+    2. useEffect query
+    3. hooks是react编程风格
+    4. useEffect query 父组件报告通信
+    

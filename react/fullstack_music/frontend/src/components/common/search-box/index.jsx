@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useRef } from 'react';
+import React, { memo, useState, useEffect, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import style from '@/assets/global-style';
 import { debounce } from '@/api/utils';
@@ -38,41 +38,67 @@ const SearchBoxWrapper = styled.div`
 
 const SearchBox = (props) => {
     const queryRef = useRef();
-    console.log(queryRef);
+    // console.log(queryRef, '///')
     // 解构父组件props时， 分两部分， 
     // 读props
     // 方法
     const { newQuery } = props;
     const { handleQuery, back } = props;
     const [query, setQuery] = useState('');
+    // 父组件传过来的函数封装一下
+    // 优化再升级
+    // useMomo 可以缓存 上一次函数计算的结果 
+    let handleQueryDebounce =  useMemo(() => {
+        return debounce(handleQuery, 500)
+    }, [handleQuery])
 
-    // let handleQueryDebounce =  
-
-    useEffect(()=>{
-        queryRef.current.focus();
-    },[])
-
+    // mount 
     useEffect(() => {
-
+        // console.log(queryRef)
+        // 挂载后
+        queryRef.current.focus();
+    }, [])
+    // 使用useEffect 去更新 
+    useEffect(() => {
+        //query 更新
+        // console.log(queryRef)
+        // let curQuery = query
+        handleQueryDebounce(query)
     }, [query])
 
-    const clearQuery = () =>{
+    useEffect(() => {
+        // mount 时候 执行 父组件  newQuery -> input query 
+        let curQuery = query;
+        if (newQuery !== query) {
+            curQuery = newQuery;
+            queryRef.current.value = newQuery;
+        }
+        setQuery(curQuery)
+        // newQuery 更新时执行
+    }, [newQuery])
+
+    const clearQuery = () => {
         setQuery('');
     }
-    const displayStyle = query?{display:'block'}:{display:'none'};
+    const handleChange = (e) => {
+        let val = e.currentTarget.value
+        setQuery(val)
+    }
+    const  displayStyle = query?{display:'block'}: {display: 'none'};
 
     return (
         <SearchBoxWrapper>
             <i className="iconfont icon-back" onClick={() => back()}>&#xe655;</i>
             <input type="text" className='box'
-            placeholder='搜索歌曲、歌手、专辑' 
-            ref={queryRef}/>
+             placeholder='搜索歌曲、歌手、专辑' 
+             ref={queryRef}
+             onChange={handleChange}
+             />
             <i 
                 className="iconfont icon-delete" 
                 style={displayStyle}
-                onClick={()=>{clearQuery()}}>
-                    &#xe600;
-            </i>
+                onClick={clearQuery}
+            >&#xe600;</i>
         </SearchBoxWrapper>
     )
 }
