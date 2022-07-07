@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import style from '@/assets/global-style';
 import { debounce } from '@/api/utils';
@@ -37,6 +37,8 @@ const SearchBoxWrapper = styled.div`
 `
 
 const SearchBox = (props) => {
+    const queryRef = useRef();
+    console.log(queryRef);
     // 解构父组件props时， 分两部分， 
     // 读props
     // 方法
@@ -46,16 +48,31 @@ const SearchBox = (props) => {
 
     // let handleQueryDebounce =  
 
+    useEffect(()=>{
+        queryRef.current.focus();
+    },[])
+
     useEffect(() => {
 
     }, [query])
+
+    const clearQuery = () =>{
+        setQuery('');
+    }
+    const displayStyle = query?{display:'block'}:{display:'none'};
 
     return (
         <SearchBoxWrapper>
             <i className="iconfont icon-back" onClick={() => back()}>&#xe655;</i>
             <input type="text" className='box'
-             placeholder='搜索歌曲、歌手、专辑' />
-            <i className="iconfont icon-delete">&#xe600;</i>
+            placeholder='搜索歌曲、歌手、专辑' 
+            ref={queryRef}/>
+            <i 
+                className="iconfont icon-delete" 
+                style={displayStyle}
+                onClick={()=>{clearQuery()}}>
+                    &#xe600;
+            </i>
         </SearchBoxWrapper>
     )
 }
