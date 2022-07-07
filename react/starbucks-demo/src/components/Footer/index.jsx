@@ -6,7 +6,7 @@ import classnames from 'classnames'
 export default function Footer(props) {
     const { pathname } = useLocation()
     useEffect(()=>{
-
+        
     },[pathname])
     return (
         <FooterWrapper>

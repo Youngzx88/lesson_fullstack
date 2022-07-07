@@ -25,7 +25,7 @@ export const changeEnterLoading = (data) =>({
     data
 })
 
-export const getHotKeyWords = () =>{
+export const getHotKeywords = () =>{
     return(dispatch) => {
         getHotKeyWordsRequest()
             .then(data=>{
