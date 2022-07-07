@@ -19,8 +19,8 @@ export const FooterWrapper = styled.div`
             background-color: #fff;
         }
         img{
-            width: 0.71428rem;
-            height: 0.71428rem;
+            width: 1em;
+            height: 1rem;
         }
         span{
             font-size: 12px;

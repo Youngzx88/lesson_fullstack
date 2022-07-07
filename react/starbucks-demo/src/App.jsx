@@ -5,12 +5,11 @@ import { useNavigate } from 'react-router-dom'
 function App() {
   const navigate = useNavigate();
   useEffect(()=>{
-    navigate('/Menu')
+    navigate('/menu')
   },[])
   
   return (
     <div className="App">
-        {/* <Menu/> */}
         <RoutesConfig/>
         <Footer/>
     </div>
