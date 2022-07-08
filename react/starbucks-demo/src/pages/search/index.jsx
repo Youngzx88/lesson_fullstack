@@ -1,23 +1,28 @@
-import React from 'react'
-import { SearchWrapper } from './style'
+import React,{useState,useEffect,useRef} from 'react'
+import { SearchWrapper} from './style'
+import { useNavigate } from 'react-router-dom'
+
 
 export default function Search() {
+  let navigate = useNavigate();
+  //变量
+  const [query,setQuery] = useState(' ')
+  //函数
+  const handleChange = (e) =>{
+    let val = e.currentTarget.value
+    setQuery(val)
+  }
+
+  //主体jsx
   return (
     <SearchWrapper>
-        <div className="head">
-            close
+        <div className="searchHead">
+          <button className='iconfont icon-cuowu' onClick={()=>navigate(-1)}></button>
         </div>
-        <div className="body">
-          <div className="search"></div>
-          <div className="title">
-            <div className="tag"></div>
-          </div>
-          <div className="hotlist">
-            <div className="item">1</div>
-            <div className="item">2</div>
-            <div className="item">3</div>
-            <div className="item">4</div>
-          </div>
+        <div className="search_box">
+          <input type="text" className='box' placeholder='搜索菜单' onChange={handleChange} >
+          </input>
+          <i className='iconfont icon-sousuo'></i>
         </div>
     </SearchWrapper>
   )

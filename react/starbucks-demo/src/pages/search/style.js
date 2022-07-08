@@ -3,18 +3,44 @@ import styled from "styled-components";
 export const  SearchWrapper = styled.div`
       width: 100%;
       height: 100vh;
-      .head{
-        float: right;
-        width: 48px;
-        height: 48px;
-        background: url("https://www-static.chinacdn.starbucks.com.cn/prod/assets/icons/icon-close.svg") no-repeat center center;
-        box-sizing: inherit;
-        border: 0px solid white;
-        color: white;
-        color: transparent;
+      .searchHead{
+        box-sizing: border-box;
+        width: 100%;
+        height: 70px;
+        padding: 24px;
+        button{
+          float: right;
+          border: 0;
+          background: transparent;
+          overflow: hidden;
+          font-size: 18px;
+          font-weight: 700;
+        }
+        button:after{
+          content: '';
+          clear: both;
+          display: table;
+        }
       }
-
-
-  
-  
+      .search_box{
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        padding:24px;
+        justify-content: space-between;
+        input{
+          flex:5;
+          border: 0;
+          outline: 0;
+          font-size: 18px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          &.active{
+            border-bottom: 1px solid #4ba568;
+          }
+        }
+        i{
+          font-size: 18px;
+          float: right;
+        }
+      }
 `
