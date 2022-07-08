@@ -54,12 +54,14 @@ const SearchBox = (props) => {
 
     // mount 
     useEffect(() => {
+        // console.log(queryRef)
         // 挂载后
         queryRef.current.focus();
     }, [])
     // 使用useEffect 去更新 
     useEffect(() => {
         //query 更新
+        // console.log(queryRef)
         // let curQuery = query
         handleQueryDebounce(query)
     }, [query])
@@ -77,6 +79,8 @@ const SearchBox = (props) => {
 
     const clearQuery = () => {
         setQuery('');
+        queryRef.current.value = "";
+        queryRef.current.focus();
     }
     const handleChange = (e) => {
         let val = e.currentTarget.value
@@ -88,10 +92,10 @@ const SearchBox = (props) => {
         <SearchBoxWrapper>
             <i className="iconfont icon-back" onClick={() => back()}>&#xe655;</i>
             <input type="text" className='box'
-                placeholder='搜索歌曲、歌手、专辑' 
-                ref={queryRef}
-                onChange={handleChange}
-                />
+             placeholder='搜索歌曲、歌手、专辑' 
+             ref={queryRef}
+             onChange={handleChange}
+             />
             <i 
                 className="iconfont icon-delete" 
                 style={displayStyle}

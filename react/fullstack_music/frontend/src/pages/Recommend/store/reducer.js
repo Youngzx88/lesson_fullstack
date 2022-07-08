@@ -18,10 +18,10 @@ export default (state = defaultState, action) => {
                 recommendList: action.data
             }
         case actionTypes.CHANGE_ENTER_LOADING:
-                return {
-                    ...state,
-                    enterLoading: action.data
-                }
+            return {
+                ...state,
+                enterLoading: action.data
+            }
         default:
             return state
     }

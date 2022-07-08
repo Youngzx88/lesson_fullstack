@@ -181,3 +181,10 @@
     3. hooks是react编程风格
     4. useEffect query 父组件报告通信
     
+24. styled-components 2.0阶段
+    1. 接受props的，并在css中动态输出，行内样式一样的效果
+    2. 是否要构建多个样式组件：styled-components是支持嵌套的，如果样式有复用的需要，List，ListItem
+    3. 当有了css不具备的变量，嵌套，模块化等功能。当styledcomponents方便复用，我们可以多写样式组件，少写UI组件，因为大部分的UI组件业务简单
+
+25. 项目风格主题，文件可以参考三元的gloval-style
+    1. show 切换 不会影响正常文档流

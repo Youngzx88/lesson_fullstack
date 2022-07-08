@@ -3,6 +3,7 @@ import LazyLoad from 'react-lazyload'
 import music from './music.png'
 import { ListWrapper, List, ListItem } from './style'
 import { useNavigate } from 'react-router-dom'
+
 function RecommendList({ recommendList }) {
     let navigate = useNavigate()
     const gotoDetail = (id) => {
@@ -10,13 +11,13 @@ function RecommendList({ recommendList }) {
     }
     return (
         <ListWrapper>
-            <h1 className='title'>推荐歌单</h1>
+            <h1 className="title">推荐歌单</h1>
             <List>
             {
                 recommendList.map(item => {
                     return (
-                        // <ListItem key={item.id} onClick={gotoDetail.bind(null,item.id)}>
-                        <ListItem key={item.id} onClick={()=>gotoDetail(item.id)}>
+                        <ListItem key={item.id} 
+                        onClick={gotoDetail.bind(null, item.id)}>
                             <div className="img_wrapper">
                                 <div className="decorate"></div>
                                 <LazyLoad 

@@ -5,6 +5,7 @@ import More from '../pages/more'
 import Home from '../pages/home'
 import Account from '../pages/account'
 import Store from '../pages/store'
+import Search from '../pages/search/'
 
 export default function RoutesConfig() {
   return (
@@ -15,6 +16,7 @@ export default function RoutesConfig() {
       <Route path='/account' element={<Account/>}></Route>
       <Route path='/menu' element={<Menu/>}></Route>
       <Route path='/more' element={<More/>}></Route>
+      <Route path='/search' element={<Search/>}></Route>
     </Routes>
   )
 }

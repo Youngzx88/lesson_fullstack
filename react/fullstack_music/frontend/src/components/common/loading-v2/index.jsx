@@ -16,7 +16,6 @@ const Loading = styled.div`
     top: 50%;
     height: 10px;
     width: 100%;
-    margin: auto;
     text-align: center;
     font-size: 10px;
     >div{
