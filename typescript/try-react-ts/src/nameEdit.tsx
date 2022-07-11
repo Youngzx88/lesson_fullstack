@@ -6,6 +6,7 @@ interface Props {
   editingName:string
   onNameUpdated:()=>any
   onEditingNameUpdated:(newEditingName: string)=>any
+  disabled: boolean
 }
 
 const NameEditComponent:React.FC<Props> = (props) =>{
@@ -20,7 +21,7 @@ const NameEditComponent:React.FC<Props> = (props) =>{
     <>
       <label htmlFor="">updated name:</label>
       <input value={props.editingName} type="text" onChange={onChange}/>
-      <button onClick={onNameSubmit}>Change</button>
+      <button onClick={onNameSubmit} disabled={props.disabled}>Change</button>
     </>
   )
 }

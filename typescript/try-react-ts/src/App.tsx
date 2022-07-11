@@ -1,36 +1,18 @@
-import React, { useState,useEffect } from 'react'
-import  HelloComponent  from './hello'
-import  NameEditComponent  from  './nameEdit'
+import React,{useState} from "react";
+import { Color } from "./mode/color";
+import ColorBrowser from './ColorBrowser'
 
-function App() {
-  const [name,setName] = useState("initialName")
-  const [editingName,setEditingName] = useState("defaultName")
-
-  // const setUserNameState = (e:any) =>{
-  //   setName(e.target.value)
-  // }
-  useEffect(()=>{
-    loadUserName()
-  },[]) 
-
-  const loadUserName = () =>{
-    setTimeout(()=>{
-      setName("Name from async call")
-      setEditingName("name from async call")
-    },500)
-  }
-
-  const setUserNameState = () =>{
-    setName(editingName)
-  }
-
+// 跟组件没有特别的需求的话，不加React.FC
+const App = () =>{
+  const [color,setColor] = useState<Color>({
+    red:200,
+    green:30,
+    blue:180
+  })
   return (
-    <div className="App">
-      {/* <HelloComponent userName="杨仲鑫" age={22}/> */}
-      <HelloComponent userName={name} age={18}/>
-      {/* <NameEditComponent userName={name} onNameUpdated={setUserNameState} /> */}
-      <NameEditComponent initialUserName={name} editingName={editingName} onNameUpdated={setUserNameState} onEditingNameUpdated={setEditingName}/>
-    </div>
+    <>
+      <ColorBrowser color={color}></ColorBrowser>
+    </>
   )
 }
 
