@@ -1,17 +1,28 @@
-import * as React from 'react'
+import React,{useState} from 'react';
 
-interface Props{
-  userName:string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>)=> void
+//父子间更复杂
+interface Props {
+  initialUserName: string
+  editingName:string
+  onNameUpdated:()=>any
+  onEditingNameUpdated:(newEditingName: string)=>any
 }
-const  nameEditComponent:React.FC<Props>= (props) => {
+
+const NameEditComponent:React.FC<Props> = (props) =>{
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
+    props.onEditingNameUpdated(e.target.value)
+  }
+  const onNameSubmit = () => {
+    props.onNameUpdated()
+  }
+  
   return (
-    <div>
-        {/* vscode是用ts写出来的 */}
-        {props.userName}
-        <input value={props.userName} onChange={props.onChange}/>
-    </div>
+    <>
+      <label htmlFor="">updated name:</label>
+      <input value={props.editingName} type="text" onChange={onChange}/>
+      <button onClick={onNameSubmit}>Change</button>
+    </>
   )
 }
-export default nameEditComponent
 
+export default NameEditComponent

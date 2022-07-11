@@ -14,3 +14,8 @@
   4. <>泛型 泛指内部的类型 关心的核心 `props：Props`(函数参数`props`需要实现`Props`接口)
   5. ts如java先编译，再运行的；js node 1.js 脚本语言
   
+  - change事件的typescript化
+    1. `e:React.ChangeEvent< HTMLInputElement >`来自@types/react
+    2. 子组件像父组件 报告 调用函数 ；复杂性带给父组件
+    3. 父组件 接受 子组件传过来的value
+        - 子组件onChange语义改成onNameUpdated
