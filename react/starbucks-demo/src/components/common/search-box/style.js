@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const  SearchWrapper = styled.div`
       width: 100%;
-      height: 100vh;
+      height: 120px;
       .searchHead{
         box-sizing: border-box;
         width: 100%;

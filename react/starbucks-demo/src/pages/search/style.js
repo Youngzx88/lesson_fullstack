@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     position:fixed;
+    height: 100vh;
     top: 0;
     left:0;
     right:0;
@@ -32,7 +33,10 @@ export const Container = styled.div`
     }
 `
 
-
 export const ShortcutWrapper = styled.div`
-
+    position: absolute;
+    color: black;
+    top: 8rem;
+    width: 100%;
+    display: ${props => props.show ? "" : "none"};
 `
