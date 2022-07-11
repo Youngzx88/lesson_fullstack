@@ -7,10 +7,13 @@ import { reducer as recommendReducer } from
 import { reducer as playerReducer } from '@/pages/Player/store/index'
 import { reducer as searchReducer } from '@/pages/Search/store/index'
 import { reducer as rankReducer } from '@/pages/Rank/store/index'
+import { reducer as singersReducer } from "@/pages/Singers/store/index";
+
 
 export default combineReducers({
     recommend: recommendReducer,
     player: playerReducer,
     search: searchReducer,
-    rank: rankReducer
+    rank: rankReducer,
+    singers: singersReducer
 })

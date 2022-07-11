@@ -1,29 +1,56 @@
 import React,{useState,useEffect,useRef} from 'react'
-import { SearchWrapper} from './style'
-import { useNavigate } from 'react-router-dom'
-
+import { Container} from './style'
+import { CSSTransition } from 'react-transition-group'
+import SearchBox from '../../components/common/search-box';
 
 export default function Search() {
-  let navigate = useNavigate();
-  //变量
-  const [query,setQuery] = useState(' ')
-  //函数
-  const handleChange = (e) =>{
-    let val = e.currentTarget.value
-    setQuery(val)
-  }
+  const [query, setQuery] = useState('')
+  const [show, setShow] = useState(false);
+  useEffect(()=>{
+    setShow(true)
+  },[])
 
+  const handleQuery = (q) =>{
+    setQuery(q)
+  }
   //主体jsx
   return (
-    <SearchWrapper>
-        <div className="searchHead">
-          <button className='iconfont icon-cuowu' onClick={()=>navigate(-1)}></button>
-        </div>
-        <div className="search_box">
-          <input type="text" className='box' placeholder='搜索菜单' onChange={handleChange} >
-          </input>
-          <i className='iconfont icon-sousuo'></i>
-        </div>
-    </SearchWrapper>
+    <CSSTransition
+    in={show}
+    timeout={400}
+    appear={true}
+    classNames="fly"
+    unmountOnExit
+    onExit={() => {
+        navigate(-1)
+    }}
+    > 
+        <Container>
+          <SearchBox
+            newQuery={query}
+            handleQuery={handleQuery}>
+                {console.log(query)}
+            </SearchBox>
+                <ShortcutWrapper show={!query}>
+                    {/* <Scroll> */}
+                        <div>
+                            <HotKey>
+                                <h1 className="title">热门搜索</h1>
+                                {renderHotKey()}
+                            </HotKey>
+                        </div>
+                    {/* </Scroll> */}
+                </ShortcutWrapper>
+                <ShortcutWrapper show={query}>
+                    {/* <Scroll onScroll={forceCheck}> */}
+                        <div>
+                            { renderSingers() }
+                            { renderAlbum() }
+                            { renderSongs() }
+                        </div>
+                    {/* </Scroll> */}
+              </ShortcutWrapper>
+        </Container>
+  </CSSTransition>
   )
 }
