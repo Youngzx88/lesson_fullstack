@@ -1,10 +1,17 @@
 import React from 'react'
 import { Wrapper,GoodWrapper } from './style'
+import Lazyload from 'react-lazyload'
+import loading from '../listitem/singer.png'
 
 const Good = ({goodItem}) => (
   <GoodWrapper>
     <div className="good">
+      <Lazyload placeholder={
+                <img width="100%" height="100%"
+                    src={loading}
+                />}>
       <img src={goodItem.img} alt=""/>
+      </Lazyload>
       <div className="name">{goodItem.goods}</div>
     </div>
   </GoodWrapper>
