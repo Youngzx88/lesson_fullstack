@@ -23,13 +23,12 @@ export const changeSuggestList = (data) => ({
   data: data
 })
 
-export const getSuggestMenu = (query) =>{
+export const getSuggestMenuList = (query) =>{
   return (dispatch) => {
     getSuggestListRequest().then(data => {
-        let res = data.data.filter(item => {
+          let res = data.data.filter(item => {
           return item.goods.indexOf(query)!=-1
         })
-        console.log(res)
         dispatch(changeSuggestList(res))
     })
   }

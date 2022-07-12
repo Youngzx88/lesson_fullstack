@@ -2,6 +2,7 @@ import React from 'react'
 import { Wrapper,GoodWrapper } from './style'
 import Lazyload from 'react-lazyload'
 import loading from '../../assets/img/loading.gif'
+import Scroll from '../../components/common/Scroll/'
 
 const Good = ({goodItem}) => (
   <GoodWrapper>
@@ -19,15 +20,17 @@ const Good = ({goodItem}) => (
 
 export default function ListItem({menuList,tab}) {
   return (
-    <Wrapper>
-      {
-        menuList.filter((item)=>{
-          return (item.title == tab || tab == '全部')
-        }).map((item)=>{
-          return <Good goodItem={item} key={item.id}/>
-        })
-      }
-      <div className="tips">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实际产品以门店供应为准。</div>
-    </Wrapper>
+    <Scroll>
+      <Wrapper>
+        {
+          menuList.filter((item)=>{
+            return (item.title == tab || tab == '全部')
+          }).map((item)=>{
+            return <Good goodItem={item} key={item.id}/>
+          })
+        }
+        <div className="tips">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实际产品以门店供应为准。</div>
+      </Wrapper>
+    </Scroll>
   )
 }

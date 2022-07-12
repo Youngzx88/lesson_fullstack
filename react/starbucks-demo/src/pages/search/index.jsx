@@ -3,7 +3,7 @@ import Lazyload, { forceCheck } from 'react-lazyload'
 import SearchBox from '../../components/common/search-box';
 import Scroll from '../../components/common/Scroll/'
 import { connect } from 'react-redux'
-import { getHotKeyMenu,getSuggestMenu} from './store/actionCreator'
+import { getHotKeyMenu,getSuggestMenuList} from './store/actionCreator'
 import { CSSTransition } from 'react-transition-group'
 import { Container,ShortcutWrapper} from './style'
 import { HotKey,GoodWrapper} from './style';
@@ -101,8 +101,10 @@ return (
                 <Scroll>
                     <div>
                         {suggestList.length>0 ? renderSuggestLsit() : 
-                            <h1 className="title">猜你喜欢</h1>
-                            
+                            <HotKey>
+                            <h2 className="title">未找到结果猜你喜欢</h2>
+                            {renderHotKey()}
+                            </HotKey>
                         }
                     </div>
                 </Scroll>
@@ -124,7 +126,7 @@ return {
         dispatch(getHotKeyMenu());
     },
     getSuggestMenuDispatch(query){
-        dispatch(getSuggestMenu(query));
+        dispatch(getSuggestMenuList(query));
     }
 }
 }

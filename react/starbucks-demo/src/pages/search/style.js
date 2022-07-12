@@ -53,6 +53,19 @@ export const ShortcutWrapper = styled.div`
         text-align: center;
         font-weight: 400;
     }
+    h2{
+        width: 300px;
+        box-sizing: border-box;
+        height: 30px;
+        font-size: 14px;
+        margin-left: 24px;
+        padding: 2px 12px;
+        top: -20px;
+        color: black;
+        position: absolute;
+        line-height: 26px;
+        font-weight: 400;
+    }
 `
 
 export const HotKey = styled.div`
