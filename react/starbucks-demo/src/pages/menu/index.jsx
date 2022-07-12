@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { actionCreators } from './store/index'
 import NavBar from '../../components/navbar'
 import ListItem from '../../components/listitem'
-import EmptyItem from '../../components/emptylist'
 import LoadingV2 from '../../components/common/loading-v2/index.jsx'
 
 
@@ -20,8 +19,7 @@ function Menu(props) {
     <Wrapper>
       <NavBar tab={tab}  setTabDispatch={setTabDispatch}/>
       {/* 过渡动画 */}
-      {loading ? <LoadingV2/> : null}
-      {menuList.length>0 ? <ListItem menuList={menuList} tab={tab}/> : <EmptyItem/>}
+      {loading ? <LoadingV2/> : <ListItem menuList={menuList} tab={tab}/>}
       <div className="frap">
         <button id="featured-campaign-search" className="button_primary" rel="menu-search-overlay" onClick={()=>{navigate("/search")}}>搜索菜单</button>
       </div>

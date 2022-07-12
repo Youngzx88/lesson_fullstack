@@ -131,7 +131,6 @@ const Search = (props) => {
             </List>
         )
     }
-
     const renderAlbum = () => {
         let albums = suggestList.playlists
         // console.log(albums, '-----------')
@@ -162,7 +161,6 @@ const Search = (props) => {
             </List>
         )
     }
-
     const renderSongs = () => {
         return (
             <SongItem style={{paddingLeft: "1rem"}}>
@@ -183,7 +181,6 @@ const Search = (props) => {
             </SongItem>
         )
     }
-
     return (
         // 当dom ready 组件挂载上去， 应用css transiiton效果 
         <CSSTransition

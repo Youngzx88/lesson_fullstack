@@ -1,16 +1,16 @@
 import React,{useState,useEffect,useRef} from 'react'
-import { Container,ShortcutWrapper} from './style'
-import { CSSTransition } from 'react-transition-group'
+import Lazyload, { forceCheck } from 'react-lazyload'
 import SearchBox from '../../components/common/search-box';
 import Scroll from '../../components/common/Scroll/'
-import { HotKey,GoodWrapper} from './style';
 import { connect } from 'react-redux'
-import { getHotKeyMenu } from './store/actionCreator'
-import Lazyload, { forceCheck } from 'react-lazyload'
+import { getHotKeyMenu,getSuggestMenu} from './store/actionCreator'
+import { CSSTransition } from 'react-transition-group'
+import { Container,ShortcutWrapper} from './style'
+import { HotKey,GoodWrapper} from './style';
 
 function Search(props) {
-const {hotList} = props;
-const {getHotKeyMenuDispatch} = props
+const {hotList,suggestList} = props;
+const {getHotKeyMenuDispatch,getSuggestMenuDispatch} = props
 const [query, setQuery] = useState('')
 const [show, setShow] = useState(false);
 
@@ -22,31 +22,54 @@ useEffect(()=>{
         getHotKeyMenuDispatch();
     }
 },[])
-
+useEffect(()=>{
+    getSuggestMenuDispatch(query);
+},[query])
 //用于在子组件searchBox执行，更新父组件的query
 const handleQuery = (q) =>{
     setQuery(q)
 }
 const renderHotKey = () =>{
-return (
-    <>  
-        {hotList.map((item)=>{
-            return (
-                <GoodWrapper key={item.id}>
-                <div className="good">
-                    <Lazyload placeholder={
-                                    <img width="100%" height="100%"
-                                        src={"https://huaban.com/pins/4834592535"}
-                                    />}>
-                        <img src={item.img} alt=""/>
-                    </Lazyload>
-                    <div className="name">{item.goods}</div>
-                </div>
-                </GoodWrapper>
-            )
-        })}
-    </>
-)
+    return (
+        <>  
+            {hotList.map((item)=>{
+                return (
+                    <GoodWrapper key={item.id}>
+                    <div className="good">
+                        <Lazyload placeholder={
+                                        <img width="100%" height="100%"
+                                            src={""}
+                                        />}>
+                            <img src={item.img} alt=""/>
+                        </Lazyload>
+                        <div className="name">{item.goods}</div>
+                    </div>
+                    </GoodWrapper>
+                )
+            })}
+        </>
+    )
+}
+const renderSuggestLsit = () => {
+    return (
+        <>  
+            {suggestList.map((item)=>{
+                return (
+                    <GoodWrapper key={item.id}>
+                    <div className="good">
+                        <Lazyload placeholder={
+                                        <img width="100%" height="100%"
+                                            src={""}
+                                        />}>
+                            <img src={item.img} alt=""/>
+                        </Lazyload>
+                        <div className="name">{item.goods}</div>
+                    </div>
+                    </GoodWrapper>
+                )
+            })}
+        </>
+    )
 }
 
 //主体jsx
@@ -74,16 +97,16 @@ return (
                         </HotKey>
                 </Scroll>
             </ShortcutWrapper>
-            {/* <ShortcutWrapper show={query}> */}
-                {/* <Scroll> */}
-                    {/* <div> */}
-                        {/* { renderSingers() }
-                        { renderAlbum() }
-                        { renderSongs() } */}
-                        {/* 222 */}
-                    {/* </div> */}
-                {/* </Scroll> */}
-            {/* </ShortcutWrapper> */}
+            <ShortcutWrapper show={query}>
+                <Scroll>
+                    <div>
+                        {suggestList.length>0 ? renderSuggestLsit() : 
+                            <h1 className="title">猜你喜欢</h1>
+                            
+                        }
+                    </div>
+                </Scroll>
+            </ShortcutWrapper>
         </Container>
     </CSSTransition>
     )
@@ -92,7 +115,7 @@ return (
 const mapStateToProps = (state) => {
 return {
     hotList: state.search.hotList,
-    // enterLoading: state.search.enterLoading,
+    suggestList: state.search.suggestList
 }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -100,6 +123,9 @@ return {
     getHotKeyMenuDispatch() {
         dispatch(getHotKeyMenu());
     },
+    getSuggestMenuDispatch(query){
+        dispatch(getSuggestMenu(query));
+    }
 }
 }
 

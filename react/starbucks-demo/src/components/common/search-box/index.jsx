@@ -17,7 +17,6 @@ export default  memo(function SearchBox(props) {
   useEffect(() => {
     queryRef.current.focus();
   }, [])
-
   //函数
   const handleChange = (e) =>{
     let val = e.currentTarget.value

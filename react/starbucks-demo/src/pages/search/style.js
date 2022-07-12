@@ -38,6 +38,21 @@ export const ShortcutWrapper = styled.div`
     top: 8rem;
     width: 100%;
     display: ${props => props.show ? "" : "none"};
+    h1{
+        width: 96px;
+        box-sizing: border-box;
+        height: 30px;
+        font-size: 14px;
+        margin-left: 24px;
+        padding: 2px 12px;
+        top: -20px;
+        color: white;
+        position: absolute;
+        background-color: #00A862;
+        line-height: 26px;
+        text-align: center;
+        font-weight: 400;
+    }
 `
 
 export const HotKey = styled.div`

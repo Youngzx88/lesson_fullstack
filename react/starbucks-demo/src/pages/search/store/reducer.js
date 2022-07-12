@@ -2,6 +2,7 @@ import * as actionTypes from './constants'
 
 const defaultState = {
     enterLoading: false,
+    suggestList: [],
     hotList:[],
 }
 
@@ -12,10 +13,10 @@ export default (state = defaultState,action) => {
             ...state,
             hotList: action.data
         }
-    case actionTypes.CHANGE_LOADING:
+    case actionTypes.CHANGE_SUGGEST_LIST:
         return {
             ...state,
-            enterLoading: action.data
+            suggestList: action.data
         }
     default:
         return state;
