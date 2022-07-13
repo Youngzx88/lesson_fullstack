@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from 'react'
-import Lazyload, { forceCheck } from 'react-lazyload'
+import Lazyload from 'react-lazyload'
 import SearchBox from '../../components/common/search-box';
 import Scroll from '../../components/common/Scroll/'
 import { connect } from 'react-redux'
@@ -7,6 +7,7 @@ import { getHotKeyMenu,getSuggestMenuList} from './store/actionCreator'
 import { CSSTransition } from 'react-transition-group'
 import { Container,ShortcutWrapper} from './style'
 import { HotKey,GoodWrapper} from './style';
+import loading from '../../assets/img/loading.gif'
 
 function Search(props) {
 const {hotList,suggestList} = props;
@@ -38,9 +39,9 @@ const renderHotKey = () =>{
                     <div className="good">
                         <Lazyload placeholder={
                                         <img width="100%" height="100%"
-                                            src={""}
+                                            src={loading}
                                         />}>
-                            <img src={item.img} alt=""/>
+                            <img src={item.img} alt="1"/>
                         </Lazyload>
                         <div className="name">{item.goods}</div>
                     </div>
@@ -99,14 +100,12 @@ return (
             </ShortcutWrapper>
             <ShortcutWrapper show={query}>
                 <Scroll>
-                    <div>
-                        {suggestList.length>0 ? renderSuggestLsit() : 
-                            <HotKey>
-                            <h2 className="title">未找到结果猜你喜欢</h2>
-                            {renderHotKey()}
-                            </HotKey>
-                        }
-                    </div>
+                    {suggestList.length>0 ? renderSuggestLsit() : 
+                        <HotKey>
+                        <h2 className="title">未找到结果猜你喜欢</h2>
+                        {renderHotKey()}
+                        </HotKey>
+                    }
                 </Scroll>
             </ShortcutWrapper>
         </Container>
@@ -127,7 +126,7 @@ return {
     },
     getSuggestMenuDispatch(query){
         dispatch(getSuggestMenuList(query));
-    }
+    },
 }
 }
 

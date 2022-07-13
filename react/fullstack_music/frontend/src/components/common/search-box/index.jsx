@@ -38,10 +38,6 @@ const SearchBoxWrapper = styled.div`
 
 const SearchBox = (props) => {
     const queryRef = useRef();
-    // console.log(queryRef, '///')
-    // 解构父组件props时， 分两部分， 
-    // 读props
-    // 方法
     const { newQuery } = props;
     const { handleQuery, back } = props;
     const [query, setQuery] = useState('');
@@ -54,15 +50,12 @@ const SearchBox = (props) => {
 
     // mount 
     useEffect(() => {
-        // console.log(queryRef)
         // 挂载后
         queryRef.current.focus();
     }, [])
     // 使用useEffect 去更新 
     useEffect(() => {
         //query 更新
-        // console.log(queryRef)
-        // let curQuery = query
         handleQueryDebounce(query)
     }, [query])
 

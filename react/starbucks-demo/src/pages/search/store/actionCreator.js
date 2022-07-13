@@ -18,10 +18,12 @@ export const getHotKeyMenu = () =>{
   }
 }
 
-export const changeSuggestList = (data) => ({
+export const changeSuggestList = (data) => (
+  {
   type: actionTypes.CHANGE_SUGGEST_LIST,
   data: data
-})
+  }
+)
 
 export const getSuggestMenuList = (query) =>{
   return (dispatch) => {

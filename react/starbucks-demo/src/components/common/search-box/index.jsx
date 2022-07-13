@@ -1,28 +1,34 @@
-import React,{useState,useEffect,useRef,memo} from 'react'
+import React,{useState,useEffect,useRef,useMemo,memo} from 'react'
 import { SearchWrapper } from './style'
 import { useNavigate } from 'react-router-dom'
-
+import { debounce } from '../../../api/utils'
 
 export default  memo(function SearchBox(props) {
   let queryRef = useRef();
   let navigate = useNavigate();
 
-  const {newQuery} = props
   const {handleQuery} = props
-
-  //变量
   const [query,setQuery] = useState('')
 
   //声明周期,一进这个页面就focus
   useEffect(() => {
     queryRef.current.focus();
   }, [])
+
+  useEffect(() => {
+    handleQueryDebounce(query)
+  }, [query])
+
   //函数
+  let handleQueryDebounce =  useMemo(() => {
+    return debounce(handleQuery,200)
+  }, [handleQuery])
+
   const handleChange = (e) =>{
     let val = e.currentTarget.value
     setQuery(val)
-    handleQuery(val)
   }
+  
   return (
     <SearchWrapper>
         <div className="searchHead">
