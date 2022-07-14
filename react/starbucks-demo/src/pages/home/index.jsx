@@ -14,6 +14,13 @@ const items = swiper1_img.map((item, index) => (
   </Swiper.Item>
 ))
 
+const swiper2_img = [img1,img2]
+const items2 = swiper2_img.map((item, index) => (
+  <Swiper.Item key={index}>
+    <img src={item} alt="" />
+  </Swiper.Item>
+))
+
 const Promotion = () => {
   return (
     <PromotionWrapper>
@@ -66,17 +73,6 @@ const Tmall = () =>{
     </TmallWrapper>
   )
 }
-
-const Coffeehouse = () =>{
-  return (
-    <CoffeehouseWrapper>
-        <h2>1912 派克街 | 咖啡星讲堂</h2>
-        <p className='light'>了解更多星巴克咖啡文化</p>
-        <div>轮播图swiper</div>
-    </CoffeehouseWrapper>
-  )
-}
-
 const Footer = () =>{
   return (
     <Footerwrapper> 
@@ -119,7 +115,23 @@ export default function Home() {
 
         <Tmall></Tmall>
 
-        <Coffeehouse></Coffeehouse>
+        <CoffeehouseWrapper>
+          <h2>1912 派克街 | 咖啡星讲堂</h2>
+          <p className='light'>了解更多星巴克咖啡文化</p>
+          <div className='swiper'>
+            <Swiper
+              className='sw'
+              trackOffset={10}
+              slideSize={80}
+              style={{
+                '--border-radius': '8px',
+              }}
+              defaultIndex={0}
+            >
+              {items2}
+            </Swiper>
+          </div>
+        </CoffeehouseWrapper>
 
         <Footer></Footer>
     </Container>

@@ -192,7 +192,12 @@ export const CoffeehouseWrapper = styled.div`
         line-height: 160%;
         letter-spacing: 0.4px;
         margin-bottom: 24px;
-}
+    }
+    .sw{
+        width: 18.75rem;
+        height: 180px;
+        padding-left:16px;
+    }
 `
 
 
