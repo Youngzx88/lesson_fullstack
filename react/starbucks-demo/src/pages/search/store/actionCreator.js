@@ -13,7 +13,7 @@ export const changeHotList = (data) =>({
 export const getHotKeyMenu = () =>{
   return (dispatch) => {
     getHotListRequest().then(data => {
-          dispatch(changeHotList(data.data))
+          dispatch(changeHotList(data))
       })
   }
 }
@@ -25,13 +25,21 @@ export const changeSuggestList = (data) => (
   }
 )
 
-export const getSuggestMenuList = (query) =>{
+// export const getSuggestMenuList = (query) =>{
+//   return (dispatch) => {
+//     getSuggestListRequest().then(data => {
+//           let res = data.filter(item => {
+//           return item.goods.indexOf(query) != -1
+//         })
+//         dispatch(changeSuggestList(res))
+//     })
+//   }
+// }
+
+export const getSuggestMenuList = () =>{
   return (dispatch) => {
     getSuggestListRequest().then(data => {
-          let res = data.data.filter(item => {
-          return item.goods.indexOf(query)!=-1
-        })
-        dispatch(changeSuggestList(res))
-    })
+        dispatch(changeSuggestList(data))
+      })
   }
 }

@@ -11,7 +11,7 @@ export const changeMenuList = (data) => ({
 export const getMenuList = () => {
   return (dispatch) => {
     getMenuListRequest().then(data => {
-          dispatch(changeMenuList(data.data))
+          dispatch(changeMenuList(data))
           dispatch(changeLoading(false))
       })
   }

@@ -54,7 +54,9 @@ const renderHotKey = () =>{
 const renderSuggestLsit = () => {
     return (
         <>  
-            {suggestList.map((item)=>{
+            {suggestList.filter(item=>{
+                return item.goods.indexOf(query) != -1
+            }).map((item)=>{
                 return (
                     <GoodWrapper key={item.id}>
                     <div className="good">
@@ -100,7 +102,13 @@ return (
             </ShortcutWrapper>
             <ShortcutWrapper show={query}>
                 <Scroll>
-                    {suggestList.length>0 ? renderSuggestLsit() : 
+                    {   
+                        suggestList.filter(item=>{
+                            return item.goods.indexOf(query) != -1
+                        }).length>0
+                        ? 
+                            renderSuggestLsit() 
+                        : 
                         <HotKey>
                         <h2 className="title">未找到结果猜你喜欢</h2>
                         {renderHotKey()}
