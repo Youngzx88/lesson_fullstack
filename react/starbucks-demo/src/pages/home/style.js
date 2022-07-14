@@ -194,9 +194,10 @@ export const CoffeehouseWrapper = styled.div`
         margin-bottom: 24px;
     }
     .sw{
+        box-sizing: border-box;
         width: 18.75rem;
         height: 180px;
-        padding-left:16px;
+        margin-left:16px;
     }
 `
 

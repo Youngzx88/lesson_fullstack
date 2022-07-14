@@ -9,7 +9,7 @@ import img2 from '../../assets/img/swiper1_img2.jpeg'
 
 const swiper1_img = [img1,img2]
 const items = swiper1_img.map((item, index) => (
-  <Swiper.Item key={index}>
+  <Swiper.Item key={index} >
     <img src={item} alt="" />
   </Swiper.Item>
 ))
