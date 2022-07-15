@@ -7,6 +7,7 @@ import Scroll from '../../components/common/Scroll/'
 const Good = ({goodItem}) => (
   <GoodWrapper>
     <div className="good">
+      {/* lazyload组件，用placeholder存放懒加载时的图片 */}
       <Lazyload placeholder={
                 <img width="120%" height="100%"
                     src={loading}
