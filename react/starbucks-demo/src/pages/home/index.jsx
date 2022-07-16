@@ -5,6 +5,10 @@ import SwiperRef from 'antd-mobile/es/components/swiper'
 import { Container,Header,LoopImg,PromotionWrapper,Club,TmallWrapper,CoffeehouseWrapper,Footerwrapper} from './style'
 import img1 from '../../assets/img/swiper1_img1.png'
 import img2 from '../../assets/img/swiper1_img2.jpeg'
+import img3 from '../../assets/img/fruit.jpg'
+import img4 from '../../assets/img/spoon.jpg'
+import img5 from '../../assets/img/drink.jpg'
+import img6 from '../../assets/img/coffee.jpg'
 
 
 const swiper1_img = [img1,img2]
@@ -14,7 +18,7 @@ const items = swiper1_img.map((item, index) => (
   </Swiper.Item>
 ))
 
-const swiper2_img = [img1,img2]
+const swiper2_img = [img3,img4,img5,img6]
 const items2 = swiper2_img.map((item, index) => (
   <Swiper.Item key={index}>
     <img src={item} alt="" />
@@ -120,11 +124,11 @@ export default function Home() {
           <p className='light'>了解更多星巴克咖啡文化</p>
           <div className='swiper'>
             <Swiper
+              // className="swiper"
               className='sw'
-              trackOffset={10}
               slideSize={80}
               style={{
-                '--border-radius': '8px',
+                '--track-padding': ' 0 0 16px',
               }}
               defaultIndex={0}
             >

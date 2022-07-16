@@ -197,7 +197,12 @@ export const CoffeehouseWrapper = styled.div`
         box-sizing: border-box;
         width: 18.75rem;
         height: 180px;
-        margin-left:16px;
+
+        img{
+            height: 180px;
+            max-width: 254px;
+            max-height: 100%;
+        }
     }
 `
 
