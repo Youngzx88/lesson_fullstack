@@ -21,6 +21,7 @@ const session_config = {
 };
 const session = koaSession(session_config, app)
 
+
 app.use(session);
 //1. use 启用一个中间件
 //2.1 静态文件路径
@@ -55,9 +56,7 @@ app.use(async ctx => {
 })
 
 app.listen(1314)
-
 //用户要访问post/:id怎么办？
 //1. 进来先运行到第10行，但是路由名并不是静态，而是动态参数，跳过这一行
 //2. 继续往后面找到符合路由条件的中间件！
-
 
