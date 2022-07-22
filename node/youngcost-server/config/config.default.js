@@ -25,7 +25,7 @@ module.exports = appInfo => {
       // 密码
       password: '12345678',
       // 数据库名
-      database: 'juejue-cost',
+      database: 'coding-cost',
     },
     // 是否加载到 app 上，默认开启
     app: true,
