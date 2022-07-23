@@ -1,5 +1,5 @@
-export interface Video {
-    id: number;
-    name: string;
-    pic: string;
+export interface Video{
+    id: number,
+    name: string,
+    pic: string,
 }

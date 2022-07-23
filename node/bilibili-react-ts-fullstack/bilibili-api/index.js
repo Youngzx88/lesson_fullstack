@@ -1,12 +1,14 @@
 // api后端服务的单点入口文件 src/main.tsx
 const Koa = require('koa'); // http server 
 const router = require('koa-router')(); // koa 路由中间件 BrowserRouter
-const cors = require('koa-cors')
 const app = new Koa();
+const crossDomain = require('./middleware/cross-domain') // 支持跨域
+const cors = require('koa-cors')
 const {
-    fetchSuggest
+    fetchSuggest,
+    fetchHotword,
+    fetchSearchData
 } = require('./api')
-// const crossDomain = require('./middleware/cross-domain') // 支持跨域
 
 // /videos get     [{}]
 router.get('/getVideos', ctx => {
@@ -31,34 +33,73 @@ router.get('/banners', ctx => {
     }];
     ctx.body = banners;
 })
-// 添加了一个路由中间件 
-// 上下文对象 =  req + res 
-router.get("/search/suggest", async (ctx, next) => {
-    // ctx.query  请求对象中的查询参数 
-    // ?a=1&b=2 查询参数  设置成{a:1, b:2}
-    const w = encodeURI(ctx.query.w); // 编码？ 
-    // ctx.body = w
-    // console.log(w, '------------')
 
-    try{
+// ctx 上下文对象 = req + res
+// 接口服务
+router.get("/search/suggest", async (ctx, next) => {
+    // ctx.query 请求对象中的查询参数
+    // ?a=1&b=2 这种查询参数 设置成{a:1,b:2} 返回
+    const w = encodeURI(ctx.query.w);
+    console.log(w, '------------')
+    try {
         const data = await fetchSuggest(w);
-        console.log(data);
-    //     let resData = {
-    //         code: "1",
-    //         msg: "success"
-    //     }
-    //     if (data.code === 0) {
-    //         resData.data = data.result;
-    //     } else {
-    //         resData.code = "0";
-    //         resData.msg = "fail";
-    //     }
-    //     // ctx.set('content-type', 'json');
-    //     ctx.body = resData
-    } catch(e) {
-        //处理错误？ 
+        // console.log(data);
+        // api 前后端交互的数据格式是JSON
+        let resData = {
+            code: "1", // 成功响应200
+            msg: "success" // 成功 | 失败原因
+        }
+        if (data.code === 0) {
+            resData.data = data.result;
+        } else {
+            resData.code = "0";
+            resData.msg = "fail";
+        }
+        // ctx.set('content-type', 'json');
+        ctx.body = resData
+    } catch (e) {
         next(e)
-    } 
+    }
+})
+
+// 接口服务
+router.get("/search/hotword", async (ctx, next) => {
+    try {
+        const data = await fetchHotword(); // 后端远程调用：rpc 调用
+        let resData = {
+            code: "1", // 成功响应200
+            msg: "success" // 成功 | 失败原因
+        }
+        if (data.code === 0) { // B站code === 0
+            resData.data = data.list;
+        } else {
+            resData.code = "0";
+            resData.msg = "fail";
+        }
+        ctx.body = resData
+    } catch (e) {
+        next(e)
+    }
+})
+
+router.get("/search/all", async (ctx, next) => {
+    const w = encodeURI(ctx.query.keyword);
+    try {
+        const data = await fetchSearchData(w); // 后端远程调用：rpc 调用
+        let resData = {
+            code: "1", // 成功响应200
+            msg: "success" // 成功 | 失败原因
+        }
+        if (data.code === 0) { // B站code === 0
+            resData.data = data.data;
+        } else {
+            resData.code = "0";
+            resData.msg = "fail";
+        }
+        ctx.body = resData
+    } catch (e) {
+        next(e)
+    }
 })
 
 app.use(cors())
@@ -68,7 +109,7 @@ app.use(router.routes())
 // 中间件函数 
 
 app.use((ctx) => {
-    ctx.body = 'hello world' 
+    ctx.body = 'hello world'
 })
 
 app.listen(3300);
