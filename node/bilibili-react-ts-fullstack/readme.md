@@ -92,7 +92,34 @@
             https://www.baidu.com:3000/a?b=1#hhh 算
             http://www.baidu.com:3300/a?b=1#hhh  算 
             http://www.google.com:3000/a?b=1#hhh 算
+            http://www.map.baidu.com:3000/a?b=1#hhh 
 
     跨域有安全问题， 按这些规则来 
     1. cors 
         后端解决方案
+
+- js 浏览器中有个 同源机制
+
+- 搜索API
+    1. 通过chrome 找到了b站的API 地址， 拿到了结果
+    2. 不放到fastmock 
+    3. 自己的bilibili-api 提供
+        - router.get('/search/suggest', async(ctx, next) => {}) 
+        - ctx.query.w  查询字符串拿出来， koa qs 变成了对象, encodeURI
+        -  try  catch   确保后端容错处理
+            - js 是单线程， 出错了， web 程序就挂了， 无法提供访问
+            - try  { 可能会出错的  } catch(e) { .....  }
+
+    4. node-fetch 是node 的fetch, 原因是node 对js 最新功能的支持没有那么快
+        node-fetch  可以用于node 发送fetch 请求  es6 fetch一样
+    5. node 去向B站发送远程接口请求的时候， B站是接受这次跨域请求的。 
+        - 路由 + 假数据  代替fastmock, 自建web 后端服务， 为前端提供api 
+        - 如果像B站一样， 跨域请求API 
+            1. chrome network xhr  查看请求  
+                url  method   query .... 
+            2. node api  封装这次请求
+                - url   domian/path  常量
+                - query  array  [key=value]
+                    = url + array.join('&')
+                - then 
+                - try {  } catch()
