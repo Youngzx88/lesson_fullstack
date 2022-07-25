@@ -21,7 +21,7 @@ export default  memo(function SearchBox(props) {
 
   //函数
   let handleQueryDebounce =  useMemo(() => {
-    return debounce(handleQuery,800)
+    return debounce(handleQuery,200)
   }, [handleQuery])
 
   const handleChange = (e) =>{

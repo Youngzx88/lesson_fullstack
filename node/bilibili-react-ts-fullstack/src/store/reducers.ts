@@ -5,6 +5,7 @@ import { combineReducers, AnyAction } from 'redux'
 // tree-shaking 树上的黄叶子，不有必要在树上，要掉落（删掉）
 
 const initalState = {
+    loading: true,
     // 搜索数据分支：
     search: {
         suggest: [],
@@ -41,6 +42,14 @@ const combineSearch = (state = initalState.search, action: AnyAction) => {
     }
 }
 
+const combineLoading = (state = initalState.loading,action: AnyAction)=>{
+    switch(action.type){
+        default:
+            return state
+    }
+}
+
 export default combineReducers({
-    search: combineSearch
+    search: combineSearch,
+    loading: combineLoading
 })

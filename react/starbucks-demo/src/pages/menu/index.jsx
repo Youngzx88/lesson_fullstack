@@ -43,4 +43,4 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Menu))
+export default connect(mapStateToProps, mapDispatchToProps)(Menu)

@@ -186,3 +186,6 @@
     2. 前端
         - `store`架构改变，`reducers.ts`承担`初始数据`和`集合reducer`（原来是每个页面有一个store）
         - 在页面上通过`useEffect`加载数据
+
+- ts as 强制类型声明 断言，因为只有运行在浏览器端才有window对象
+    - state.search :rootState 推断 代码写的更快
