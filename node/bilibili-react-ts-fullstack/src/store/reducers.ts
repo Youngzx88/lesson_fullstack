@@ -1,24 +1,26 @@
-// reducer + combineReducers
-import * as ActionTypes from './action-types'
-import { combineReducers, AnyAction } from 'redux'
-// ts 除了类型检测  也会检查没有引用的变量
-// tree-shaking 树上的黄叶子，不有必要在树上，要掉落（删掉）
-
+// reducer +  combineReducers
+import { combineReducers, AnyAction } from 'redux';
+import * as ActionTypes from './action-types';
+// 但从未读取其值?   后面没用到， 引入没必要 ts  代码正确
+// tree-sharking 黄叶子 
 const initalState = {
     loading: true,
-    // 搜索数据分支：
+    home: {
+        partitions: {}
+    },
+    // 分支 
     search: {
-        suggest: [],
+        suggest:[],
         hotword: [],
         searchResult: {}
-    }
-    // 首页数据分支
-    // 视频数据分支
-    // 登录数据分支
+    },
+    // 首页
+    // 视频
+    // 登录
 }
 
-const combineSearch = (state = initalState.search, action: AnyAction) => {
-    switch (action.types) {
+const combineSearch = (state = initalState.search, action:AnyAction) => {
+    switch(action.type) {
         case ActionTypes.SET_HOTWORD:
             return {
                 ...state,
@@ -42,8 +44,20 @@ const combineSearch = (state = initalState.search, action: AnyAction) => {
     }
 }
 
-const combineLoading = (state = initalState.loading,action: AnyAction)=>{
-    switch(action.type){
+const combineLoading = (state = initalState.loading, action: AnyAction) => {
+    switch(action.type) {
+        default:
+            return state
+    }
+}
+const combineHome = (state = initalState.home, action: AnyAction)  => {
+    switch(action.type) {
+        case ActionTypes.SET_PARTITIONS:
+            return {
+                ...state.partitions,
+                partitions:action.data
+            }
+        break;
         default:
             return state
     }
@@ -51,5 +65,6 @@ const combineLoading = (state = initalState.loading,action: AnyAction)=>{
 
 export default combineReducers({
     search: combineSearch,
-    loading: combineLoading
+    loading: combineLoading,
+    home: combineHome
 })

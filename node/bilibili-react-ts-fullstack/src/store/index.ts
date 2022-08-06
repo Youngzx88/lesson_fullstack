@@ -13,8 +13,8 @@ const store = createStore(reducers,
         )
     )    
 )
-
-//type和interface都是ts中的类型声明
-export type rootState = ReturnType<typeof reducers>
-
+// rootState   state 状态类型 
+// type interface ts 里的类型声明 
+// type 自定义类型 
+export type rootState = ReturnType<typeof reducers>;
 export default store;
