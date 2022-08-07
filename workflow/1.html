@@ -7,31 +7,30 @@
   <title>Document</title>
 </head>
 <body>
-    <!-- <ul id="example-1">
-      <li v-for="item in items">
+    <ul id="example-1">
+      <li id="example-2" vfor="iteminitems">
         {{item.message}}
       </li>
-    </ul> -->
-    
-    <ul id="example-1">
-      <li id="example-2" v="111"></li>
     </ul>
     <button onclick="change()">click me</button>
 </body>
 <script>
-  arr = [1,2,3,4,5,6,7,8]
-  
-  function change(arr){
-    console.log(arr)
-    var len = arr.length;
-    console.log(document.getElementById("example-2").getAttribute('v'))
-    for(var i = 0 ; i < len ; i++){
+  var scope = { items: [1,2,3,4,5] };
+  (function change(){
+    //1.得到v-for
+    var str = document.getElementById("example-2").getAttribute('vfor');
+    //2.得到内部文本
+    var innerText = document.getElementById("example-2");
+    innerText = innerText.textContent.trim()// console.log(innerText);
+    str = str.trim();
+    const [itemStr,listStr] = str.split('in')// console.log(scope[listStr])
+    //3.遍历增加节点进去(因为items数组简单，不需要内部文本也可以直接输出，难的话还需要切割内部文本进行对应的输出)
+    for(var i = 0 ; i < scope[listStr].length ; i++){
       var node = document.createElement("LI");
-      var textnode = document.createTextNode(arr[i++]);
+      var textnode = document.createTextNode(scope[listStr][i]);
       node.appendChild(textnode);
       document.querySelector("#example-1").appendChild(node);
     }
-  }
-
+  })()
 </script>
 </html>
