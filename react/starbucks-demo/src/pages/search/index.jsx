@@ -88,10 +88,7 @@ return (
     }}
     > 
         <Container>
-            <SearchBox
-                newQuery={query}
-                handleQuery={handleQuery}>
-            </SearchBox>
+            
             <ShortcutWrapper show={!query}>
                 <Scroll>
                         <HotKey>
@@ -118,6 +115,10 @@ return (
                     }
                 </Scroll>
             </ShortcutWrapper>
+            <SearchBox
+                newQuery={query}
+                handleQuery={handleQuery}>
+            </SearchBox>
         </Container>
     </CSSTransition>
     )

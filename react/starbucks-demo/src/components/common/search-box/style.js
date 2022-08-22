@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const  SearchWrapper = styled.div`
+
       width: 100%;
       height: 120px;
       .searchHead{
@@ -23,6 +24,8 @@ export const  SearchWrapper = styled.div`
         }
       }
       .search_box{
+        /* position: absolute;
+        top: 40rem; */
         width: 100%;
         box-sizing: border-box;
         display: flex;
