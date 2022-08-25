@@ -1,8 +1,24 @@
 const age: number = 24;
 const sex: string = "24";
-const arr3: string[] = ['lin', 'bu', 'du'];
-// const arr4: [string,string,string] = ['lin', 'bu', 'du'];
+
+const arr3: string[] = ['y', 'z', 'x'];
 console.log(arr3[599]);
-// console.log(arr4[599]);
-console.log("Hello TypeScript");
-console.log(age);
+
+const arr4: [string, string, string] = ['y', 'z', 'x'];
+console.log(arr4[2]);
+
+const arr6: [string, number?, boolean?] = ['linbudu'];
+console.log(arr6[2])
+
+interface IDescription {
+  name: string;
+  age: number;
+  male: boolean;
+}
+
+const obj1: IDescription = {
+  name: 'yzx',
+  age: 599,
+  male: true,
+};
+console.log(obj1)
