@@ -12,3 +12,5 @@ var obj1 = {
     male: true
 };
 console.log(obj1);
+res.code = 10000;
+// console.log(res.code);

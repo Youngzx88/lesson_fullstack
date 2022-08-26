@@ -22,3 +22,13 @@ const obj1: IDescription = {
   male: true,
 };
 console.log(obj1)
+
+
+interface Res {
+  code: 10000 | 10001 | 50000;
+  status: "success" | "failure";
+  data: any;
+}
+declare var res:Res
+res.code = 10000
+console.log(res.code)

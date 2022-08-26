@@ -80,11 +80,18 @@ const obj1: IDescription = {
 - 这里的“描述”指：
   - 每一个属性的值必须一一对应到接口的属性类型
   - 不能有多的属性，也不能有少的属性，包括直接在对象内部声明，或是 `obj1.other = 'xxx'`这样属性访问赋值的形式
+
 > 1.6、修饰接口属性
 - 类似于上面的元组可选，在接口结构中同样通过 ? 来标记一个属性为可选：
+- 除了标记一个属性为可选以外，你还可以标记这个属性为只读：readonly。很多同学对这一关键字比较陌生，因为以往 JavaScript 中并没有这一类概念，它的作用是防止对象的属性被再次赋值。
+- 其实在数组与元组层面也有着只读的修饰，但与对象类型有着两处不同。
+  - 你只能将整个数组/元组标记为只读，而不能像对象那样标记某个属性为只读。
+  - 一旦被标记为只读，那这个只读数组/元组的类型上，将不再具有 push、pop 等方法（即会修改原数组的方法），因此报错信息也将是类型 xxx 上不存在属性“push”这种。这一实现的本质是只读数组与只读元组的类型实际上变成了 ReadonlyArray，而不再是 Array。
+
+
 ```js
 interface IDescription {
-  name: string;
+  readonly name: string;
   age: number;
   male?: boolean;
   func?: Function;
@@ -96,4 +103,218 @@ const obj2: IDescription = {
   male: true,
   // 无需实现 func 也是合法的
 };
+```
+- 假设新增一个可选的函数类型属性，然后进行调用：`obj2.func()` ，此时将会产生一个类型报错：不能调用可能是未定义的方法。但可选属性标记不会影响你对这个属性进行赋值，如：
+- 即使你对可选属性进行了赋值，TypeScript 仍然会使用接口的描述为准进行类型检查，你可以使用类型断言、非空断言或可选链解决`waiting after`
+```js
+obj2.male = false;
+obj2.func = () => {};
+```
+> 1.7、type 与 interface
+- 用 type（Type Alias，类型别名）来代替接口结构描述对象
+- interface 用来描述对象、类的结构，而类型别名用来将一个函数签名、一组联合类型、一个工具类型等等抽离成一个完整独立的类型。
+- 但大部分场景下接口结构都可以被类型别名所取代，因此，只要你觉得统一使用类型别名让你觉得更整齐，也没什么问题。
+
+> 1.8、object、Object 以及 { }
+- object、Object 以及{}（一个空对象）这三者
+- 首先是 Object 的使用。在 TypeScript 中就表现为 Object 包含了所有的类型
+```js
+// 对于 undefined、null、void 0 ，需要关闭 strictNullChecks
+const tmp1: Object = undefined;
+const tmp2: Object = null;
+const tmp3: Object = void 0;
+
+const tmp4: Object = 'yzx';
+const tmp5: Object = 599;
+const tmp6: Object = { name: 'yzx' };
+const tmp7: Object = () => {};
+const tmp8: Object = [];
+```
+- 和 `Object` 类似的还有 `Boolean`、`Number`、`String`、`Symbol`，这几个装箱类型（Boxed Types） 同样包含了一些超出预期的类型。以 `String` 为例，它同样包括 `undefined、null、void`，以及代表的 拆箱类型（Unboxed Types） `string`，但并不包括其他装箱类型对应的拆箱类型，如 boolean 与 基本对象类型，我们看以下的代码：
+```js
+const tmp9: String = undefined;
+const tmp10: String = null;
+const tmp11: String = void 0;
+const tmp12: String = 'yzx';
+
+// 以下不成立，因为不是字符串类型的拆箱类型
+const tmp13: String = 599; // X
+const tmp14: String = { name: 'yzx' }; // X
+const tmp15: String = () => {}; // X
+const tmp16: String = []; // X
+```
+- 在任何情况下，你都不应该使用这些装箱类型。
+- `object` 的引入就是为了解决对 `Object` 类型的错误使用，它代表所有非原始类型的类型，即数组、对象与函数类型这些：
+```js
+const tmp17: object = undefined;
+const tmp18: object = null;
+const tmp19: object = void 0;
+
+const tmp20: object = 'linbudu';  // X 不成立，值为原始类型
+const tmp21: object = 599; // X 不成立，值为原始类型
+
+const tmp22: object = { name: 'linbudu' };
+const tmp23: object = () => {};
+const tmp24: object = [];
+```
+- 最后`{}`，一个奇奇怪怪的空对象，如果你了解过`字面量类型`，可以认为`{}`就是一个对象字面量类型（对应到字符串字面量类型这样）。否则，你可以认为使用{}作为类型签名就是一个合法的，但内部无属性定义的空对象，这类似于 Object（想想 new Object()），它意味着任何非 null / undefined 的值：
+- 虽然能够将其作为变量的类型，但你实际上无法对这个变量进行任何赋值操作
+```js
+const tmp25: {} = undefined; // 仅在关闭 strictNullChecks 时成立，下同
+const tmp26: {} = null;
+const tmp27: {} = void 0; // void 0 等价于 undefined
+
+const tmp28: {} = 'linbudu';
+const tmp29: {} = 599;
+const tmp30: {} = { name: 'linbudu' };
+const tmp31: {} = () => {};
+const tmp32: {} = [];
+```
+- 最后，为了更好地区分 `Object、object 以及{}`这三个具有迷惑性的类型，我们再做下总结：
+  - 在任何时候都不要，不要，`不要`使用 Object 以及类似的装箱类型。
+  - 当你不确定某个变量的具体类型，但能确定它不是原始类型，可以使用 `object`。但我更推荐进一步区分，也就是使用 `Record<string, unknown>` 或` Record<string, any>` 表示对象，`unknown[]` 或 `any[]` 表示数组，(...args: any[]) => any表示函数这样。
+  - 我们同样要避免使用`{}`。`{}`意味着`任何非 null / undefined` 的值，从这个层面上看，使用它和使用 `any` 一样恶劣。
+
+> 1.9、unique symbol
+- `Symbol` 在 JavaScript 中代表着一个唯一的值类型，它类似于字符串类型，可以作为对象的属性名，并用于避免错误修改 对象 / Class 内部属性的情况。而在 TypeScript 中，symbol 类型并不具有这一特性，一百个具有 symbol 类型的对象，它们的 symbol 类型指的都是 TypeScript 中的同一个类型。为了实现“独一无二”这个特性，TypeScript 中支持了 unique symbol 这一类型声明，它是 symbol 类型的子类型，每一个 unique symbol 类型都是独一无二的。
+```js
+const uniqueSymbolFoo: unique symbol = Symbol("yzx")
+
+// 类型不兼容
+const uniqueSymbolBar: unique symbol = uniqueSymbolFoo
+```
+- 在 JavaScript 中，我们可以用 Symbol.for 方法来复用已创建的 Symbol，如 Symbol.for("yzx") 会首先查找全局是否已经有使用 linbudu 作为 key 的 Symbol 注册，如果有，则返回这个 Symbol，否则才会创建新的 Symbol 。
+- 在 TypeScript 中，如果要引用已创建的 unique symbol 类型，则需要使用类型查询操作符 typeof 
+```js
+declare const uniqueSymbolFoo: unique symbol;
+
+const uniqueSymbolBaz: typeof uniqueSymbolFoo = uniqueSymbolFoo
+```
+
+## 2、字面量类型 与 枚举
+> 2.1、类型不够精准
+- 这里的 code 与 status 实际值会来自于一组确定值的集合，比如 code 可能是 10000 / 10001 / 50000，status 可能是 "success" / "failure"。而上面的类型只给出了一个宽泛的 number（string），此时我们既不能在访问 code 时获得精确的提示，也失去了 TypeScript 类型即文档的功能。
+```js
+interface IRes {
+  code: number;
+  status: string;
+  data: any;
+}
+//使用联合类型加上字面量类型
+interface Res {
+  code: 10000 | 10001 | 50000;
+  status: "success" | "failure";
+  data: any;
+}
+```
+
+> 2.2、字面量类型
+- `"success"` 不是一个值吗？为什么它也可以作为类型？在 TypeScript 中，这叫做字面量类型（Literal Types），它代表着比原始类型更精确的类型，同时也是原始类型的子类型（关于类型层级，我们会在后面详细了解）。
+- 字面量类型主要包括字符串字面量类型、数字字面量类型、布尔字面量类型和对象字面量类型，它们可以直接作为类型标注
+- 所以字面量类型比原始类型更精确
+```js
+interface Tmp {
+  bool: true | false;
+  num: 1 | 2 | 3;
+  str: "y" | "z" | "x"
+}
+```
+- 联合类型的常用场景之一是通过多个对象类型的联合，来实现手动的互斥属性，即这一属性如果有字段1，那就没有字段2：
+```js
+interface Tmp {
+  user:
+    | {
+        vip: true;
+        expires: string;
+      }
+    | {
+        vip: false;
+        promotion: string;
+      };
+}
+
+declare var tmp: Tmp;
+
+if (tmp.user.vip) {
+  console.log(tmp.user.expires);
+}
+```
+- 我们也可以通过类型别名来复用一组字面量联合类型：
+```js
+type Code = 10000 | 10001 | 50000;
+
+type Status = "success" | "failure";
+```
+
+> 2.3、枚举
+```js
+export default {
+  Home_Page_Url: "url1",
+  Setting_Page_Url: "url2",
+  Share_Page_Url: "url3",
+}
+//枚举,如果你没有声明枚举的值，它会默认使用数字枚举，并且从 0 开始，以 1 递增：
+enum PageUrl {
+  Home_Page_Url = "url1",
+  Setting_Page_Url = "url2",
+  Share_Page_Url = "url3",
+}
+const home = PageUrl.Home_Page_Url;
+//在数字型枚举中，你可以使用延迟求值的枚举值，比如函数：
+const returnNum = () => 100 + 499;
+
+enum Items {
+  Foo = returnNum(),
+  Bar = 599,
+  Baz
+}
+//如果你使用了延迟求值，那么没有使用延迟求值的枚举成员必须放在使用常量枚举值声明的成员之后（如上例），或者放在第一位：
+```
+- 枚举和对象的重要差异在于，对象是单向映射的，我们只能从键映射到键值。而枚举是双向映射的，即你可以从枚举成员映射到枚举值，也可以从枚举值映射到枚举成员：
+```js
+//obj[k] = v 的返回值即是 v，因此这里的 obj[obj[k] = v] = k 本质上就是进行了 obj[k] = v 与 obj[v] = k 这样两次赋值。
+enum Items {
+  Foo,
+  Bar,
+  Baz
+}
+
+const fooValue = Items.Foo; // 0
+const fooKey = Items[0]; // "Foo"
+//但需要注意的是，仅有值为数字的枚举成员才能够进行这样的双向枚举，字符串枚举成员仍然只会进行单次映射：
+```
+> 2.4、常量枚举
+- 常量枚举和枚举相似，只是其声明多了一个 const
+```js
+const enum Items {
+  Foo,
+  Bar,
+  Baz
+}
+
+const fooValue = Items.Foo; // 0
+//对于常量枚举，你只能通过枚举成员访问枚举值（而不能通过值访问成员）。同时，在编译产物中并不会存在一个额外的辅助对象（如上面的 Items 对象），对枚举成员的访问会被直接内联替换为枚举的值。以上的代码会被编译为如下形式：
+const fooValue = 0 /* Foo */; // 0
+```
+> 2.5、类型控制流分析中的字面量类型
+- 除了手动声明字面量类型以外，实际上 TypeScript 也会在某些情况下将变量类型推导为字面量类型，看这个例子：
+- 要解答这个现象，需要你回想 let 和 const 声明的意义。我们知道，使用 let 声明的变量是可以再次赋值的，在 TypeScript 中要求赋值类型始终与原类型一致（如果声明了的话）。因此对于 let 声明，只需要推导至这个值从属的类型即可。而 const 声明的原始类型变量将不再可变，因此类型可以直接一步到位收窄到最精确的字面量类型，但对象类型变量仍可变（但同样会要求其属性值类型保持一致）。
+```js
+let indentifer = "Youngzx";//const indentifer: Youngzx
+//你会发现，使用 const 声明的变量，其类型会从值推导出最精确的字面量类型。而对象类型则只会推导至符合其属性结构的接口，不会使用字面量类型：
+const info = {
+  name: string,
+  age: 18,
+  profile: {
+    job:"程序员";
+  }
+}
+// const info = {
+//   name: string,
+//   age: number,
+//   profile: {
+//     job:string;
+//   }
+// }
+//
 ```
