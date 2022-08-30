@@ -32,3 +32,34 @@ interface Res {
 declare var res:Res
 res.code = 10000
 console.log(res.code)
+
+
+function add(num1:number,num2:number): number{
+  return num1+num2;
+}
+console.log(add(1,3))
+
+const add2 = (num1: number,num2: number,num3? : number): Number => {
+  if(num3){
+    return num1+num2+num3;
+  }else{
+    return num1+num2;
+  }
+}
+
+function func(foo: number, bar: true): string;
+function func(foo: number, bar?: false): number;
+function func(foo: number, bar?: boolean): string | number {
+  if (bar) {
+    return String(foo);
+  } else {
+    return foo * 599;
+  }
+}
+
+const res1 = func(599); // number
+const res2 = func(599, true); // string
+const res3 = func(599, false); // number
+
+
+type UnionWithNever = "yzx" | 599 | true | void | never;

@@ -11,6 +11,29 @@ var obj1 = {
     age: 599,
     male: true
 };
-console.log(obj1);
-res.code = 10000;
+// console.log(obj1);
+// res.code = 10000;
 // console.log(res.code);
+function add(num1, num2) {
+    return num1 + num2;
+}
+console.log(add(1, 3));
+var add2 = function (num1, num2, num3) {
+    if (num3) {
+        return num1 + num2 + num3;
+    }
+    else {
+        return num1 + num2;
+    }
+};
+function func(foo, bar) {
+    if (bar) {
+        return String(foo);
+    }
+    else {
+        return foo * 599;
+    }
+}
+var res1 = func(599); // number
+var res2 = func(599, true); // string
+var res3 = func(599, false); // number

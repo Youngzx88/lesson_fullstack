@@ -318,3 +318,161 @@ const info = {
 // }
 //
 ```
+
+## 3、函数重载与面向对象
+> 3.1、函数
+
+- 如果说变量的类型是描述了这个变量的`值类型`，那么函数的类型就是描述了`函数入参类型`与`函数返回值类型`，它们同样使用:的语法进行类型标注。我们直接看最简单的例子
+```js
+function add(num1:number,num2:number): number{
+  return num1+num2;
+}
+console.log(add(1,3))
+```
+- 这里的 (name: string) => number 看起来很眼熟，对吧？它是 ES6 的重要特性之一：箭头函数。但在这里，它其实是 TypeScript 中的函数类型签名。而实际的箭头函数，我们的类型标注也是类似的：
+```js
+// 方式一
+const foo = (name: string): number => {
+  return name.length
+}
+
+// 方式二
+const foo: (name: string) => number = (name) => {
+  return name.length
+}
+```
+
+> 3.2、void类型
+- 在 TypeScript 中，一个没有返回值（即没有调用 return 语句）的函数，其返回类型应当被标记为 void 而不是 undefined，即使它实际的值是 undefined。
+- 在 TypeScript 中，undefined 类型是一个实际的、有意义的类型值，而 void 才代表着空的、没有意义的类型值。 相比之下，void 类型就像是 JavaScript 中的 null 一样。因此在我们没有实际返回值时，使用 void 类型能更好地说明这个函数没有进行返回操作。但在上面的第二个例子中，其实更好的方式是使用 `undefined` ：
+```js
+// 没有调用 return 语句
+function foo(): void { }
+
+// 调用了 return 语句，但没有返回值
+function bar(): void {
+  return;
+}
+```
+
+> 3.3、可选参数与rest参数
+- 在很多时候，我们会希望函数的参数可以更灵活，比如它不一定全都必传，当你不传入参数时函数会使用此参数的默认值。正如在对象类型中我们使用 ? 描述一个可选属性一样，在函数类型中我们也使用` ? `描述一个可选参数：
+- 需要注意的是，可选参数必须位于必选参数之后。毕竟在 JavaScript 中函数的入参是按照位置（形参），而不是按照参数名（名参）进行传递。当然，我们也可以直接将可选参数与默认值合并，但此时就不能够使用` ? `了，因为既然都有默认值，那肯定是可选参数啦。
+- 在某些情况下，这里的可选参数类型也可以省略，如这里原始类型的情况可以直接从提供的默认值类型推导出来。但对于联合类型或对象类型的复杂情况，还是需要老老实实地进行标注。
+```js
+// 在函数逻辑中注入可选参数默认值
+function foo1(name: string, age?: number): number {
+  const inputAge = age || 18; // 或使用 age ?? 18
+  return name.length + inputAge
+}
+
+// 直接为可选参数声明默认值
+function foo2(name: string, age: number = 18): number {
+  const inputAge = age;
+  return name.length + inputAge
+}
+```
+
+> 3.4、重载
+- 在某些逻辑较复杂的情况下，函数可能有多组入参类型和返回值类型：
+- 在这个实例中，函数的返回类型基于其入参 bar 的值，并且从其内部逻辑中我们知道，当 bar 为 true，返回值为 string 类型，否则为 number 类型。而这里的类型签名完全没有体现这一点，我们只知道它的返回值是这么个联合类型。
+- 要想实现与入参关联的返回值类型，我们可以使用 TypeScript 提供的函数重载签名（Overload Signature），将以上的例子使用重载改写：
+```js
+function func(foo: number, bar?: boolean): string | number {
+  if (bar) {
+    return String(foo);
+  } else {
+    return foo * 599;
+  }
+}
+//上面的例子用重载重写
+function func(foo: number, bar: true): string;
+function func(foo: number, bar?: false): number;
+function func(foo: number, bar?: boolean): string | number {
+  if (bar) {
+    return String(foo);
+  } else {
+    return foo * 599;
+  }
+}
+
+const res1 = func(599); // number
+const res2 = func(599, true); // string
+const res3 = func(599, false); // number
+```
+- 这里我们的三个 `function func` 其实具有不同的意义：
+`function func(foo: number, bar: true): string`，重载签名`一`，传入 bar 的值为 true 时，函数返回值为 string 类型。
+`function func(foo: number, bar?: false): number`，重载签名`二`，不传入 bar，或传入 bar 的值为 false 时，函数返回值为 number 类型。
+f`unction func(foo: number, bar?: boolean): string | number`，函数的`实现签名`，会包含重载签名的所有可能情况。
+- 这里有一个需要注意的地方，拥有多个重载声明的函数在被调用时，是按照重载的声明顺序往下查找的。因此在第一个重载声明中，为了与逻辑中保持一致，即在 bar 为 true 时返回 string 类型，这里我们需要将第一个重载声明的 bar 声明为必选的字面量类型。
+
+> 3.5、异步函数、Generator 函数等类型签名
+- 对于`异步函数`、`Generator 函数`、`异步 Generator 函数`的类型签名，其参数签名基本一致，而返回值类型则稍微有些区别：
+- 其返回值必定为一个 Promise 类型，而 Promise 内部包含的类型则通过泛型的形式书写，即 Promise< T >
+```js
+async function asyncFunc(): Promise<void> {}
+
+function* genFunc(): Iterable<void> {}
+
+async function* asyncGenFunc(): AsyncIterable<void> {}
+```
+
+> 3.6、Class
+- 过时暂不去了解
+
+## 4、内置类型：any，unknown，never
+> 4.1、any
+- 你可以在 any 类型变量上`任意地`进行操作，包括赋值、访问、方法调用等等，此时可以认为类型推导与检查是被完全禁用的
+  - 如果是`类型不兼容报错`导致你使用 any，考虑用`类型断言`替代，我们下面就会开始介绍类型断言的作用。
+  - 如果是`类型太复杂`导致你不想全部声明而使用 any，考虑将这一处的类型去`断言为你需要的最简类型`。如你需要调用 foo.bar.baz()，就可以先将 foo 断言为一个具有 bar 方法的类型。
+  - 如果你是想表达一个`未知类型`，更合理的方式是使用 `unknown`。
+  - unknown 类型和 any 类型有些类似，一个 unknown 类型的变量可以再次赋值为任意其它类型，但只能赋值给 any 与 unknown 类型的变量：
+```js
+// 被标记为 any 类型的变量可以拥有任意类型的值
+let anyVar: any = "linbudu";
+
+anyVar = false;
+anyVar = "linbudu";
+anyVar = {
+  site: "juejin"
+};
+
+anyVar = () => { }
+
+// 标记为具体类型的变量也可以接受任何 any 类型的值
+const val1: string = anyVar;
+const val2: number = anyVar;
+const val3: () => {} = anyVar;
+const val4: {} = anyVar;
+//any 就像是 “我身化万千无处不在” ，所有类型都把它当自己人。而 unknown 就像是 “我虽然身化万千，但我坚信我在未来的某一刻会得到一个确定的类型” 
+```
+> 4.2 、never
+- 将鼠标悬浮在类型别名之上，你会发现这里显示的类型是"yzx" | 599 | true | void。`never 类型被直接无视掉了`，而 void 仍然存在。这是因为，void 作为类型表示一个空类型，就像没有返回值的函数使用 void 来作为返回值类型标注一样，void 类型就像 JavaScript 中的 null 一样代表“这里有类型，但是个空类型”。
+- 在编程语言的类型系统中，never 类型被称为 `Bottom Type`，是整个类型系统层级中`最底层`的类型。和 null、undefined 一样，它是所有类型的子类型，但只有 never 类型的变量能够赋值给另一个 never 类型变量。
+```js
+type UnionWithNever = "yzx" | 599 | true | void | never;
+```
+- 但在某些情况下使用 never 确实是符合逻辑的，比如一个只负责抛出错误的函数：
+- 在类型流的分析中，一旦一个返回值类型为 never 的函数被调用，那么下方的代码都会被视为无效的代码（即无法执行到）：
+```js
+function justThrow(): never {
+  throw new Error()
+}
+```
+- 我们也可以显式利用它来进行类型检查，即上面在联合类型中 never 类型神秘消失的原因。假设，我们需要对一个联合类型的每个类型分支进行不同处理：
+```js
+declare const strOrNumOrBool: string | number | boolean;
+
+if (typeof strOrNumOrBool === "string") {
+  console.log("str!");
+} else if (typeof strOrNumOrBool === "number") {
+  console.log("num!");
+} else if (typeof strOrNumOrBool === "boolean") {
+  console.log("bool!");
+} else {
+  throw new Error(`Unknown input type: ${strOrNumOrBool}`);
+}
+```
+
+> 4.3、类型断言：警告编译器不准报错
+- 类型断言能够显式告知类型检查程序当前这个变量的类型，可以进行类型分析地修正、类型。它其实就是一个将变量的已有类型更改为新指定类型的操作，它的基本语法是 `as NewType`，你可以将 `any / unknown` 类型断言到一个具体的类型：
