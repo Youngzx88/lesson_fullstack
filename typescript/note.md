@@ -476,3 +476,166 @@ if (typeof strOrNumOrBool === "string") {
 
 > 4.3、类型断言：警告编译器不准报错
 - 类型断言能够显式告知类型检查程序当前这个变量的类型，可以进行类型分析地修正、类型。它其实就是一个将变量的已有类型更改为新指定类型的操作，它的基本语法是 `as NewType`，你可以将 `any / unknown` 类型断言到一个具体的类型：
+- 还可以 as 到 any 来为所欲为，跳过所有的类型检查
+- 也可以在联合类型中断言一个具体的分支
+```ts
+let unknownVar: unknown;
+(unknownVar as { foo: () => {} }).foo();
+
+const str: string = "linbudu";
+(str as any).func().foo().prop;
+```
+
+> 4.4、双重断言
+- 如果在使用类型断言时，原类型与断言类型之间差异过大，也就是指鹿为马太过离谱，离谱到了指鹿为霸王龙的程度，TypeScript 会给你一个类型报错
+- 此时它会提醒你先断言到 unknown 类型，再断言到预期类型，就像这样：
+```ts
+const str: string = "yzx";
+
+// 从 X 类型 到 Y 类型的断言可能是错误的，blabla
+(str as { handler: () => {} }).handler()
+
+(str as unknown as { handler: () => {} }).handler()
+```
+
+> 4.5、非空断言
+- 非空断言其实是类型断言的简化，它使用` ! `语法，即 `obj!.func()!.prop` 的形式标记前面的一个声明一定是非空的（实际上就是剔除了 `null` 和 `undefined` 类型），比如这个例子
+```ts
+declare const foo: {
+  func?: () => ({
+    prop?: number | null;
+  })
+};
+
+foo.func().prop.toFixed();
+
+//func 在 foo 中不一定存在，prop 在 func 调用结果中不一定存在，且可能为 null，我们就会收获两个类型报错。如果不管三七二十一地坚持调用，想要解决掉类型报错就可以使用非空断言：
+
+foo.func!().prop!.toFixed();
+```
+
+## 5、类型工具
+> 5.1、类型别名
+- 类型别名可以说是 TypeScript 类型编程中最重要的一个功能，从一个简单的函数类型别名，到让你眼花缭乱的类型体操，都离不开类型别名。虽然很重要，但它的使用却并不复杂
+- 我们通过 type 关键字声明了一个类型别名 A ，同时它的类型等价于 string 类型。类型别名的作用主要是对一组类型或一个特定类型结构进行封装，以便于在其它地方进行复用。
+- 在类型别名中，类型别名可以这么声明自己能够接受泛型（我称之为泛型坑位）。一旦接受了泛型，我们就叫它工具类型
+```ts
+type A = String
+//抽离
+type StatusCode = 200 | 301 | 400 | 500 | 502;
+type PossibleDataTypes = string | number | (() => unknown);
+//复用
+const status: StatusCode = 502;
+//抽离一组联合类型
+type StatusCode = 200 | 301 | 400 | 500 | 502;
+type PossibleDataTypes = string | number | (() => unknown);
+
+const status: StatusCode = 502;
+//抽离一个函数类型
+type Handler = (e: Event) => void;
+
+const clickHandler: Handler = (e) => { };
+const moveHandler: Handler = (e) => { };
+const dragHandler: Handler = (e) => { };
+//声明一个对象类型，就像接口那样：
+type ObjType = {
+  name: string;
+  age: number;
+}
+//在类型别名中，类型别名可以这么声明自己能够接受泛型（我称之为泛型坑位）。一旦接受了泛型，我们就叫它工具类型
+type Factory<T> = T | number | string;
+const foo: Factory<boolean> = true;
+//虽然现在类型别名摇身一变成了工具类型，但它的基本功能仍然是创建类型，只不过工具类型能够接受泛型参数，实现更灵活的类型创建功能
+```
+> 5.2、联合类型与交叉类型
+- 联合类型`|`
+- 交叉类型`&`
+```ts
+interface NameStruct {
+  name: string;
+}
+
+interface AgeStruct {
+  age: number;
+}
+
+type ProfileStruct = NameStruct & AgeStruct;
+
+const profile: ProfileStruct = {
+  name: "linbudu",
+  age: 18
+}
+```
+- 对于对象类型的交叉类型，其内部的同名属性类型同样会按照交叉类型进行合并
+```ts
+type Struct1 = {
+  primitiveProp: string;
+  objectProp: {
+    name: string;
+  }
+}
+
+type Struct2 = {
+  primitiveProp: number;
+  objectProp: {
+    age: number;
+  }
+}
+
+type Composed = Struct1 & Struct2;
+
+type PrimitivePropType = Composed['primitiveProp']; // never
+type ObjectPropType = Composed['objectProp']; // { name: string; age: number; }
+
+//声明一个简单、有实际意义的工具类型：
+type MaybeNull<T> = T | null;
+//类似的还有 MaybePromise、MaybeArray
+type MaybeArray<T> = T | T[];
+// 函数泛型我们会在后面了解~
+function ensureArray<T>(input: MaybeArray<T>): T[] {
+  return Array.isArray(input) ? input : [input];
+}
+```
+- 总结一下交叉类型和联合类型的区别就是，联合类型只需要符合成员之一即可`（||）`，而交叉类型需要严格符合每一位成员`（&&）`。
+
+> 5.3、索引类型
+- 索引类型指的不是某一个特定的类型工具，它其实包含三个部分：`索引签名类型`、`索引类型查询`与`索引类型访问`。
+- 唯一共同点是，它们都通过索引的形式来进行类型操作，但`索引签名类型是声明`，`后两者`则是`读取`
+
+- 1、`索引签名类型`
+  - 在这个例子中我们声明的键的类型为 `string（[key: string]）`，这也意味着在实现这个类型结构的变量中只能声明字符串类型的键
+  - 在这个例子中我们声明的键的类型为 `string（[key: string]）`，这也意味着在实现这个类型结构的变量中只能声明字符串类型的键
+  - 但由于 JavaScript 中，对于 `obj[prop]`形式的访问会将数字索引访问转换为字符串索引访问，也就是说， `obj[599]` 和 `obj['599']` 的效果是一致的。因此，在字符串索引签名类型中我们仍然可以声明数字类型的键。类似的，`symbol` 类型也是如此：
+  ```ts
+  interface AllStringTypes {
+    [key: string]: string;
+  }
+
+  type PropType1 = AllStringTypes['linbudu']; // string
+  type PropType2 = AllStringTypes['599']; // string
+
+  const foo: AllStringTypes = {
+    "linbudu": "599",
+    599: "linbudu",
+    [Symbol("ddd")]: 'symbol',
+  }
+  ```
+- 2、`索引类型查询`
+  - 刚才我们已经提到了索引类型查询，也就是 `keyof` 操作符。严谨地说，它可以将对象中的所有键转换为对应字面量类型，然后再组合成联合类型。注意，这里并不会将数字类型的键名转换为字符串类型字面量，而是仍然保持为数字类型字面量。
+```js
+interface Foo {
+  linbudu: 1,
+  599: 2
+}
+
+type FooKeys = keyof Foo; // "linbudu" | 599
+```
+- 3、`索引类型访问`
+  - 在 JavaScript 中我们可以通过 obj[expression] 的方式来动态访问一个对象属性（即计算属性），expression 表达式会先被执行，然后使用返回值来访问属性。而 TypeScript 中我们也可以通过类似的方式，只不过这里的 expression 要换成类型。接下来，我们来看个例子：
+  ```js
+  interface NumberRecord {
+    [key: string]: number;
+  }
+
+  type PropType = NumberRecord[string]; // number
+  ```

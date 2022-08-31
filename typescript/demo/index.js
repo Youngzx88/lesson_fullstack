@@ -37,3 +37,9 @@ function func(foo, bar) {
 var res1 = func(599); // number
 var res2 = func(599, true); // string
 var res3 = func(599, false); // number
+var str = "yzx";
+var myobj = {
+    name: "shit",
+    age: 19
+};
+console.log(myobj);

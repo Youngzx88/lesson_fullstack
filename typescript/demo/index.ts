@@ -63,3 +63,40 @@ const res3 = func(599, false); // number
 
 
 type UnionWithNever = "yzx" | 599 | true | void | never;
+
+
+const str: string = "yzx";
+
+// 从 X 类型 到 Y 类型的断言可能是错误的，blabla
+// (str as { handler: () => {} }).handler()
+
+type Struct1 = {
+  initProps: string,
+  initObj:{
+    name:string
+  }
+}
+
+
+type Struct2 = {
+  initProps: number,
+  initObj:{
+    age:number
+  }
+}
+
+type unionStruct = Struct1 & Struct2;
+
+type PrimitivePropType = unionStruct['initProps']; // never
+type PrimitivePropObj = unionStruct['initObj']
+const myobj:PrimitivePropObj = {
+  name: "shit",
+  age: 19
+}
+console.log(myobj)
+
+interface AllStringTypes {
+  [key: string]: string;
+}
+type proptype1 = AllStringTypes["yzx"];
+type proptype2 = AllStringTypes['xxx'];
