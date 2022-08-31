@@ -622,20 +622,76 @@ function ensureArray<T>(input: MaybeArray<T>): T[] {
   ```
 - 2、`索引类型查询`
   - 刚才我们已经提到了索引类型查询，也就是 `keyof` 操作符。严谨地说，它可以将对象中的所有键转换为对应字面量类型，然后再组合成联合类型。注意，这里并不会将数字类型的键名转换为字符串类型字面量，而是仍然保持为数字类型字面量。
-```js
-interface Foo {
-  linbudu: 1,
-  599: 2
-}
+  ```js
+  interface Foo {
+    linbudu: 1,
+    599: 2
+  }
 
-type FooKeys = keyof Foo; // "linbudu" | 599
-```
+  type FooKeys = keyof Foo; // "linbudu" | 599
+  ```
 - 3、`索引类型访问`
   - 在 JavaScript 中我们可以通过 obj[expression] 的方式来动态访问一个对象属性（即计算属性），expression 表达式会先被执行，然后使用返回值来访问属性。而 TypeScript 中我们也可以通过类似的方式，只不过这里的 expression 要换成类型。接下来，我们来看个例子：
-  ```js
+  ```ts
   interface NumberRecord {
     [key: string]: number;
   }
 
   type PropType = NumberRecord[string]; // number
   ```
+- 4、`映射类型`
+  - 不同于索引类型包含好几个部分，映射类型指的就是一个确切的类型工具。看到映射这个词你应该能联想到 JavaScript 中数组的 map 方法，实际上也是如此，映射类型的主要作用即是基于键名映射到键值类型。概念不好理解 
+  ```ts
+  //把一个对象所有的属性映射为string
+  type Stringfy<T> = {
+    [K in keyof T]: string
+  }
+  type Foo = {
+    name: string,
+    age: number,
+    grade: string,
+    sex: boolean
+  }
+  var newFoo:Stringfy<string>
+  ```
+  - 拿到属性映射为string其实没有什么很大的意义，但是同时也可以拿到值
+  ```ts
+  type clone<T> = {
+    [K in keyof T]: T[K];
+  }
+  ```
+  - 这里的`T[K]`其实就是上面说到的`索引类型访问`，我们使用键的字面量类型访问到了键值的类型，这里就相当于克隆了一个接口。需要注意的是，这里其实只有`K in `属于`映射类型`的语法，`keyof T` 属于 `keyof 操作符`，`[K in keyof T]`的`[]`属于`索引签名`类型，`T[K]`属于`索引类型`访问。
+
+> 5.4、类型查询操作符：typeof
+  - ts中存在两种功能不同的typeof操作符，最常见的就js中，用于检查变量类型的`tyoeof`
+  - 第二种就是用于类型查询，typeof，返回的是一个`ts类型`
+  ```ts
+  const str = "linbudu";
+
+  const obj = { name: "linbudu" };
+
+  const nullVar = null;
+  const undefinedVar = undefined;
+
+  const func = (input: string) => {
+    return input.length > 10;
+  }
+
+  type Str = typeof str; // "linbudu"
+  type Obj = typeof obj; // { name: string; }
+  type Null = typeof nullVar; // null
+  type Undefined = typeof undefined; // undefined
+  type Func = typeof func; // (input: string) => boolean
+  ```
+  - typeof 返回的类型就是当你把鼠标悬浮在变量名上时出现的推导后的类型，并且是最窄的推导程度（即到字面量类型的级别）。你也不必担心混用了这两种 typeof，在`逻辑代码`中使用的 typeof 一定会是 JavaScript 中的 typeof，而`类型代码`（如类型标注、类型别名中等）中的一定是类型查询的 typeof 。同时，为了更好地避免这种情况，也就是隔离类型层和逻辑层，类型查询操作符后是`不允许使用表达式的`
+  ```js
+  const isInputValid = (input: string) => {
+    return input.length > 10;
+  }
+
+  // 不允许表达式
+  let isValid: typeof isInputValid("linbudu");
+  ```
+  > 5.5、类型守卫
+  - TypeScript 中提供了非常强大的类型推导能力，它会随着你的代码逻辑不断尝试收窄类型，这一能力称之为类型的控制流分析（也可以简单理解为类型推导）。
+  - 

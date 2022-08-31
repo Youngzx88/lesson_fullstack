@@ -100,3 +100,17 @@ interface AllStringTypes {
 }
 type proptype1 = AllStringTypes["yzx"];
 type proptype2 = AllStringTypes['xxx'];
+
+
+
+type Stringfy<T> = {
+  [K in keyof T]: string
+}
+type Foo = {
+  name: string,
+  age: number,
+  grade: string,
+  sex: boolean
+}
+
+var newFoo:Stringfy<string>
