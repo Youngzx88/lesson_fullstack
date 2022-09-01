@@ -18,7 +18,7 @@ const symbolVar: symbol = Symbol('unique');
 - 这两者在没有开启 strictNullChecks 检查的情况下，会被视作其他类型的子类型，比如 string 类型会被认为包含了 null 与 undefined 类型
 
 > 1.3、void
-- <a href="javascript:void(0)"//> 清除缓存</a/>
+- <a href="javascript:void(0)"> 清除缓存</a>
 - 这里的 `void(0)` 等价于 void 0，即`void expression` 的语法。void 操作符会执行后面跟着的表达式并返回一个 undefined，如你可以使用它来执行一个`立即执行函数（IIFE）`：
 ```js
 void function iife() {
@@ -408,7 +408,7 @@ f`unction func(foo: number, bar?: boolean): string | number`，函数的`实现�
 
 > 3.5、异步函数、Generator 函数等类型签名
 - 对于`异步函数`、`Generator 函数`、`异步 Generator 函数`的类型签名，其参数签名基本一致，而返回值类型则稍微有些区别：
-- 其返回值必定为一个 Promise 类型，而 Promise 内部包含的类型则通过泛型的形式书写，即 Promise< T >
+- 其返回值必定为一个 Promise 类型，而 Promise 内部包含的类型则通过泛型的形式书写，即 Promise <T/>
 ```js
 async function asyncFunc(): Promise<void> {}
 
@@ -692,6 +692,45 @@ function ensureArray<T>(input: MaybeArray<T>): T[] {
   // 不允许表达式
   let isValid: typeof isInputValid("linbudu");
   ```
-  > 5.5、类型守卫
-  - TypeScript 中提供了非常强大的类型推导能力，它会随着你的代码逻辑不断尝试收窄类型，这一能力称之为类型的控制流分析（也可以简单理解为类型推导）。
-  - 
+> 5.5、类型守卫
+- TypeScript 中提供了非常强大的类型推导能力，它会随着你的代码逻辑不断尝试收窄类型，这一能力称之为类型的控制流分析（也可以简单理解为类型推导）。
+```ts
+//原来的写法，再往下走不能过滤
+function isString(input: unknown): boolean {
+  return typeof input === "string";
+}
+//TypeScript 引入了 is 关键字来显式地提供类型信息
+function isString(input: unknown): input is string {
+  return typeof input === "string";
+}
+function foo(input: string | number) {
+  if (isString(input)) {
+    // 正确了
+    (input).replace("y z x", "yzx")
+  }
+  if (typeof input === 'number') { }
+  // ...
+}
+```
+> 5.6、基于 in 与 instanceof 的类型保护
+```ts
+interface Foo {
+  foo: string;
+  fooOnly: boolean;
+  shared: number;
+}
+
+interface Bar {
+  bar: string;
+  barOnly: boolean;
+  shared: number;
+}
+
+function handle(input: Foo | Bar) {
+  if ('foo' in input) {
+    input.fooOnly;
+  } else {
+    input.barOnly;
+  }
+}
+```
