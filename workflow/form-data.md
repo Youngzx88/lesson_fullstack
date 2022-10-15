@@ -1,7 +1,0 @@
-- formdata
-  - 默认编码：aplication/x-www-form-urlencoded
-  - 请求体
-  - 文件上传 multipart、form-data
-    - 最常见的 POST 提交数据的方式，原生Form表单，如果不设置 enctype 属性，默认为`application/x-www-form-urlencoded` 方式提交数据。
-    - Content-Type: `application/json` 作为响应头比较常见。实际上，现在越来越多的人把它作为请求头，用来告诉服务端消息主体是序列化后的 JSON 字符串，其中一个好处就是JSON 格式支持比键值对复杂得多的结构化数据。由于 JSON 规范的流行，除了低版本 IE 之外的各大浏览器都原生支持JSON.stringify，服务端语言也都有处理 JSON 的函数，使用起来没有困难。
-    - 另一个常见的 POST 数据提交的方式， Form 表单的 enctype 设置为`multipart/form-data`，它会将表单的数据处理为一条消息，以标签为单元，用分隔符（这就是boundary的作用）分开，类似我们上面Content-Type中的例子。由于这种方式将数据有很多部分，它既可以`上传键值对`，也可以`上传文件`，甚至多个文件。当上传的字段是文件时，会有`Content-Type`来说明文件类型；Content-disposition，用来说明字段的一些信息。每部分都是以 –boundary 开始，紧接着是内容描述信息，然后是回车，最后是字段具体内容（字段、文本或二进制等）。如果传输的是文件，还要包含文件名和文件类型信息。消息主体最后以 –boundary– 标示结束。

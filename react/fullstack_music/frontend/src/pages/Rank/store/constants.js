@@ -1,2 +1,0 @@
-export const CHANGE_LOADING = 'CHANGE_LOADING'
-export const CHANGE_RANK_LIST = 'CHANGE_RANK_LIST'

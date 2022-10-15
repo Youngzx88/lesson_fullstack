@@ -1,8 +1,0 @@
-.App {
-  background-color: black;
-}
-/* 全局 */
-.pt10 {
-  /* 1 物理像素  = 2css像素  */
-  padding-top: 0.5rem;
-}
