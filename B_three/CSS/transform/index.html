@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    .test_transform {
+        width: 10px;
+        height: 200px;
+        background-color: #c685d9;
+        margin: 100px auto;
+        /* 变形属性在3维空间中发生，  */
+        transform-style: preserve-3d;
+        /* transform: rotate(-5deg); */
+        /* rotate默认沿z旋转 正值顺时针，负值逆时针*/
+
+        /* transform默认沿xy移动 */
+        /* transform：translate3D 第三个参数 视距 负值更远 正值更近*/
+        /* transform: translate3d(0px,0px,300px); */
+        /* transform: translate X Y */
+        transform: rotate(0deg);
+        transform-origin: 0px 0px;
+        transition: all 1s;
+    }
+
+    .wrap {
+        perspective:1000px;
+    }
+    .test_transform:hover{
+        transform: rotate(45deg);
+        background-color: black;
+    }
+</style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="test_transform"></div>
+    </div> 
+</body>
+</html>

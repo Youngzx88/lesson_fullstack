@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 把异步的事件执行函数 存到 event loop里面去，实现异步同步化 -->
+    <button id="btn">按钮</button>
+</body>
+<script>
+    const btn = document.getElementById('btn');
+    btn.addEventListener('click',()=>{
+        console.log('clickbtn');
+    })
+    console.log('=======');
+</script>
+</html>

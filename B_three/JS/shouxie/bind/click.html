@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>点赞</button>
+    <button>收藏</button>
+    <button>加关注</button>
+    <script>
+        let aBtn = document.querySelectorAll('button');
+        //1.当点击的时候，for已经执行完了，所以每次点击都为3
+        // for (var i = 0; i < aBtn.length; i++) {//同步代码
+        //     aBtn[i].onclick = function() {//异步代码
+        //         alert(i)
+        //     }
+        // }
+        
+        //2.当i为块级作用域的时候，alert(i)会找到块级作用域的i(闭包)，函数作用域与块级作用域的嵌套
+        for (let i = 0; i < aBtn.length; i++) {//同步代码
+            aBtn[i].onclick = function() {//异步代码
+                alert(i)
+            }
+        }
+
+    </script>
+</body>
+</html>

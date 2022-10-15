@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //代理模式：第一个参数为obj，第二个参数为处理器
+        //初始化一个被代理的，可以被监听的对象的方式
+        //{}
+        //new Object
+        //Object.create();
+        let i = 1;
+        const objHandler = {
+            set(target,name,value){
+                if(name == 'count'){
+                    console.log('你修改了count属性');
+                    target[name] = value;
+                }
+            },
+            get(target,name){
+                if(name == 'count'){
+                    console.log('你访问了count属性');
+                    return target[name];
+                }
+            }
+        }
+        const obj = new Proxy({},objHandler);
+        obj.count;
+        obj.count = 1;
+        console.log(obj.count);
+        obj.count = 2;
+        console.log(obj.count);
+    </script>
+</body>
+</html>

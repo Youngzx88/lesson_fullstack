@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 History API</title>
+    <link rel="stylesheet" href="commons.css">
+</head>
+<body>
+    <!-- url 
+    domain , 组织文件,  向用户提供很多资源
+    链接把资源组织起来 
+    一切皆资源  Restful  -->
+    <div class="wrapper">
+        <ul class="nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="fluffy.html">Fluffy</a></li>
+            <li><a href="socks.html">Socks</a></li>
+            <li><a href="whiskers.html">Whiskers</a></li>
+        </ul>
+        <p class="content">Welcome to Kittens! Home of Fluffy, Socks, and Whiskers. If you're not suffering from a cute overdose within the hour, then you really are a heartless bugger! Now lets look at some cats!
+        </p>
+        <div class="media">
+            <img src="http://www.ichong123.com/uploads/2014/08/m1.jpg" alt="" class="photo">
+        </div>
+    </div>
+</body>
+<script>
+    function getHtml(href,callback){
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET",href, true);
+        xhr.send(); // 发送请求
+        xhr.addEventListener('readystatechange', function(event) {
+            // console.log(event);
+            if (event.target.readyState === 4) { // 数据全部到达了
+                callback(xhr.responseText);
+            }
+        })
+    }
+    function createState(data){
+        //.匹配任何字符  +匹配一次或多次
+        const contentMatches = data.match(/content">(.+)</);//找到data种的content的内容
+        // console.log(contentMatches)
+        const content = contentMatches[1];
+        const photoMatches = data.match(/img.+src="(.+)"\s/);
+        const photo = photoMatches[1];
+        return {
+            content,
+            photo
+        }
+    }
+    window.addEventListener('DOMContentLoaded',function(){
+        //比load更早的js运行，交互
+        // console.log('loaded');
+        const links = document.querySelectorAll('.nav li a');
+        links.forEach(link =>{
+            link.addEventListener('click',function(){
+                event.preventDefault();//不跳转
+                // let href = this.href;//拿到跳转的href
+                // console.log(href);
+                let href = event.target.href;
+                console.log(event.target.href);//第二种方式拿到
+                getHtml(href,function(data){
+                    //callback
+                    // console.log(data);
+                    let state = createState(data);//用正则匹配
+                    // console.log(state); 
+                    document.querySelector('.content').innerHTML = state.content;
+                    document.querySelector('.photo').src = state.photo;
+                })
+                
+            })
+        })
+    })
+    // window.addEventListener('load',function(){
+    // })
+</script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // https://api.github.com/users/wesbos
+        (async function(){
+            //2.
+            // const response = await fetch('https://api.github.com/users/wesbos');
+            // const data = await response.json();
+            // console.log(data);
+            // const response2 = await fetch('https://api.github.com/users/shunwuyu');
+            // const data2 = await response2.json();
+            // console.log(data2);
+            //3.多个异步任务用promise.all();
+            const p1 = fetch('https://api.github.com/users/wesbos');
+            const p2 = fetch('https://api.github.com/users/shunwuyu');
+            const res = await Promise.all([p1,p2]);
+            // console.log(res);
+            const [wes,shunyuwu] = await Promise.all([res.map(r=>r.json())]);
+            console.log(wes,shunyuwu);
+            
+            //1.
+            //then(data => data.json())//没有花括号说明data.json也是一个promise
+            // .then(data=>{
+            //  console.log(data);    
+            //})
+        })()
+    </script>
+</body>
+</html>

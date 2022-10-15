@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/common.css">
+    <script async src="./js/common.js" ></script>
+    <script async src="./js/1.js" ></script> 
+    <!-- <script defer src="./js/common.js" ></script>
+    <script defer src="./js/1.js" ></script>  
+    <script defer src="./js/2.js" ></script>
+    <script defer src="./js/3.js" ></script> -->
+</head>
+<body>
+    <script>
+    // 页面的所有资源都现在并执行完成 
+    // window >  document  事件
+    // window.onload = function() {
+    //     console.log('123');
+    // }
+
+    window.addEventListener('load', () => {
+        console.log('123');
+    })
+
+    //事件 异步 
+    window.addEventListener(
+        "DOMContentLoaded", 
+        () => {
+            console.log('456')
+        }
+    );
+    </script>
+</body>
+</html>

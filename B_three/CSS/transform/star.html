@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    .wrap {
+        display: flex;
+        width: 600px;
+        height: 600px;
+        background-color: green;
+        align-items: center;
+        justify-content: center;
+        perspective: 1000px;
+    }
+    .planet {
+        width: 200px;
+        height: 200px;
+        /* 轨道 */
+        border: 2px solid #fff;
+        transform-style: preserve-3d;
+        position: absolute; /*找到离他最近的position属性不为static元素定位*/
+        /* margin: 0 auto;  */
+        /* margin-top: 200px; */
+        border-radius: 50%;
+        /* transform: scaleY(0.5) rotateZ(45deg); */
+        animation: planet-rotate 20s linear infinite;
+    }
+    /* 定义关键帧 */
+    @keyframes planet-rotate {
+        0%{
+            transform: rotate(45deg) scaleY(0.5) rotate(0);
+        }
+        100%{
+            transform: rotate(45deg) scaleY(0.5) rotate(360deg);
+        }
+
+    }
+    .ball {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        border-radius: 50%;
+        /* ball 穿过轨道 -25px */
+        top: -25px;
+        left: calc(50% - 25px);
+        background-color: yellowgreen;
+        /* transform: rotateZ(-45deg) scaleY(2);  */
+        animation: self-rotate 20s linear infinite;
+    }
+    @keyframes self-rotate {
+        0%{
+            transform:  rotate(0) scaleY(2);
+        }
+        100%{
+            transform:  rotate(-360deg) scaleY(0.2);
+        }
+
+    }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <!-- 星球 -->
+        <div class="planet">
+            <div class="ball"></div>
+        </div>
+    </div>
+</body>
+</html>

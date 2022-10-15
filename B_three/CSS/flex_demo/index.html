@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP状态码</title>
+    <link rel="stylesheet" href="./flex.css">
+    <style>
+    /* css reset  */
+    /* 嵌入样式 */
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="page__hd">
+            <div class="page__title">Flex</div>
+            <div class="page__desc">Flex布局</div>
+        </div>
+        <!-- BEM  -->
+        <div class="page__bd page__bd_spacing">
+            <!-- weui 项目前缀, 弹性布局组件  新一轮的BEM -->
+            <div class="weui-flex">
+                <div class="weui-flex__item">
+                    <div class="placeholder">weui</div>
+                </div>
+            </div>
+            <div class="weui-flex">
+                <div class="weui-flex__item">
+                    <div class="placeholder">weui</div>
+                </div>
+                <div class="weui-flex__item">
+                    <div class="placeholder">weui</div>
+                </div>
+            </div>
+            <div class="weui-flex">
+                <div class="weui-flex__item">
+                    <div class="placeholder">weui</div>
+                </div>
+                <div class="weui-flex__item">
+                    <div class="placeholder">weui</div>
+                </div>
+                <div class="weui-flex__item">
+                    <div class="placeholder">weui</div>
+                </div>
+            </div>
+        </div>
+        <div class="page__ft">
+            <!-- 行内样式 不要这么写 优先级更高 -->
+            <a href=" " style="color:white;">
+                <!-- img 标签 也会发出http请求的 
+                    127.0.0.1 IP  
+                    png 属于 微信的
+                    可以给你用， 
+                    不给我们用  403 Forbidden 
+                    保护自己站点的资源， 减少一些无效的请求 
+                -->
+                <img src="./icon_footer_link.png" alt="">
+            </a>
+        </div>
+    </div>
+    <script>
+    // typeof  不靠谱  
+    // js  函数是一等对象 淘特 
+    function home() {
+        // 通过js 跳转到 /home 页面?
+        // window 全局对象 
+        // location  属于 BOM 对象  DOM对象
+        // Browser 浏览器   
+        window.location.href = '/home';
+    }
+    console.log(typeof home); // function 
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+        .clearfix:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+        .green{
+            background-color: green;
+        }
+        .orange{
+            background-color: orange;
+        }
+        .w150{
+            width: 150px;;
+            height: 150px;
+        }
+        .grail{
+            /* padding把左右侧边的栏位让出来 */
+            padding: 0 150px;
+        }
+        /* 满足BFC浮动元素不重叠 */
+        .left{
+            float: left;
+        }
+        .right{
+            float: right;
+        }
+        .grail main{
+            /* 给main加了浮动 margin-left往左走才会向上挤 不然只能在当前行挤 */
+            float: left;
+            width: 100%;
+        }
+        .grail .left{
+            margin-left: -100%;
+            position: relative;
+            left: -150px;
+        }
+        .grail .right{
+            margin-left: -100%;
+            position: relative;
+            /* 但是这种情况不好确定像素 */
+            left: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <h4>方法一:圣杯布局</h4>
+        <section class="grail clearfix">
+            <!-- 自适应 -->
+            <main class="green">main</main>
+            <aside class="w150 left orange">aside</aside>
+            <aside class="w150 right orange">aside</aside>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+    "beers": [
+    {
+        "id": 1,
+        "title": "百威",
+        "pic": "https://img11.360buyimg.com/n7/jfs/t1/134175/27/28106/450362/626747eeEac924c6e/bb65d4d35ed7ea93.jpg"
+    }, 
+    {
+        "id": 2,
+        "title": "雪花",
+        "pic": "https://img11.360buyimg.com/n7/jfs/t1/125419/39/22707/151885/628c69f4E6bfb698f/cc2e4392b60ca899.jpg"
+    },
+    {
+        "id": 3,
+        "title": "8度",
+        "pic": "https://img11.360buyimg.com/n7/jfs/t1/125419/39/22707/151885/628c69f4E6bfb698f/cc2e4392b60ca899.jpg"
+    }
+    ]
+}

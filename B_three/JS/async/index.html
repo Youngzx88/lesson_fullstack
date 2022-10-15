@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="posts"></ul>
+    <script>
+    // 前端 通过fetch  去和后端通信
+    fetch('http://localhost:3000/post')
+        .then(data => data.json())
+        .then(data => {
+            document.getElementById('posts')
+                //map()方法返回一个新数组，数组中的元素为原始数组元素调用函数处理的后值。 
+                .innerHTML = data.map(post => `
+                    <li>
+                        ${post.id}  ${post.title}  ${post.author}
+                    </li>
+                `).join('')//避免数组的map方法产生','
+            console.log(data);
+        })
+    </script>
+</body>
+</html>

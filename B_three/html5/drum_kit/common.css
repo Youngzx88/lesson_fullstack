@@ -1,0 +1,46 @@
+/* css继承属性 */
+/* css reset样式重置*/
+*{
+    margin: 0px;
+    padding: 0px;
+}
+html{
+    height: 100%;
+    font-size: 10px;
+    background: url('./background.jpg') bottom center;
+    background-size: cover;
+    font-family: sans-serif;
+}
+.keys{
+    display: flex;/*声明为弹性布局*/
+    flex:1;
+    min-height: 100vh;/*vh相对单位 viewportHeight相对单位 与设备无关(px是绝对单位)*/
+    align-items: center;
+    justify-content: center;
+}
+.key{
+    border: .4rem solid black;/*rem相对单位相对于html font-size*/
+    border-radius: .5rem;
+    margin: 1rem;
+    padding: 1rem 0.5rem;
+    font-size: 1.5rem;
+    width: 10rem;
+    text-align: center;
+    color: white;
+    background-color: rgba(0,0,0,0.4);
+    text-shadow: 0 0 0.5rem;   /*灯光从头照上去*/
+}
+.key div{
+    font-size: 4rem;
+}
+.key .sound{
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    letter-spacing: .1rem;
+    color: #ffc600;
+}
+.playing{
+    border-color: #ffc600;
+    transform: scale(1.1);/*变形属性 scale 1.1 变大1.1倍*/
+    box-shadow: 0 0 1rem #ffc600;
+}

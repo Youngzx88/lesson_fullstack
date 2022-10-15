@@ -1,0 +1,83 @@
+ /* css reset */ 
+ * { 
+     margin: 0; 
+     padding: 0; 
+     /* outline: 1px solid green; */
+} 
+body,html { 
+    height: 100%; 
+} 
+/* css4变量 */
+:root{
+    --weui-FG-1: rgba(255,255,255,0.5);
+    --weui-BG-0: #111;
+}
+body { 
+    /* 手机网页 apple-system */ 
+    /* css 继承 */ 
+    font-family: -apple-system-font, sans-serif; 
+    background-color: var(--weui-BG-0);
+    color:var(--weui-FG-1);
+} 
+ .page { 
+     position: absolute; 
+     /* 格式化上下文 绝对定位， 脱离了文档流 */ 
+     top: 0; 
+     right: 0; 
+     bottom: 0; 
+     left: 0; 
+     overflow-y: auto; 
+     /*内部滚动*/ 
+     -webkit-overflow-scrolling: touch; 
+     /*让我么的滚动如丝般顺滑*/ } 
+.page__hd { 
+     padding: 40px;    
+} 
+.page__title{
+    text-align: left;
+    font-size: 20px;
+    font-weight: 400;
+}
+.page__desc{
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+}
+.page__bd_spacing{
+    padding: 0 16px;
+}
+.page__ft{
+    padding-top: 40px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+.page__ft img{
+    height: 19px;
+    filter: invert(100) hue-rotate(170deg);
+}
+.weui-flex{
+    /* 解决兼容性问题 
+        chorme 先支持flex，-webkit-flex 今早支持，-webkit 前缀，-webkit-box最早
+    */
+    display: -webkit-box;
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+    
+}
+.weui-flex__item{
+    -webkit-box-flex: 1;
+    -ms-flex:1;
+    -webkit-flex:1;
+    flex: 1;
+}
+.weui-flex__item .placeholder{
+    text-align: center;
+    margin: 5px;
+    padding: 0 10px;
+    background-color: #1e1e1e;
+    /* em：相对于自身字体大小 */
+    height: 2.3em;
+    line-height: 2.3em;
+    color: var(--weui-FG-1);
+}

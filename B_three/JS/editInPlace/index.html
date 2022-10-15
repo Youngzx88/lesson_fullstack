@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0px;
+            padding: 0px;
+        }
+        #content{ 
+            /* 1.visibility:hidden 占位隐藏 */
+                /* visibility: hidden; */
+                
+            /* 2.display:none 不占位隐藏 */
+                /* display: none;  */
+
+            /* 3.绝对定位：不占文档流*/
+                /* position: absolute;
+                left: -9999px;  */
+               
+
+            /* 4.scale：占文档流 
+                inline行内元素,不能设置宽高-》行内块元素:既不换行,也可以做盒子
+                适用于行内块元素
+            */
+                
+                /* display: inline-block;
+                width: 200px;
+                height: 200px;
+                background-color: green;
+                transform: scale(0);  
+                */
+
+            /* 5.透明度为0：占文档流 */
+                /* opacity: 0; */
+                
+        }
+               
+            /* 6.translate相对于元素本身移动 */
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="ep1">
+            <span id="content">彪悍的人生不需要解释</span>
+            <input type="text" id="input" value="彪悍的人生不需要解释" />
+            <input type="button" id="save" value="Save">
+            <input type="button"  id="cancel" value="Cancel">
+        </div>
+        <div>666666</div>
+    </div>
+    <script>
+    // js 来切换现实/隐藏
+    const save = document.getElementById('save');
+    const cancel = document.getElementById('cancel');
+    const input = document.getElementById('input');
+    const content = document.getElementById('content')
+  
+    // DOM  动态样式
+    function convertToText(){
+    save.style.display = 'none';
+    cancel.style.display = 'none';
+    input.style.display = 'none';
+    content.style.display = 'block';
+    }
+    convertToText();
+    function convertToEdit(){
+    content.style.display = 'none';
+    save.style.display = 'inline';
+    input.style.display = 'inline';
+    cancel.style.display = 'inline';
+    }
+    content.addEventListener("dblclick",function(){
+        convertToEdit();
+        input.focus();
+    })
+
+    save.addEventListener('click',function(){
+        //拿到值并动态设置span
+        const val = input.value;
+        content.innerText = val;
+        convertToText();
+    })
+
+    cancel.addEventListener('click',function(){
+        convertToText();
+    })
+    </script>
+</body>
+</html>

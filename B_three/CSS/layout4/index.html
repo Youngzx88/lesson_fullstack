@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .green{
+            background-color: green;
+        }
+        .orange{
+            background-color: orange;
+        }
+        .clearfix::after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+        .w150{
+            width: 150px;
+            height: 50px;
+        }
+        .wings main{
+            float: left;
+            width: 100%;
+        }
+        .wings .inner{
+            margin: 0 150px;;
+        }
+        .wings .left{
+            float: left;
+            margin-left: -100%;
+        }.wings .right{
+            float: right;
+            margin-left: -100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <h4>方法二:双飞翼布局</h4>
+        <section class="wings clearfix">
+            <main>
+                <div class="green inner">main</div>
+            </main>
+            <aside class="w150 left orange">
+                aside
+            </aside>
+            <aside class="w150 right orange">
+                aside
+            </aside>
+        </section>
+    </div>
+</body>
+</html>

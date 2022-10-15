@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    /* 单屏 */
+    html, body, .layout {
+        height: 100%;
+    }
+    .layout {
+        color: #fff;
+        text-align: center;
+        display: flex;
+        justify-content: space-around; 
+    }
+    main {
+        overflow-y: auto;
+    }
+    section {
+        width: 20%;
+        margin: 20px 0;
+    }
+    .h50 {
+        height: 50px;
+        line-height: 50px;
+    }
+    .orange {
+        background-color: orange;
+    }
+    .blue {
+        background-color: blue;
+    }
+    .black {
+        background-color: black;
+    }
+    .grid {
+        display: grid;  /*GFC 二维布局   */ 
+        grid-template-rows: 50px 1fr 50px;
+    }
+    header, footer {
+        line-height: 50px;
+    }
+    .flex {
+        display: flex;
+        flex-direction:column;
+    }
+    .flex main {
+        flex: 1;
+    }
+    .demo2 {
+        position: relative;
+    }
+    .demo2 header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+    .demo2 footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    /* 盒子模型  */
+    .demo2 main {
+        height: 100%;
+        padding: 50px 0;
+    }
+    .demo1 main { 
+        height: calc(100% - 100px);
+    }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <section class="grid">
+            <header class="orange">方法一:grid</header>
+            <main class="blue">
+                main
+            </main>
+            <footer class="black">footer</footer>
+        </section>
+        <section class="flex">
+            <header class="orange">方法二:flex</header>
+            <main  class="blue">
+                main
+            </main>
+            <footer class="black">footer</footer>
+        </section>
+        <section class="demo2">
+            <header class="h50 orange">方法三:absolute</header>
+            <main >
+                <div class="blue">main</div>
+            </main>
+            <footer class="h50 black">footer</footer>
+        </section>
+        <section class="demo1">
+            <header class="h50 orange">方法一: calc</header>
+            <main class="blue">
+                main
+            </main>
+            <footer class="h50 black">footer</footer>
+        </section>
+    </div>
+</body>
+</html>
