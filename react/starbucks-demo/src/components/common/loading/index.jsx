@@ -20,7 +20,7 @@ const LoadingWrapper = styled.div`
       opacity: 0.6;
       border-radius: 50%;
       background-color: #fffeff;
-      animation: ${loading} 1.4s infinite ease-in;
+      animation: ${loading} 1.4s infinite ease-in
     }
     >div:nth-child(2) {
       animation-delay: -0.7s;

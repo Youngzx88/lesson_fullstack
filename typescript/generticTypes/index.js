@@ -1,6 +1,12 @@
-//等价于如下写法
-// function Factory(typeArg){
-//   return [typeArg,number,string]
-// }
-var sex = 1;
-console.log(sex);
+function handle(input) {
+    if ('foo' in input) {
+        input.fooOnly;
+    }
+    else {
+        input.barOnly;
+    }
+}
+var profile = {
+    name: "linbudu",
+    age: 18
+};

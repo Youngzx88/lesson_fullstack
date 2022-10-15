@@ -27,3 +27,15 @@ function handle(input: Foo | Bar) {
     input.barOnly;
   }
 }
+
+
+interface NameStruct {
+  name: string;
+}
+
+interface AgeStruct {
+  age: number;
+}
+
+type haha = NameStruct | AgeStruct
+
