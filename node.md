@@ -1,12 +1,13 @@
-# 1、今日10月18日
+# 1、今日10月19日
 - 工作计划
     - 完成麦能欣4页切图
-    - 看完ajax，看一点node
-    - 看zustand源码，自己自己写一个简单的，把starbucks换成zustand
+    - 看完ajax，看一点node✅
+    - 看zustand源码，自己自己写一个简单的
+    - 把starbucks换成zustand
     - 看webpack
 
 # 2、现阶段学习目标(打基础 11月15号)
-1. ajax [oooooooo..]❗️
+1. ajax ✅
 2. node 
 3. es6 
 4. webpack5 
@@ -20,6 +21,8 @@
 12. vue+ts
 13. svg
 14. canvas
+15. 看好项目源码
+16. 自己写项目
 
 # 3、未来进阶学习目标
 - Formily(建议有积累了之后研读源码)

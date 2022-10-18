@@ -159,7 +159,7 @@ xhr.onerror = function(){
 }
 ```
 - 针对ie缓存可以在请求后加上时间戳
-## 10、JQ发送ajax以及通用场景
+## 10、JQ发送ajax以及通用场景(❗️)
 - 普通场景
 ```js
 $('button').click(function(){
@@ -193,3 +193,53 @@ $('button').click(function(){
   })
 })
 ```
+## 11、axios发送ajax
+```js
+const result = document.getElementById('result')
+window.onkeydown = function() {
+  axios({
+    method: 'POST',
+    url: 'http://127.0.0.1:8000/axios-server',
+    params: {
+      vip: 10,
+      level: 99,
+    },
+    headers: {
+      a: 100,
+      b: 200
+    },
+    data: {
+      username: 'admin',
+      password: '123456'
+    }
+  }).then(value=>{
+    console.log(value)
+    result.innerHTML = value.data.name
+  })
+} 
+```
+## 12、使用fetch函数调用ajax
+```js
+btn.onclick = function(){
+  fetch('http://127.0.0.1:8000/axios-server',{
+    method: 'POST',
+    headers: {
+      name: 'Youngzx'
+    },
+    // 请求体
+    body: 'username=admin&psw=admin'
+  }).then(resposne => {
+    return response.json();
+  }).then(response =>{
+    console.log(response)
+  })
+}
+```
+## 13、总结发送请求的几种方式
+- 原生的xhr
+- fetch
+- axios
+## 14、解决跨域JSONP
+- 在html里写handle处理函数给节点赋值
+- 引入外部script，script包含`data`和`handle(data)`
+- 返回函数调用(一段js,这样前端才能解析)， 实现ajax

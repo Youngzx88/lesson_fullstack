@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.1.2/axios.js"></script>
+  <style>
+    #result{
+      width: 300px;
+      height: 300px;
+      border: 1px solid green;
+
+    }
+  </style>
+</head>
+<body>
+    <div id="result"></div>
+    <script>
+      const result = document.getElementById('result')
+      window.onkeydown = function() {
+        axios({
+          method: 'POST',
+          url: 'http://127.0.0.1:8000/axios-server',
+          params: {
+            vip: 10,
+            level: 99,
+          },
+          headers: {
+            a: 100,
+            b: 200
+          },
+          data: {
+            username: 'admin',
+            password: '123456'
+          }
+        }).then(value=>{
+          console.log(value)
+          result.innerHTML = value.data.name
+        })
+      }
+        
+    </script>
+</body> 
+</html>

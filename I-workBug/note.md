@@ -22,3 +22,6 @@ if(Taro.getEnv() == ENV_TYPE.WEB){
 }
 ```
 - 固定高度要用大写的PX，但是尽量用rpx因为是响应式
+- 响应式切图
+  - pc直接切img ➕ 绝对定位 text
+  - mobile img display：none，用text撑开文本，用img当作text的背景图
