@@ -140,3 +140,56 @@ app.get('/json-server',(request,response) => {
       } 
 ```
 ## 7、nodeman自动重启node环境
+## 8、取消请求，重复请求
+- 取消请求  
+```js
+// 获取到xhr的实例
+x = new XHMHttpRequest()
+x.abort()
+```
+- 重复请求类似防抖的处理
+## 9、超时与网络请求
+- 超时
+```js
+xhr.ontimeout = function(){
+  alert("网络异常，请稍后重试")
+}
+xhr.onerror = function(){
+  alert("网络异常")
+}
+```
+- 针对ie缓存可以在请求后加上时间戳
+## 10、JQ发送ajax以及通用场景
+- 普通场景
+```js
+$('button').click(function(){
+  $.get('http://127.0.0.1:8000/jquery-server',{a:100,b:200},function(){
+    console.log(data) 
+  })
+})
+```
+- 通用场景
+```js
+$('button').click(function(){
+  $.ajax({
+    //url
+    url: 'http://127.0.0.1:8000/jquery-server',
+    //参数
+    data: {a:100,b:2000},
+    //请求类型
+    type: 'GET',
+    //响应体结果
+    dataType: 'json' ,
+    //成功的回调
+    success: function(data) {
+      console.log(data);
+    }
+    //超过时间
+    timeout: 2000,
+    //失败的回调
+    error:function() {
+      console.log("出错了");
+    }
+  })
+})
+```
