@@ -1,28 +1,21 @@
 # 1、今日10月19日
 - 工作计划
     - 完成麦能欣4页切图
-    - 看完ajax，看一点node✅
-    - 看zustand源码，自己自己写一个简单的
+    - 自己自己写一个简单的项目跑起来zustand
     - 把starbucks换成zustand
     - 看webpack
+    - 写一题算法题
 
 # 2、现阶段学习目标(打基础 11月15号)
-1. ajax ✅
-2. node 
-3. es6 
-4. webpack5 
-5. babel 
-6. vite 
-7. promise 
-8. axios 
-9. ts 
-10. Taro
-11. ts融入项目
-12. vue+ts
-13. svg
-14. canvas
-15. 看好项目源码
-16. 自己写项目
+- 跟着路线学
+- Taro
+- ts融入项目
+- vue
+- svg
+- canvas
+- 看好项目源码
+- 自己写项目
+
 
 # 3、未来进阶学习目标
 - Formily(建议有积累了之后研读源码)
@@ -31,7 +24,7 @@
     2. dayjs(时间操作)
     3. once-init(promise once)
     4. queue(队列)
-    5. qs(querystring parse)
+    5. qs(querystring parse)✅配合正则
     6. immer(change data immutable)
 - 请求相关
     1. Axios
@@ -44,6 +37,7 @@
 - 扩展资料
     1. storybook(组件文档)
     2. mdx(markdown 组件扩展)
+
 
 # 4、终极目标(往这里面添加东西)
 #### 前端组件库
@@ -58,7 +52,7 @@
 - redux
 - mobx
 #### 前端样式
-- tailwind 响应式
+- tailwind 响应式(unocss)✅
 - react VantUI
 - autoprefix
 #### 前端工具库
