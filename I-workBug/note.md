@@ -2,8 +2,10 @@
 - react中form表单post请求
 - ajax的不同使用场景
 - decodeUrlComponent解码问题
+  - 不能放在参数里解码，容易变成字符串的undefined
 - zustand常用逻辑
 - actions的先后顺序问题
+  - .then解决
 - 所有useEffect，useDidShow写一个就好
 - queryString拿到url上的参数
 - 倒计时use-timer
@@ -37,3 +39,44 @@
     background-position: center
   }
   ```
+- vite配置别名解决打包错误/解决本地开发跨域问题
+  ```js
+  <!-- vite config js -->
+  export default defineConfig({
+    base: process.env.PUBLIC_PATH || '/',
+    plugins: [react()],
+    resolve:{
+      alias:{
+        '@':'/src/',     
+      }
+    },
+    <!-- 将所有/mail的请求发送到https://www.magelesi.com -->
+    <!-- 以后可以改成将所有/api的请求发送到https://www.magelesi.com -->
+    server: {
+      proxy: {
+        "/mail": {
+          target: "https://www.magelesi.com",
+          changeOrigin: true,
+          rewrite: (path) => path.replace("/^\/mail/","")
+        }
+      }
+    }
+  })
+
+  ```
+- 给后端的数据结构
+  - axios
+    - json：直接传
+    - format: 把json转化一下
+    ```js
+    //方法1：有兼容问题，老浏览器不支持URLSearchParams
+    const params = new URLSearchParams({ foo: 'bar' });
+    params.append('extraparam', 'value');
+    axios.post('/foo', params);
+    ```
+    ```js
+    //方法2: qs解决
+    const qs = require('qs');
+    axios.post('/foo', qs.stringify({ 'bar': 123 }));
+    ```
+- 关闭ts类型监测
