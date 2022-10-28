@@ -63,3 +63,7 @@
 - yml
 #### 前端数据埋点
 #### 源码分析
+#### 项目经历
+- CypherCaptial：tailwindcss
+- XSAD：Taro
+- Magelesi: Tailwindcss laysui 响应式切图

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.0/dist/browser-image-compression.js"></script>
+<link rel="stylesheet" href="./index.css">
+<script>
+  async function handleImageUpload(event) {
+  console.log("event",event)
+  const imageFile = event.target.files[0];
+  console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+  console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+  console.log(`imageFile ${imageFile}`);
+
+  const options = {
+    maxSizeMB: 0.2,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true
+  }
+  try {
+    const compressedFile = await imageCompression(imageFile, options);
+    console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+    console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+    console.log(`imageFile ${imageFile}`); // smaller than maxSizeMB
+    // await uploadToServer(compressedFile); // write your own logic
+    var reader = new FileReader();
+    reader.readAsDataURL(imageFile);
+    reader.onload = function (e) {
+      console.log("e",e);    //成功读取文件
+      var img = document.getElementById("selectImg");
+      img.src = e.target.result;   //或 img.src = this.result / e.target == this
+  };
+  } catch (error) {
+    console.log(error);
+  }
+
+  }
+</script>
+<body>
+  <label for="file">照相机</label>
+  <input type="file" onchange="handleImageUpload(event);" id='image' accept="image/*">
+  <div>
+    <img class="seePic" id="selectImg" src="" alt="">
+  </div>
+</body>
+</html>

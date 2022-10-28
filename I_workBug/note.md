@@ -82,3 +82,4 @@
       axios.post('/foo', qs.stringify({ 'bar': 123 }));
       ```
 15. 关闭ts类型监测
+16. 项目手机端预览要在同一局域网ip下
