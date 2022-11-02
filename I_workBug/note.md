@@ -83,4 +83,34 @@
       ```
 15. 关闭ts类型监测
 16. 项目手机端预览要在同一局域网ip下
-17. css module
+17. css module taro中使用在config下index.js中修改，h5在vite.config.js中修改
+```js
+
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { resolve } from 'path' //++
+ 
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {//++
+    alias: {//++
+      '@': resolve(__dirname, './src'),//++
+      '*': resolve('')//++
+    },//++
+  },//++
+  css: {
+    // 配置 css-module
+    modules: {
+      // 开启 camelCase 格式变量名转换
+      localsConvention: 'camelCase',
+      // 类名 前缀
+      generateScopedName: '[local]-[hash:base64:5]',
+    },
+  }
+```
+18. 在vite中配置alias,采用vite + typescript开发，配置别名时会报错：找不到模块“path”或其相应的类型声明 或者 找不到名称“__dirname”等
+```bash
+npm install @types/node --save-dev
+```
+19. pc端切图不要写高度，用container的padding撑开上下的高度

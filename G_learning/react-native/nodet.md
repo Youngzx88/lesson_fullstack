@@ -1,0 +1,5 @@
+- 用 expo 去新建一个项目：npx expo init
+- 想要打包出一个安装包要用 react-native，expo 是实验性质的
+- 学习在 chorme 中调试 和 在 vscode 中调试:需要修改 vscode 端口号为 web 端口一样的 19000
+- 发布不了 expo publish
+- 解决全局安装失败的问题
