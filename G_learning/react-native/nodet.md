@@ -51,3 +51,30 @@
     },
   })
   ```
+- Dimensions
+
+  - 通过屏幕尺寸来调节组件大小,缺点：不能考虑屏幕旋转后(hooks 解决)
+
+  ```js
+  console.log(Dimensions.get('screen'))
+  {"fontScale": 1, "height": 844, "scale": 3, "width": 390}
+  ```
+
+## 2. react-native/hooks
+
+- 有很多别人写好的 hooks 库
+
+  ```shell
+  npm install @react-native-community/hooks
+  ```
+
+- 动态控制宽高 useDeviceOrientation,动态判断设备宽度 useDimensions
+
+  ```js
+  const orientation = useDeviceOrientation() //用它动态进行高度计算
+  <View style={{ backgroundColor: 'red', width: "50%", height: orientation.portrait == true ? 100 : 50 }}>
+    <Text>hekki</Text>
+  </View>
+  ```
+
+## 3. flex
