@@ -1,0 +1,3 @@
+- Node.js 要求 ES6 模块采用`.mjs`后缀文件名。也就是说，只要脚本文件里面使用 import 或者 export 命令，那么就必须采用.mjs 后缀名。Node.js 遇到.mjs 文件，就认为它是 ES6 模块，默认启用严格模式，不必在每个模块文件顶部指定"use strict"。
+- 果不希望将后缀名改成.mjs，可以在项目的 package.json 文件中，指定 type 字段为 module。
+-
