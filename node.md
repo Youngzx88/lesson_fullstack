@@ -65,8 +65,9 @@
 
 #### 源码分析
 
-#### 项目经历
+#### 项目经历(学到了什么？)
 
 - CypherCaptial：tailwindcss
-- XSAD：Taro
+- XSAD：Taro 多端开发
 - Magelesi: Tailwindcss laysui 响应式切图
+- fenix games：ghost 官网开发
