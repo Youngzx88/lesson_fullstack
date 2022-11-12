@@ -8,7 +8,7 @@
    - classnames
 4. decodeUrlComponent 解码问题
    - 不能放在参数里解码，容易变成字符串的 undefine(区分不出)
-5. zustand 常用逻辑
+5. zustand 常用逻辑 set，get，usepagestate()...
 6. actions 的先后顺序问题
    - .then 解决
 7. 所有 useEffect，useDidShow 写一个就好
@@ -149,3 +149,20 @@ console.log('params2', params) //params2 id=1
 let qs = QueryString.parse(params)
 console.log('qs', qs) //qs {id: '1'}
 ```
+
+21. #的含义(锚点)
+
+- #代表网页中的一个位置。其右面的字符，就是该位置的标识符。
+- `http://www.example.com/index.html#print` 代表 index.html 中 print 的位置，浏览器读取这个 URL 后，会自动将 print 位置滚动至可视区域。
+- 为网页位置指定标识符，有两个方法。一是使用锚点，比如`<a name="print"></a>`，二是使用 id 属性，比如`<div id="print" >`。
+
+22. 短链接生成工具:草料
+
+23. nginx 反向代理
+
+24. 数据流管理常用逻辑
+
+- state，action 分开写
+- 不要在拿到的同时打 log，同步任务优先执行
+
+25. 连接服务器用 vscode server 就好
