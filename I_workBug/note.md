@@ -160,6 +160,26 @@ console.log('qs', qs) //qs {id: '1'}
 
 23. nginx 反向代理
 
+- etc/nginx/default.d/nginx.config 下是`nginx`的配置文件
+- 为了分离，我们一般自己建一个`config.d`，并被`nginx.config`引入`include /etc/nginx/conf.d/*.conf;`
+
+```
+server {
+  listen 80;
+  listen [::]:80;
+  server*name *;
+  root /usr/share/nginx/dist;
+  location / {
+  index /index.html;
+  try_files $uri /$uri /index.html;
+  }
+}
+```
+
+- 为了不让有权限问题，打包后的 dist 最好放在 nginx 文件夹下
+- spa 应用，只有一个 html，路由都在 html 里，其他都是用 js 静态资源引入，jsx 本质就是 js(vite 和 webpack 做的事情)
+- 所以我们配 try file，不过是为了访问`/index.js`是文件就访问真实的文件，不是文件就打到`index.html`上
+
 24. 数据流管理常用逻辑
 
 - state，action 分开写
