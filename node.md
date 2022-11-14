@@ -1,8 +1,4 @@
-# 1、现阶段学习目标(打基础 11 月 15 号)
-
-- 目前只要会用，不要理解为什么
-
-# 2、未来进阶学习目标
+# 1、学习目标
 
 - Formily(建议有积累了之后研读源码)
 - Tools
@@ -24,7 +20,7 @@
   1. storybook(组件文档)
   2. mdx(markdown 组件扩展)
 
-# 3、终极目标(往这里面添加东西)
+# 2、终极目标(往这里面添加东西)
 
 #### 前端组件库
 
@@ -32,14 +28,14 @@
 
 #### 请求相关
 
-- xhr
-- fetch
+- xhr✅
+- fetch✅
 - promise
 - axios
 
 #### 状态管理
 
-- zustand
+- zustand✅
 - redux
 - mobx
 
@@ -51,7 +47,7 @@
 
 #### 前端工具库
 
-- 截取 url 参数：querystring
+- 截取 url 参数：querystring✅
 
 #### 前端 BFF
 
@@ -71,3 +67,4 @@
 - XSAD：Taro 多端开发
 - Magelesi: Tailwindcss laysui 响应式切图
 - fenix games：ghost 官网开发
+- zk-vault 链 官网开发
