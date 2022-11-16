@@ -41,3 +41,8 @@ webpack([
 ```
 
 - 在 webpack 编译结束后，可拿到 `Stat` 对象，其中包含诸多编译时期的信息。比如，可通过该对象获取到打包后所有资源体积以及编译时间`stat.toJson()`。
+- 如何得知打包的时间
+
+```js
+console.log(stat.endTime - stat.startTime)
+```
