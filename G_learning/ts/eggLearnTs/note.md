@@ -13,3 +13,10 @@ const button: HTMLButtonElement = document.querySelector(
 //解决方式2:联合类型
 const button: HTMLButtonElement | null = document.querySelector('button')
 ```
+
+- async 函数
+
+  - 返回 promise<T>,T 表示具体返回的范型
+
+- 按钮点击事件
+  - button?.addEventListener<'click'>('click', getData)
