@@ -186,3 +186,13 @@ server {
 - 不要在拿到的同时打 log，同步任务优先执行
 
 25. 连接服务器用 vscode server 就好
+
+26. 小程序重复扫码得到的是第一次的内容
+
+- 扫码放到一个页面去判断
+- 不要用`Taro.getLaunchOptionsSync().query.code_ticket code`这个只能接收到第一次扫描的二维码参数
+- 用 useRouter 解析的 parmas 去得到每次的新二维码参数
+
+```js
+const { params } = useRouter()
+```

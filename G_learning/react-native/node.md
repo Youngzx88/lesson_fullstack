@@ -1,4 +1,4 @@
-- 用 expo 去新建一个项目：npx expo init
+- 用 expo 去新建一个项目：npx expo init//或者 npx create-expo-app
 - 想要打包出一个安装包要用 react-native，expo 是实验性质的
 - 学习在 chorme 中调试 和 在 vscode 中调试:需要修改 vscode 端口号为 web 端口一样的 19000
 - 发布不了 expo publish
@@ -83,3 +83,118 @@
 - 封装组件，让同一类型的组件字体，颜色一致(因为 react-native 当中没有继承的概念)
 - 图标： `import { MaterialCommunityIcons } from '@expo/vector-icons'`,`<MaterialCommunityIcons name="email" />`
   - 在这里找到 expo 中所有的失量图标`https://icons.expo.fyi/`
+- 分离平台
+
+  - platform：`fontFamily: Platform.OS == "android" ? "Robot" : "Avenir"`
+  - Platform.select({}),会返回一个对象，需要在样式中解构
+
+- 跑通代码`react-native-paper`npm i react-native-reanimated
+
+## 4. 路由
+
+- react-navigation
+
+1. `npm install @react-navigation/native-stack`
+2.
+
+- CreateNativeStackNavigator 是一个函数，它返回一个包含两个属性的对象: Screen 和 Navigator。它们都是用于配置导航器的 React 组件。Navigator 应该包含 Screen 元素作为其子元素，以定义路由的配置。
+
+```js
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+    </View>
+  )
+}
+
+const Stack = createNativeStackNavigator()
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
+
+export default App
+```
+
+3. 路由跳转
+
+- 默认跳转
+
+```jsx
+<Button title="Go to Details" onPress={() => navigation.navigate('Details')} />
+```
+
+- 带返回的跳转
+
+```js
+<Button
+  title="Go to Details... again"
+  onPress={() => navigation.push('Details')}
+/>
+```
+
+4. 路由传参
+
+```js
+//home页面传递参数
+<Button
+  title="Go to Details"
+  onPress={() => {
+    /* 1. Navigate to the Details route with params */
+    navigation.navigate('Details', {
+      itemId: 86,
+      otherParam: 'anything you want here',
+    })
+  }}
+/>
+//detail页面接收参数
+function DetailsScreen({ route, navigation }) {
+  /* 2. Get the param */
+  const { itemId, otherParam } = route.params;
+  ...
+}
+
+```
+
+5. 更新参数
+
+```js
+navigation.setParams({
+  query: 'someText',
+})
+```
+
+6. 导航器嵌套
+
+```js
+function Home() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Feed" component={Feed} />
+      <Tab.Screen name="Messages" component={Messages} />
+    </Tab.Navigator>
+  )
+}
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Settings" component={Settings} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
+```
