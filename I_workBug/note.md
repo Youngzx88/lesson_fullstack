@@ -196,3 +196,9 @@ server {
 ```js
 const { params } = useRouter()
 ```
+
+27. rn 文字不会换行
+
+- 默认视为一个单词了，要用 wrap 给他换行
+
+28. useDidshow 获取数据，返回页面会多加载一次，用 usedidhide 在出页面的时候删掉
