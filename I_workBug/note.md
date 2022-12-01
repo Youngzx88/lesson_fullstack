@@ -185,7 +185,8 @@ server {
 - state，action 分开写
 - 不要在拿到的同时打 log，同步任务优先执行
 
-25. 连接服务器用 vscode server 就好
+25
+. 连接服务器用 vscode server 就好
 
 26. 小程序重复扫码得到的是第一次的内容
 
@@ -202,3 +203,64 @@ const { params } = useRouter()
 - 默认视为一个单词了，要用 wrap 给他换行
 
 28. useDidshow 获取数据，返回页面会多加载一次，用 usedidhide 在出页面的时候删掉
+
+29. postcss处理兼容
+
+30. we分析
+- 添加自定义事件
+
+31. rn bable
+- 解决导出模块化的问题
+```js
+module.exports = {
+  presets: ['module:metro-react-native-babel-preset'],
+  plugins: [
+    'react-native-reanimated/plugin',
+    '@babel/plugin-proposal-export-namespace-from',
+  ],
+};
+```
+
+32. zustand跨页面拿数据
+```js
+useGlobalState.getState().state
+```
+
+32. rn持久化存储，用户鉴权
+- https://react-native-async-storage.github.io/async-storage/docs/install
+- 配合zustand全局状态管理
+  - zustand创建token的model
+  - 路由根据zustand token model来更新(会自己传递更新组件)
+  - app里初始化token，AsyncStorage有token就同步更新全局model状态的token
+  - 这样更新后的token就会同步传递到路由组件当中
+  - 注意存取token是异步的，需要加loading判断后再展示页面
+
+33. 导出x倍图，缩小展示
+```jsx
+<Image
+  source={require('../assets/Doodle.png')}
+  style={styles.homeImg}
+  resizeMode='contain'
+/>
+// 定死宽高
+```
+
+34. axios
+- get请求带参
+```js
+const res = await actions.searchMaterial({params2})
+export const shopSearch = 
+    ({params2}:any) => return baseAxios.get('pumpkin/mobile/sku/search',
+    {params:{
+      plantCode:params2.plantCode,
+      searchTxt:params2.searchTxt,
+      pageSize:params2.pageSize,
+      pageIndex:params2.pageIndex,
+      orderBy:params2.orderBy
+    }})
+```
+- post请求
+```js
+export const login = 
+    (phoneNumber:string,codeNumber:string) => baseAxios.post('pumpkin/mobile/auth/login',{mobile: phoneNumber,code: codeNumber})
+```
