@@ -83,6 +83,7 @@
 - 封装组件，让同一类型的组件字体，颜色一致(因为 react-native 当中没有继承的概念)
 - 图标： `import { MaterialCommunityIcons } from '@expo/vector-icons'`,`<MaterialCommunityIcons name="email" />`
   - 在这里找到 expo 中所有的失量图标`https://icons.expo.fyi/`
+  - <Appbar.Content color='#fff' title={<Ionicons name="menu" size={24} color="black" />}  onPress={() => navigation.openDrawer()} ></Appbar.Content>
 - 分离平台
 
   - platform：`fontFamily: Platform.OS == "android" ? "Robot" : "Avenir"`

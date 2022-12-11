@@ -264,3 +264,14 @@ export const shopSearch =
 export const login = 
     (phoneNumber:string,codeNumber:string) => baseAxios.post('pumpkin/mobile/auth/login',{mobile: phoneNumber,code: codeNumber})
 ```
+
+25. rn学习到了什么
+- 路由跳转
+- 路由传参
+- 样式flex
+- FlatList调用
+- ts字面量类型要注意：直接用类型传参，可能只能推导到string类型，要么直接传{}，不先用变量整合，要么把类型导出在要传参的部分声明类型
+- setState 和 actions先后出发，actions改变的state会重新传递进来，导致state被刷新为最初的值
+- 多个页面用到的数据一定要提出来
+- 同一级modal数据要遵循先后顺序
+- header
