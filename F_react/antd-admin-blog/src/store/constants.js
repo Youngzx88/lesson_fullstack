@@ -1,1 +1,0 @@
-export const SET_LOGGIN = 'SET_LOGGIN'
