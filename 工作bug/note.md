@@ -132,7 +132,7 @@ npm install @types/node --save-dev
 
 17. pc 端切图不要写高度，用 container 的 padding 撑开上下的高度
 
-18. qs 的使用
+18. qs 的使用,拿到url上的参数
 
 ```js
 // ?id = 1
@@ -268,3 +268,20 @@ export const login =
 - 同一级modal数据要遵循先后顺序
 - header
 - 公共数据抽成modal在每个页面都能拿到
+
+35. State 的更新可能是异步的
+-  出于性能考虑，React 可能会把多个 setState() 调用合并成一个调用。
+- 因为 props 和 state 可能会异步更新，所以不要依赖他们的值来更新下一个状态。
+```js
+// Wrong
+this.setState({
+  counter: this.state.counter + this.props.increment,
+});
+```
+- 要解决这个问题，可以让 setState() 接收一个函数而不是一个对象。这个函数用上一个 state 作为第一个参数，将此次更新被应用时的 props 做为第二个参数
+```js
+// Correct
+this.setState((state, props) => ({
+  counter: state.counter + props.increment
+}));
+```
