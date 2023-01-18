@@ -285,3 +285,38 @@ this.setState((state, props) => ({
   counter: state.counter + props.increment
 }));
 ```
+
+
+36. 传formdata的时候和json有何不同？
+```js
+// post请求以formdata的形式请求接口，用qs兼容性更好
+export const login = (data:any) => {
+  data = qs.stringify(data)
+  return baseAxios.post('/auth-center/oauth/token?',data,{headers:
+  {
+    'content-type': 'application/x-www-form-urlencoded'
+  }})
+}
+// 普通的get请求，参数放在params里
+export const shopSearch = 
+    (formData:any) => {
+      return baseAxios.get('pumpkin/mobile/sku/search',
+    {
+      params:{
+        plantCode:formData.plantCode,
+        searchTxt:formData.searchTxt,
+        pageSize:formData.pageSize,
+        pageIndex:formData.pageIndex,
+      },
+    }
+  )
+}
+// 普通的post请求
+export const createInventoryMission = (formData:any) =>{
+  return baseAxios.post("/pumpkin/mobile/order/stocktaking/task",{
+    plantCode: formData.plantCode,
+    stocktakingOrderId:formData.stocktakingOrderId,
+    taskName:formData.taskName
+  })
+}
+```
