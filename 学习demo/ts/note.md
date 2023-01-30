@@ -734,3 +734,7 @@ function handle(input: Foo | Bar) {
   }
 }
 ```
+
+## 6. 泛型
+- 泛型方便我们不限定入参
+- `extends`用于精确入参类型，类似三元运算符
