@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="canvas" style="background-color: blue;"></canvas>
+</body>
+<script>
+  const canvasDom = document.querySelector('#canvas')
+  var context = canvasDom.getContext("2d");
+  var cx = canvasDom.width = 400;
+  var cy = canvasDom.height = 400;
+  var grd = context.createLinearGradient(0,0,400,400)
+  grd.addColorStop(0,'pink')
+  grd.addColorStop(1,'white')
+  context.fillStyle = grd;
+  context.fillRect(0,0,400,400)
+</script>
+</html>

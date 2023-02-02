@@ -14,17 +14,10 @@
   var context = canvasDom.getContext("2d");
   var cx = canvasDom.width = 400;
   var cy = canvasDom.height = 400;
-
-  // context.beginPath();       // 起始一条路径，或重置当前路径
-  // context.arc(100, 100, 1, 0, Math.PI * 2, true);  // 创建弧/曲线
-  // context.closePath();       // 创建从当前点回到起始点的路径
-  // context.fillStyle = 'rgb(255,255,255)'; // 设置或返回用于填充绘画的颜色、渐变或模式
-  // context.fill();            // 填充当前绘图（路径）
-
   context.beginPath();
-  context.arc(100, 100, 50, 0, Math.PI * 0.5, false);
-  context.closePath()
-  context.strokeStyle="white";
+  context.moveTo(50,50);
+  context.lineTo(100,100);
+  context.strokeStyle = '#fff';
   context.stroke();
 </script>
 </html>

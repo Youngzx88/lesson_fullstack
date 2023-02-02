@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  html,body {
+      margin:0;
+      overflow:hidden;
+      width:100%;
+      height:100%;
+      cursor:none;
+      background:black;
+  }
+</style>
+<body>
+  <canvas id="canvas" style="background-color: black;"></canvas>
+</body>
+<script>
+    var ctx = document.getElementById('canvas'),
+        content = ctx.getContext('2d'),
+        round = [],
+        WIDTH,
+        HEIGHT,
+        initRoundPopulation = 200;
+        //多少个粒子
+
+
+    WIDTH = document.documentElement.clientWidth;
+    HEIGHT = document.documentElement.clientHeight;
+
+    ctx.width = WIDTH;
+    ctx.height = HEIGHT;
+    // 创建粒子本身的函数
+    function Round_item(index,x,y) {
+        this.index = index;
+        this.x = x;
+        this.y = y;
+        this.r = Math.random() * 2 + 1;
+        //0到0.5之间的透明度
+        var alpha = (Math.floor(Math.random() * 10) + 1) / 10 / 2 +0.5;
+        this.color = "rgba(255,255,255," + alpha + ")";
+    }
+    // 粒子位置
+    Round_item.prototype.draw = function () {
+        content.fillStyle = this.color;
+        content.shadowBlur = this.r * 2;
+        content.beginPath();
+        content.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+        content.closePath();
+        content.fill();
+    };
+    // 给粒子一个move函数
+    Round_item.prototype.move = function () {
+        this.y -= 2;
+        if (this.y <= -10) {
+            this.y = HEIGHT + 10;
+        }
+        this.draw();
+    };
+    // 初始化粒子
+    function init() {
+        for(var i = 0; i < initRoundPopulation; i++ ){
+            round[i] = new Round_item(i,Math.random() * WIDTH,Math.random() * HEIGHT);
+            round[i].draw();
+        }
+        animate();
+    }
+
+    init();
+
+
+    function animate() {
+        // 先清除所有粒子
+        content.clearRect(0, 0, WIDTH, HEIGHT);
+        // 遍历每个粒子move一下
+        for (var i in round) {
+            round[i].move();
+        }
+        //递归调用动画函数
+        requestAnimationFrame(animate);
+    }
+</script>
+</html>
