@@ -152,7 +152,7 @@ console.log('qs', qs) //qs {id: '1'}
 
 20. 短链接生成工具:草料
 
-21. nginx 反向代理
+21. nginx 反向代理（代理服务器端）
 
 - etc/nginx/default.d/nginx.config 下是`nginx`的配置文件
 - 为了分离，我们一般自己建一个`config.d`，并被`nginx.config`引入`include /etc/nginx/conf.d/*.conf;`
@@ -180,7 +180,7 @@ server {
 
 23. 
 - 连接服务器用 vscode server 就好
-- comman shift p :ssh
+- command shift p :ssh
 24. 小程序重复扫码得到的是第一次的内容
 - 扫码放到一个页面去判断
 - 不要用`Taro.getLaunchOptionsSync().query.code_ticket code`这个只能接收到第一次扫描的二维码参数
