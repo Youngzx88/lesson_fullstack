@@ -35,3 +35,6 @@
 - 调试就是把浏览器跑起来访问访问目标网页，这时有一个`ws`的调试服务，我们用frontend的ws客户端连接上这个ws就可以进行调试来
 - launch 的意思是把 url 对应的网页跑起来，指定调试端口，然后 frontend 自动 attach 到这个端口。
 - attach是已经在跑的就attach上去
+  1. 手动把chorme对应的端口跑起来`/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=你自己创建的某个目录`
+  2. Chrome 跑起来之后，你可以打开几个网页，比如百度、掘金，然后你访问 localhost:9222/json，这时候会发现所有的 ws 服务的地址了
+  3. 每个页面的调试都是独立的，自然就需要单独的 ws 服务。

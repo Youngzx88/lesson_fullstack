@@ -1,45 +1,12 @@
 {
-    // 使用 IntelliSense 了解相关属性。 
-    // 悬停以查看现有属性的描述。
-    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
     "configurations": [
         {
             "name": "Attach to Chrome",
             "port": 9222,
             "request": "attach",
             "type": "chrome",
+            "url": "http://localhost:8080/#/",
             "webRoot": "${workspaceFolder}"
         },
-        {
-            "name": "Launch Chrome",
-            "request": "launch",
-            "type": "chrome",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "name": "ts-node",
-            "type": "node",
-            "request": "launch",
-            "args": [
-                "${relativeFile}"
-            ],
-            "runtimeArgs": [
-                "-r",
-                "ts-node/register"
-            ],
-            "cwd": "${workspaceRoot}",
-            "protocol": "inspector",
-            "internalConsoleOptions": "openOnSessionStart"
-        },
-        {
-            "type": "lldb",
-            "request": "launch",
-            "name": "Debug",
-            "program": "${workspaceFolder}/<your program>",
-            "args": [],
-            "cwd": "${workspaceFolder}"
-        }
     ]
 }
