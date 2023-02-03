@@ -10,3 +10,28 @@
 - Chrome 插件中可以访问网页的 DOM 的部分叫做 Content Script，随页面启动而生效，可以写一些操作 DOM 的逻辑。还有一部分是后台运行的，叫做 Background，浏览器启动就生效了，生命周期比较长，可以做一些常驻的逻辑。
 - React DevTools 也是类似的，都是通过 backend 拿到组件信息，然后传递给 DevTools Page 做渲染和交互。
 
+## 2. 如何调试网页js
+### 2.1、F12
+- 点进原代码
+- 打断点
+- 刷新页面
+
+### 2.2、VSCode Debugger(不用切换调试工具)
+- 用 VSCode 打开项目目录，创建 .vscode/launch.json 文件
+- 点击右下角的 Add Configuration... 按钮，选择 Chrome: Launch
+- 把访问的 url 改为开发服务器启动的地址
+- 然后进入 Debug 窗口，点击启动
+- 打断点
+- 重启
+- 所有的信息都在左边展示(断点异常移到了BreakPoints里)
+
+## Chrome DevTools Protocal
+- chrome detools和vscode Debugger都可以对接CDP来调试网页
+
+## launch.json
+- 创建chrome debug的方式
+  - Launch启动
+  - Attach附加
+- 调试就是把浏览器跑起来访问访问目标网页，这时有一个`ws`的调试服务，我们用frontend的ws客户端连接上这个ws就可以进行调试来
+- launch 的意思是把 url 对应的网页跑起来，指定调试端口，然后 frontend 自动 attach 到这个端口。
+- attach是已经在跑的就attach上去
