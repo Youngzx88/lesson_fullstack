@@ -38,3 +38,11 @@
   1. 手动把chorme对应的端口跑起来`/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=你自己创建的某个目录`
   2. Chrome 跑起来之后，你可以打开几个网页，比如百度、掘金，然后你访问 localhost:9222/json，这时候会发现所有的 ws 服务的地址了
   3. 每个页面的调试都是独立的，自然就需要单独的 ws 服务。
+
+## 3. sourcemap
+- 代码是经过编译打包然后在浏览器运行的 
+- 但我们却可以直接调试源码，这是通过 sourcemap 做到的。调试工具都支持 sourcemap，并且是默认开启的
+- 在开启 sourcemap 的情况下，用 Chrome DevTools 可以看到，源文件的路径是 /static/js/bundle.js
+- 而在 VSCode 里，这个路径是有对应的文件的，所以就会打开对应文件的编辑器，这样就可以边调试边修改代码。
+- 但有的时候，sourcemap 到的文件路径在本地里找不到，这时候代码就只读了，因为没有地方保存
+- 编译后源码(sourceMap)->源码路径(sourceMapOverrides)->本地文件路径
