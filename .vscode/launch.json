@@ -1,12 +1,26 @@
 {
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch jingTai",
+            "request": "launch",
+            "mainClass": "chapter01.jingTai",
+            "projectName": "lesson_fullstack_8c90a87f"
+        },
+        {
+            "type": "java",
+            "name": "Launch Java_helloWorld",
+            "request": "launch",
+            "mainClass": "chapter01.Java_helloWorld",
+            "projectName": "lesson_fullstack_8c90a87f"
+        },
+        {
             "name": "Attach to Chrome",
             "port": 9222,
             "request": "attach",
             "type": "chrome",
             "url": "http://localhost:8080/#/",
             "webRoot": "${workspaceFolder}"
-        },
+        }
     ]
 }

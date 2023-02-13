@@ -1,3 +1,4 @@
+ts-node draft.ts
 ## 1、原始类型与对象类型
 > 1.1、内置原始类型
 ```js
@@ -736,5 +737,34 @@ function handle(input: Foo | Bar) {
 ```
 
 ## 6. 泛型
+- 类型别名中的泛型大多是用来进行工具类型封装，比如我们在上一节的映射类型中学习的工具类型：
+```js
+type Stringify<T> = {
+  [K in keyof T]: string;
+};
+//Stringify 会将一个对象类型的所有属性类型置为 string 
+//而 Clone 则会进行类型的完全复制。我们可以提前看一个 TypeScript 的内置工具类型实现：
+type Clone<T> = {
+  [K in keyof T]: T[K];
+};
+```
 - 泛型方便我们不限定入参
+```js
+interface IFoo {
+  prop1: string;
+  prop2: number;
+  prop3: boolean;
+  prop4: () => void;
+}
+
+type PartialIFoo = Partial<IFoo>;
+
+// 等价于
+interface PartialIFoo {
+  prop1?: string;
+  prop2?: number;
+  prop3?: boolean;
+  prop4?: () => void;
+}
+```
 - `extends`用于精确入参类型，类似三元运算符
