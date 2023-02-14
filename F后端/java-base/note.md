@@ -231,14 +231,251 @@ public class javaArray {
 String[][] names = {{1,2,3},{2,3,4}};
 ```
 #### 20.2、字符串
+- substring
+- split
+- trim
+- repalce
+- repalceAll按规则转换
+- toLowerCase
+- toUpperCase
+- toCharAray返回一个char[]
+- getBytes返回一个byte[]
+- charAt(index)
+- indexOf("str")
+- lastIndexOf
+- contains
+- endsWith
+- isEmpty
+- StringBuilder：构建字符串
+```java
+StringBuilder s = new StringBuilder();
+for(int i = 0 ; i < 100 ; i++){
+    s.append("abv")
+}
+```
 #### 20.3、包装类
+- 基本数据类型byte，short，int，long，float，double，char，boolean
+- 包装类：Byte，Short，Integer，Long，Float，Double，Character 
+- 自动装拆箱
 #### 20.4、日期类
+- System.currentTimeMillis()时间戳
+- Date日期类（java.util.Data）
+```java
+//SimpleDateFormat
+//java格式化日期格式：
+//y(Y)->年：yyyy
+//m(M)->MM:月份，mm:分钟 
+//d(D)->dd:一个月重的日期，D:一年重的日志
+//h(H)->h:12进制，HH:24进制
+//s(S)->s:秒，S:毫秒
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");//date->string
+sdf.parse("2022-6-21");//string->data
+d.setTime(System.currentTimeMills)//根据时间戳构建指定的日期对象
+```
 #### 20.5、日历类
-#### 20.6、打印日历
-#### 20.7、工具类
-#### 20.8、比较
+- 抽象类，使用他的静态方法
+- Calender.getInstance()
+- instance.get("Calendar.YEAR")...
+#### 20.6、工具类
+#### 20.7、比较
+- ==基本数据类型比大小，引用数据类型比内存地址
+- 对象相等一般要重写equals，hashCode
 ## 21、异常
+- 类型转换错误
+- stackoverflow递归没有跳出逻辑
+- 可以通过代码恢复正常逻辑执行的异常，称为运行时异常，runTimerException
+- 不可以通过代码恢复正常逻辑执行的异常，称之为编译器异常，exception
+```java
+//可能会出现异常的代码放在try里
+//catch里方抛出异常对象的引用
+//先捕捉范围小的异常，再捕捉范围大的异常
+try{
+}catch{
+}finally{
+}
+```
+- 例如调用一个为null对象的成员属性/方法时候会出现空指针异常
+- 数组越界异常
+- ClassCastException
+- 如果方法中可能会出现问题，那么需要提前声明，告诉其他人，我的方法可能会出现问题，需要使用`throws`
+- 如果程序中需要手动抛出异常，用`throw`关键字\
+- 自定义异常
+  - 最好继承RuntimeException，因为非运行期异常需要手动在类上throws
+  - 继承以后可以抛出自定义异常
+```java
+public class DiyException {
+    public static void main(String[] args) {
+        String name = "admin";
+        String pwd = "admin";
+
+        try{
+            Login(name,pwd);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+    }
+    public static void Login(String name,String pwd) {
+        if(!"admin".equals(name)){
+            throw new AccountException("账户名不正确");
+        }
+        if(!"admin".equals(pwd)){
+            throw new PwdException("密码不正确");
+        }
+        System.out.println("登陆成功");
+    }
+}
+
+class AccountException extends RuntimeException {
+    public AccountException(String msg) {
+        super(msg);
+    }
+}
+
+class PwdException extends RuntimeException {
+    public PwdException(String msg) {
+        super(msg);
+    }
+}
+```
 ## 22、集合
-## 23、IO
-## 24、线程
-## 25、反射
+- collection
+- java中的集合是一个名次，数据的一种容器，java提供类完整的集合框架
+- java集合框架中就包含类对不确定个数的数据处理的集合类
+- 集合分为两大数据体系：
+  - 单一数据体系：Collection
+  - 成对出现的数据体系：Map
+- 常用接口和类：
+  - Collection
+    - List：按插入顺序保存数据，数据可以重复，ArrayList，LinkedList
+    - Set：集，无序保存，数据不能重复，HashSet
+    - Queue：队列
+  - Map
+    - hashMap
+    - hashTable
+#### 22.1、ArrayList
+- 不需要传递构造参数，直接new即可，底层数组为空数组
+- 构造函数传递的参数若为int，则为设定底层数组的长度
+- 构造函数传递的参数若为一个Collection集合类型的值，用于将其他集合中的数据放置在当前集合中 
+- 方法
+  - add(),增加数据，若集合中没有任何数据则会创建长度为10的数组
+  - size(),得到集合中数据的长度
+  - get(index),得到指定位置的数据
+  - set(index,value),修改index位置的值为value,并返回修改前的值
+  - remove(index),删除index位置的数据，返回的是删除的值
+  - isEmpty()
+#### 22.2、LinkedList
+- 可以前插，可以后插，无索引
+- 方法
+  - add()
+  - addAll()
+  - addFirst(),addLast()
+  - get() 
+  - set(index,value)
+  - remove(value)
+  - removeFirst()
+  - removeLast()
+  - indexOf()
+  - push()
+  - contains()
+  - element()，获取第一个
+  - pop(),弹出第一个
+## 23、泛型
+- < T >
+- 从集合中获取的对象类型为object
+- 如果想要执行对象方法，需要进行强制类型转换
+- ArrayList<xxxLeixing> arr = new ArrayList()
+- 简化类型的判断
+## 24、IO
+## 25、线程
+- 声明自定义线程类：重写运行指令(run)
+- 线程的生命周期
+  - new新建
+  - runnable可运行
+  - terminated
+  - blocked
+  - waiting
+  - timed waiting
+- 串行和并发
+  - 串行：执行完一个线程再执行下一个t1.join();t2.join()
+  - 并发：线程之间相互独立
+- 线程休眠
+  - sleep(time)：Thread静态方法，可以在任意代码使用，sleep其他线程无法抢占
+- 线程等待
+  - wait():Object成员方法，只能使用在同步代码中，wait其他线程可以抢占
+```java
+Thread t = new Thread(()->{
+    sout("线程执行")
+})
+```
+- 线程池
+  - 所谓线程池，其实就是线程对象的容器
+  - java中有4中比较常见的线程池
+  - 1.ExecutorService：`newFixedThreadPool(numbers)`固定数量线程池
+  - ![img_1.png](img_1.png)
+  - 2.ExecutorService：`newCachedThreadPool()`根据需求动态创建线程
+  - ![img_2.png](img_2.png)
+  - 3.ExecutorService：`newSingleThreadPool()`单一线程
+  - ![img_3.png](img_3.png)
+  - 4.ExecutorService：`newScheduleThreadPool()`定时调度线程
+- 同步
+  - `synchronized`用于同步的对象  
+- 线程安全
+  - java会给每个线程创建一个栈内存
+  - 多个线程在并发执行时，修改类共享内存中对象的属性，导致的数据冲突问  题
+## 26、反射
+- 父类类型声明的子类对象如何调用子类的方法？反射
+- getClass()得到字节码文件(16进制编码  )
+- ![img_4.png](img_4.png)
+- 类加载器
+  - Java中分为三种类
+    - java中核心类库中的类，string，object
+    - jvm软件平台开发商
+    - 自己写的类
+  - 对应的类加载器也有三种
+    - Boot核心
+    - Platform平台
+    - AppClass应用加载器
+  - 类名.class.getClassLoader()
+```java
+//反射小练习
+public class javaReflectTest {
+  public static void main(String[] args) throws Exception {
+    //使用反射登陆
+    //得到反射class
+    Class<Emp> empClass = Emp.class;
+    //通过构造函数对象，构建反射对象
+    Constructor<Emp> declaredConstructor = empClass.getDeclaredConstructor();
+    Emp emp = declaredConstructor.newInstance();
+    Field account = empClass.getField("account");
+    Field pwd = empClass.getField("pwd");
+    account.set(emp,"admin");
+    pwd.set(emp,"admin");
+
+    Method login = empClass.getMethod("login");
+    login.invoke(emp);
+  }
+}
+
+class Emp {
+  public String account;
+  public String pwd;
+  public void login() {
+    if("admin".equals(account) && "admin".equals(pwd)){
+      System.out.println("登陆成功");
+    }else {
+      System.out.println("账号或密码错误");
+    }
+  }
+}
+```
+- 获取反射的方法
+  - 类名.class
+  - new 类名().getClass()
+  - Class.forName("包名.类名")
+- 常见异常
+  - ClassNotFoundException
+  - NoSuchMethodException
+  - IllegalArgumentException
+  - NoSuchFieldException
+  - IllegalAccessException
