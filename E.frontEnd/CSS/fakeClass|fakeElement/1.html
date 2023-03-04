@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    input {
+      width: 200px;
+      height: 50px;
+      border-radius: 10px;
+    }
+    /* 伪类可以叠加（拼接） */
+    input:out-of-range:focus{
+      background-color: greenyellow;
+    }
+    input:out-of-range + h2::after {
+      content: "超出范围";
+    }
+    .select::after {
+      content: "已勾选";
+      display: none;
+    }
+    .select:checked::after {
+      content: "已勾选";
+      display: block;
+      margin-left: 140px;
+    }
+    .flex {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+  <!-- 伪元素，伪类 -->
+  <h1>请输入数字:</h1>
+  <input type="number" min="5" max="10"/>
+  <h2>结果:</h2>
+  <!-- 位置 -->
+  <div class="flex">
+    <input class="select" type="checkbox">
+    <input class="select" type="checkbox">
+    <input class="select" type="checkbox">
+  </div>
+</body>
+</html>
