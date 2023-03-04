@@ -3,6 +3,7 @@
 - html为演员，css为化妆师，js为动作导演
 
 ## 1.css选择器
+
     1. 标签选择器
     2. 类名选择器 class 一类元素
     3. id 选择器 # 一个元素 唯一的
@@ -17,7 +18,9 @@
     12. a[href] [type] ：a[for]
     13. plate[for^=S],bento[for^=S]选中 for 的属性值以 S 开头的元素
     14. bento[for$=o],plate[for$=o]选中 for 的属性值以 o 结尾的元素
+
 ## 2.使用多个规则嵌套
+
     1. 选择越来越准确
     2. 优先级 权重计算公式
         标签 1分
@@ -25,5 +28,5 @@
         id 100分
         行内样式
         !important无限大
-- emmet使用css 选择器作为快捷输入的规则
 
+- emmet使用css 选择器作为快捷输入的规则
