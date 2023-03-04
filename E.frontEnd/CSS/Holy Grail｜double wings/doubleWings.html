@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .header{
+    background-color: pink;
+    height: 200px;
+  }
+  .left{
+    background-color: red;
+    width: 100px;
+    height: 350px;
+  }
+  .middle{
+    background-color: green;
+    height: 350px;
+    width: 100px;
+  }
+  .right{
+    background-color: yellow;
+    height: 350px;
+    width: 100px;
+  }
+  .footer{
+    background-color: pink;
+    height: 200px;
+  }
+  /* 浮动导致高度塌陷 */
+  .middle,.left,.right {
+    float: left;
+  }
+  /* 清楚高度塌陷 */
+  .clearFix::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  /* 负外边距,让主区域在前面*/
+  /* .left {
+    margin-left: -200px;
+  } */
+  /* 内边距，让三个元素顺序一致 */
+  .wrapper {
+    padding: 0 100px;
+  }
+  .middle {
+    width: 100%;
+  }
+  /* 调整左右区域 */
+  .left {
+    margin-left: -100%;
+  }
+  .right {
+    margin-left: -100px;
+  }
+  /* 设置相对定位防止左右区域挡住主区域内容 */
+  .left {
+    position: relative;
+    left: -100px;
+  }
+  .right {
+    position: relative;
+    left: 100px;
+  }
+</style>
+<body>
+  <header class="header">头部</header>
+  <div class="clearFix">
+    <div class="wrapper">
+      <div class="middle">主区域</div>
+      <div class="left">左 </div>
+      <div class="right">右</div>
+    </div>
+  </div>
+  <footer class="footer">尾部</footer>
+</body>
+</html>
