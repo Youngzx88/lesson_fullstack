@@ -189,6 +189,6 @@ String url = context.getInitParameter("url")
 - page
 - exception
 
-## 14、jsp/jstl
+## 14、jsp/jstl/el表达式
 
 -
