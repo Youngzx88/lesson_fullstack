@@ -22,6 +22,7 @@ new Promise((resolve) => {
 console.log(3); 
 //代码跑到最后一行输出3.此时同步代码执行完毕,开始检查当前宏任务中的微任务队列.
 //运行微任务队列中的第一个then回调函数输出2.再检查微任务队列,没有发现其他任务.
+//结果3，2，1
 ```
 
 ![alt](./eventLoop.png)
@@ -32,7 +33,7 @@ console.log(3);
 new Promise((resolve)=>{
     //这里面是同步执行的
     console.log(1);
-	resolve();
+    resolve();
 }).then(()=>{//.then进入微任务
     console.log(2);
  })

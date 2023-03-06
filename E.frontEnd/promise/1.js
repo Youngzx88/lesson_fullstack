@@ -1,50 +1,17 @@
-// 题目：使用栈实现队列的一下操作
-// push(x)  -- 尾部添加
-// pop() -- 队列首部删除
-// peek() -- 返回队列首部元素
-// empty() -- 返回队列是否为空
-
-// queue = new MyQueue()
-// queue.push(1)
-// queue.push(2)
-// queue.peek()  // 1
-// queue.pop()  // 1
-// queue.empty()  // false
-
-
-const MyQueue = function() {
-  this.stack1 = []
-  this.stack2 = []
-}
-MyQueue.prototype.push = function(x) {
-  this.stack1.push(x)
-}
-MyQueue.prototype.pop = function() {
-  // 栈2是空的
-  if (this.stack2.length <= 0) {
-    while(this.stack1.length !== 0) {
-      this.stack2.push(this.stack1.pop())
-    }
-  }
-  return this.stack2.pop()
-}
-MyQueue.prototype.peek = function() {
-  // 栈2是空的
-  if (this.stack2.length <= 0) {
-    while(this.stack1.length !== 0) {
-      this.stack2.push(this.stack1.pop())
-    }
-  }
-  return this.stack2[this.stack2.length - 1]
-}
-MyQueue.prototype.empty = function() {
-  return !this.stack1.length && !this.stack2.length
-}
-
-
-let queue = new MyQueue()
-queue.push(1)
-queue.push(2)
-// queue.pop()  // 1
-// queue.peek()  // 2
-console.log(queue);
+setTimeout(() => { //定时器1
+  console.log(1);
+}, 0)
+new Promise((resolve) => {
+  resolve();
+}).then(() => { // (宏任务1中的微任务1）碰到Promise,将then的回调函数放入宏任务1的微任务队列中等待,线程继续往下.
+  console.log(2)
+})
+console.log(3); 
+console.log("====")
+new Promise((resolve)=>{
+  //这里面是同步执行的
+  console.log(1);
+  resolve();
+}).then(()=>{//.then进入微任务
+  console.log(2);
+})
