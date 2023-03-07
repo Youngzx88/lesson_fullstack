@@ -70,6 +70,7 @@ console.log(t1)
 - new String
 - new Boolean
 
+```js
 var num = 3;
 console.log(num.length);//相当于new Number(num).length
 //包装以后用完立即销毁包装类
