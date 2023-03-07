@@ -117,3 +117,9 @@ if(function b(){}){//函数声明作为表达式，不为false，表达式忽略
 }
 console.log(a);//10undefined
 ```
+
+- 插件开发
+  - 写一个立即执行函数
+  - 在立即执行函数当中写一个功能类
+  - return到window.xxx
+  - 在window既可new出功能类实例来
