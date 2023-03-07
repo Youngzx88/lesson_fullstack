@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ul>
+</body>
+<script>
+  // var liArr = document.querySelectorAll('li')
+  // // 遍历去赋值点击事件，但是无论点哪个都是5
+  // for(var i = 0 ; i < 5 ; i ++){
+  //   // 这里是的函数并未执行，所以只有当i = 5的时候，才会跳出for循环去执行
+  //   liArr[i].onclick = function(){
+  //     console.log(i)
+  //   }
+  // }
+  var liArr = document.querySelectorAll('li')
+  // 遍历去赋值点击事件，但是无论点哪个都是5
+  for(var i = 0 ; i < 5 ; i ++){
+    // 这里是的函数并未执行，所以只有当i = 5的时候，才会跳出for循环去执行
+    (function(j){
+      liArr[j].onclick = function(){
+        console.log(j)
+      }
+    })(i)
+  }
+</script>
+</html>
