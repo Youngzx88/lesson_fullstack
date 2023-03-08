@@ -1,7 +1,7 @@
 # 立即执行函数
 
 - 立即执行函数，只能是表达式才能被执行符号执行,函数名会被自动忽略掉
-- 例子1
+- 例子 1
 
 ```js
 (function test1(){
@@ -21,43 +21,43 @@ function test3(){
 }()//4
 ```
 
-- 例子2
+- 例子 2
 
 ```js
-function test(){
-  var arr = [];
-  for(var i = 0 ; i < 10 ; i++){
+function test() {
+  var arr = []
+  for (var i = 0; i < 10; i++) {
     // 在这里令每一个arr[i]都等于了一个匿名函数，但是并未执行
-    arr[i] = function(){
-      console.log(i);
+    arr[i] = function () {
+      console.log(i)
     }
   }
   return arr
   //return出去的时候i已经变为10了，且形成了闭包
 }
 var myArr = test()
-for(var j = 0 ; j < 10 ; j++){
+for (var j = 0; j < 10; j++) {
   // 每次打印都为10
   myArr[j]()
 }
 ```
 
-- 例子2变
+- 例子 2 变
 
 ```js
-function test3(){
-  for(var x = 0 ; x < 10 ; x++){
+function test3() {
+  for (var x = 0; x < 10; x++) {
     // 在这里令每一个arr[i]都等于了一个匿名函数，但是并未执行
-    ((function(){
-      console.log(x);
-    })())
+    ;(function () {
+      console.log(x)
+    })()
   }
   //return出去的时候i已经变为10了，且形成了闭包
 }
 test3() //0123456789
 ```
 
-- 例子3
+- 例子 3
 
 ```html
 <body>
@@ -82,7 +82,7 @@ test3() //0123456789
 </html>
 ```
 
-- 例子3 变
+- 例子 3 变
 
 ```html
 <body>
@@ -106,20 +106,21 @@ test3() //0123456789
   }
 ```
 
-- 例子4
+- 例子 4
 
 ```js
-var a = 10;
-if(function b(){}){//函数声明作为表达式，不为false，表达式忽略函数名，所以后面的b为undefined
-  function b(){
-    a += typeof(b)
+var a = 10
+if (function b() {}) {
+  //函数声明作为表达式，不为false，表达式忽略函数名，所以后面的b为undefined
+  function b() {
+    a += typeof b
   }
 }
-console.log(a);//10undefined
+console.log(a) //10undefined
 ```
 
 - 插件开发
   - 写一个立即执行函数
   - 在立即执行函数当中写一个功能类
-  - return到window.xxx
-  - 在window既可new出功能类实例来
+  - return 到 window.xxx
+  - 在 window 既可 new 出功能类实例来
