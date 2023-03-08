@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var obj = {}
+    var obj2 = new Object();
+    function OBJ(){
+
+    }
+    var obj3 = new OBJ();
+    var obj4 = Object.create(OBJ.prototype)
+    console.log("obj",obj)//prototype的constructor指向Object()
+    console.log("obj2",obj2)//prototype的constructor指向Object()
+    console.log("obj3",obj3)//prototype的constructor指向OBJ()
+    console.log("obj4",obj4)
+  </script>
+</body>
+</html>
