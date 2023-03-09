@@ -232,3 +232,7 @@ Student.prototype = buf;
 
 - 尽量不要用到`instanceOf`
 - 修改`Object`的`toString`的`this`指向：`Object.prototype.toString.call(x)`
+
+## 12、typeof 可能返回的值有哪些
+
+- object,boolean,number,string,undefined,function
