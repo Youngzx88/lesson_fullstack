@@ -222,3 +222,13 @@ Student.prototype = buf;
 ## 9、常用的模块化开发/插件开发
 
 - window.method = 立即执行函数{function(opt){这里面返回你要的数据}}()
+
+## 10、对象遍历属性
+
+- 正常用`for in`去遍历的话，会把原型链上的所有属性都打印出来
+- 这个时候就要用到`instance.hasOwnProperty(key)`
+
+## 11、判断对象属性
+
+- 尽量不要用到`instanceOf`
+- 修改`Object`的`toString`的`this`指向：`Object.prototype.toString.call(x)`
