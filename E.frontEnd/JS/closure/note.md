@@ -59,7 +59,49 @@ function test3(){
       console.log(x);
     })())
   }
-  //return出去的时候i已经变为10了，且形成了闭包
 }
 test3() //0123456789
 ```
+
+## 2、闭包的用处
+
+- 科里化(curry)
+  - curry的本质就是返回一个函数出去
+
+  ```html
+  <!-- 这样一段代码如何实现防抖？ -->
+  <!-- 既套一层函数，再返回执行的函数中有条件的执行 -->
+  <body>
+    <input type="text" id="here"></input>
+  </body>
+  <script>
+    const oInput = document.querySelector('#here')
+    oInput.addEventListener('input',function(){
+      console.log(this.value) 
+    },false)
+  </script>
+  <!-- 如下所示 -->
+  <body>
+  <input type="text" id="here"></input>
+  </body>
+  <script>
+    const oInput = document.querySelector('#here');
+    oInput.addEventListener('input',throttle(handler,2000),false);
+
+    function handler () {
+      console.log(this.value)
+    }
+    function throttle (handler,delay) {
+      const _delay = delay || 1000;
+      let initTime = new Date().getTime();
+      return function(){
+        const nowTime = new Date().getTime();
+        const ctx = this
+        if(nowTime - initTime >= _delay){
+          handler.call(ctx)
+          initTime = nowTime
+        }
+      }
+    }
+  </script>
+  ```
