@@ -67,6 +67,7 @@ test3() //0123456789
 
 - 科里化(curry)
   - curry的本质就是返回一个函数出去
+  - 例如如下实现节流
 
   ```html
   <!-- 这样一段代码如何实现防抖？ -->
@@ -105,3 +106,36 @@ test3() //0123456789
     }
   </script>
   ```
+
+  - 例如如下实现防抖
+
+  ```html
+  <body>
+    <input type="text" id="here"></input>
+  </body>
+  <script>
+    // 防抖：重复点击不执行，只有不点击以后2秒后执行(适用于输入框)
+    const oInput = document.querySelector('#here');
+    oInput.addEventListener('input',debounce(handler),false);
+
+    function handler () {
+      console.log(this.value)
+    }
+    
+    function debounce (handler) {
+      const _delay = 1000;
+      let timer = null
+      return function(){
+        // 如果timer存在就清除这个定时器，随即建立一个新的_delay时长的定时器
+        if(timer) clearTimeout(timer)
+        timer = setTimeout(()=>{
+          const ctx = this
+          handler.call(ctx)
+        },_delay)
+      }
+    }
+  </script>
+  </html>
+  ```
+
+  - 为什么上面的绑定事件并未执行返回的函数也可以运行？因为addEventListener就是默认执行第二个参数的函数

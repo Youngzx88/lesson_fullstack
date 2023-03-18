@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" id="here"></input>
+</body>
+<script>
+  // 防抖：重复点击不执行，只有不点击以后2秒后执行(适用于输入框)
+  const oInput = document.querySelector('#here');
+  oInput.addEventListener('input',debounce(handler),false);
+
+  function handler () {
+    console.log(this.value)
+  }
+  
+  function debounce (handler) {
+    const _delay = 1000;
+    let timer = null
+    return function(){
+      // 如果timer存在就清除这个定时器，随即建立一个新的_delay时长的定时器
+      if(timer) clearTimeout(timer)
+      timer = setTimeout(()=>{
+        const ctx = this
+        handler.call(ctx)
+      },_delay)
+    }
+  }
+</script>
+</html>
