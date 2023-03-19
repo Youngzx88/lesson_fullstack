@@ -15,6 +15,7 @@
 8. 倒计时 use-timer
 9. 固定高度要用大写的 PX，但是尽量用 rpx 因为是响应式
 10. pc+mobile 响应式切图
+
     - pc 直接切 img ➕ 绝对定位 text
     - mobile img display：none，用 text 撑开文本，用 img 当作 text 的背景图(bgi)
 
@@ -85,7 +86,9 @@
     ```
 
 12. 给后端的数据结构
+
     - axios
+
       - json：直接传
       - format: 把 json 转化一下
 
