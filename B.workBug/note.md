@@ -351,3 +351,20 @@ export const createInventoryMission = (formData: any) => {
   })
 }
 ```
+
+37. 私钥读不了，需要加权限才可以 ssh 连接
+
+- chmod 600 /position
+
+38. ssh
+
+- 一种远程连接主机的方式，vscode中command+shift+p
+- 配置好对应的ssh config进行连接
+- 密码或者证书登陆
+
+```config
+Host oms-prod
+  HostName xxx.xx.xxx.xx
+  User xxxx
+  IdentityFile /Users/youngzx/xxxx/neobio-prodFile/xxxx
+```
