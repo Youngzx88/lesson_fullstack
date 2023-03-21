@@ -61,3 +61,28 @@ const obj = Object.create({c: 3},{
 - 冻结对象属性：通过 Object.defineProperty() 方法可以将一个对象的属性设置为不可写、不可删除和不可配置，从而达到“冻结”对象的属性的目的。
 
 - 虽然默认不可枚举，但是可以通过Object.getOwnPropertyNames得到他的key数组，然后再去访问他的属性
+
+## 6、super
+
+- 要实现继承，必须要实现父类的构造函数，既在自己的构造函数基础上`super()`
+
+## 7、继承extends
+
+- 假设`Do`类继承于`Compute`类
+- `Do`中调用方法`result`
+- 但是调用到了父类`Compute`中的方法
+- 那么继承关系应该如下所示
+
+```js
+do:{
+  __proto__: Do.prototype {
+    result: fn,
+      __proto__: Compute.prototype {
+        plus,
+        minus...
+      }
+  }
+}
+```
+
+- 可见不是子类实例直接继承父类原型，而是子类先去找自己的原型，自己的原型再往上找
