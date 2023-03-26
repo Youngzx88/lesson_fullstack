@@ -75,3 +75,67 @@ obj[3] = 2;
 
 - 类数组如何变为数组并使用数组的方法？
   - `var realArray = Array.prototype.slice.call(arguments)`
+
+## 7、数组的方法
+
+- forEach
+
+```js
+const arr = [1,2,3]
+arr.forEach(item=>{
+  console.log(item)
+})
+arr.forEach(function(item,index,arr){
+  arr[index] += this.a
+},{a:3})
+console.log(arr)//[ 4, 5, 6 ]
+```
+
+- map:常用于返回一个新数组
+
+```js
+const mapArr = [1,3,4]
+const arr2 = mapArr.map(item=>{
+  return item + 3
+})
+console.log(arr2)//[4,6,7]
+```
+
+- filter:一般用于数组项的删除，其次返回一个新的数组
+
+```js
+const filterArr = [1,2,3,4,5]
+const newArr = filterArr.filter(item=>{
+  return item > 3
+})
+console.log(newArr)//[4,5]
+```
+
+- reduce:是一个比较随意的方法，可以组成你想要的任何形式
+
+```js
+// 使用reduce进行累加
+const reduceArr = [1,2,3,4,5,6]
+const num = reduceArr.reduce((prev,next,index) => {
+  console.log("prev,next,index",prev,next,index)
+  return prev = prev + next
+  // 每次需要显示的返回prev
+})
+console.log(num);//21
+
+// 不给第二个参数prev就是number，但是可以显示的指定prev是什么，比如这里让prev变为对象
+const reduceArr2 = [1,2,3,4,'yzx','yy']
+const obj = reduceArr2.reduce((prev,next,index) => {
+  prev[reduceArr2[index]] = next
+  return prev
+},{})
+console.log(obj)
+
+// 还可以变为数组的同时操作数组
+const reduceArr2 = [1,2,3,4,'yzx','yy']
+const nArr = reduceArr2.reduce((prev,next,index) => {
+  prev[index] = next
+  return prev
+},[])
+console.log(nArr)//[ '1-0', '2-1', '3-2', '4-3', 'yzx-4', 'yy-5' ]
+```
