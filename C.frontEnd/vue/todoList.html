@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<body>
+  <div id="app">Vue 渲染
+  <form v-on:submit.prevent="addNewTodo">
+    <input v-model="newTodoText" type="text">
+    <button>新增</button>
+  </form>
+  <ul>
+    <li 
+      v-for="(todo,index) in todos"
+      is="todo-item"
+      v-bind:title="todo.text"
+      v-bind:key="index"
+      v-bind:title="todo.text"
+      v-on:remove="todos.splice(index, 1)"
+    >
+
+    </li>
+  </ul>
+  </div>
+</body>
+<script>
+  Vue.component('todo-item',{
+    template:  '\
+      <li>\
+        {{ title }}\
+        <button v-on:click="$emit(\'remove\')">Remove</button>\
+      </li>\
+    ',
+    props: ['title']
+  })
+  const app = new Vue({
+    el: '#app',
+    data: {
+      newTodoText: '',
+      todos: [
+        {text: "todo1"},
+        {text: "todo2"},
+        {text: "todo3"},
+      ]
+    },
+    methods: {
+      addNewTodo: function(e){
+        this.todos.push({text:this.newTodoText})
+      },
+      remove: function(e){
+        this.todos.splice(index,1)
+      }
+    }
+  })
+</script>
+</html>

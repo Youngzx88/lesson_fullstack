@@ -271,3 +271,412 @@ var watchExampleVM = new Vue({
 })
 </script>
 ```
+
+## 7、使用 bind 动态绑定 class
+
+## 8、条件渲染
+
+- 用 key 管理可复用的元素
+  - 没有 key 的情况，vue 不会重复渲染复用的 dom
+
+  ```html
+  <template v-if="loginType === 'username'">
+    <label>Username</label>
+    <input placeholder="Enter your username">
+  </template>
+  <template v-else>
+    <label>Email</label>
+    <input placeholder="Enter your email address">
+  </template>
+  ```
+
+  - Vue 为你提供了一种方式来表达“这两个元素是完全独立的，不要复用它们”。只需添加一个具有唯一值的 `key` attribute
+
+  ```html
+  <!-- 需要注意的是label会被复用，因为他没有加key -->
+  <template v-if="loginType === 'username'">
+    <label>Username</label>
+    <input placeholder="Enter your username" key="username-input">
+  </template>
+  <template v-else>
+    <label>Email</label>
+    <input placeholder="Enter your email address" key="email-input">
+  </template>
+  ```
+
+- v-show
+  - 另一个用于根据条件展示元素的选项是 v-show 指令。用法大致一样：
+  - 不同的是带有 v-show 的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 CSS property display。
+  - 注意，v-show 不支持 template 元素，也不支持 v-else
+  - v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
+  - v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+  - 相比之下，v-show 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+  - 一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
+
+## 9、列表渲染
+
+- 使用v-for渲染li
+  - 不仅可以渲染数组还可以渲染对象，item in obj
+  - 给 bind 一个 key 属性会更加高效
+  - 不要使用对象或数组之类的非基本类型值作为 v-for 的 key。请用字符串或数值类型的值。
+  - 变更方法，顾名思义，会变更调用了这些方法的原始数组。相比之下，也有非变更方法，例如 filter()、concat() 和 slice()。它们不会变更原始数组，而总是返回一个新数组。当使用非变更方法时，可以用新数组替换旧数组
+  - 用计算属性缓存，计算属性的函数并没有在模板中被直接执行。实际上，计算属性的函数只有在计算属性被访问时才会执行。
+
+    ```html
+    <ul id="example-1">
+      <li v-for="item in items" :key="item.message">
+        {{ item.message }}
+      </li>
+    </ul>
+    ```
+
+- 对template使用v-for可以达到react map 的形式
+
+  ```html
+  <ul>
+  <template v-for="item in items">
+    <li>{{ item.msg }}</li>
+    <li class="divider" role="presentation"></li>
+  </template>
+
+</ul>
+  ```
+
+- v-for与v-if一起使用
+  - 当它们处于同一节点，v-for 的优先级比 v-if 更高，这意味着 v-if 将分别重复运行于每个 v-for 循环中。当你只想为部分项渲染节点时，这种优先级的机制会十分有用，
+
+  ```html
+  <li v-for="todo in todos" v-if="!todo.isComplete">
+  {{ todo }}
+  </li>
+  ```
+
+- 自定义组件里使用 v-for
+  - 然而，任何数据都不会被自动传递到组件里，因为组件有自己独立的作用域。为了把迭代数据传递到组件里，我们要使用 prop
+  - 注意这里的 is="todo-item" attribute。这种做法在使用 DOM 模板时是十分必要的，因为在 <ul> 元素内只有 <li> 元素会被看作有效内容。这样做实现的效果与 <todo-item> 相同，但是可以避开一些潜在的浏览器解析错误。
+
+  ```html
+  <div id="todo-list-example">
+    <form v-on:submit.prevent="addNewTodo">
+      <label for="new-todo">Add a todo</label>
+      <input
+        v-model="newTodoText"
+        id="new-todo"
+        placeholder="E.g. Feed the cat"
+      >
+      <button>Add</button>
+    </form>
+    <ul>
+      <li
+        is="todo-item"
+        v-for="(todo, index) in todos"
+        v-bind:key="todo.id"
+        v-bind:title="todo.title"
+        v-on:remove="todos.splice(index, 1)"
+      ></li>
+    </ul>
+  </div>
+  <script>
+  Vue.component('todo-item', {
+    template: '\
+      <li>\
+        {{ title }}\
+        <button v-on:click="$emit(\'remove\')">Remove</button>\
+      </li>\
+    ',
+    props: ['title']
+  })
+
+  new Vue({
+    el: '#todo-list-example',
+    data: {
+      newTodoText: '',
+      todos: [
+        {
+          id: 1,
+          title: 'Do the dishes',
+        },
+        {
+          id: 2,
+          title: 'Take out the trash',
+        },
+        {
+          id: 3,
+          title: 'Mow the lawn'
+        }
+      ],
+      nextTodoId: 4
+    },
+    methods: {
+      addNewTodo: function () {
+        this.todos.push({
+          id: this.nextTodoId++,
+          title: this.newTodoText
+        })
+        this.newTodoText = ''
+      }
+    }
+  })
+  </script>
+  ```
+
+## 10、事件处理
+
+- v-on:click="doSomethingFunc" 的形式绑定事件处理函数
+- 可以传递dom：v-on:click="doSomethingFunc(here is my $event)"
+- 在事件处理程序中调用 event.preventDefault 是常见的形式，但vue使用了事件修饰符
+  - .stop：`<a v-on:click.stop="doThis"></a>`
+  - .prevent
+  - .capture
+  - .self
+  - .once
+  - .passive
+- 使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。
+- once只触发一次:`<a v-on:click.once="doThis"></a>`
+- 按键修饰符
+
+  ```html
+  <input v-on:keyup.enter="submit">
+  <input v-on:keyup.page-down="onPageDown">
+  ```
+
+- 系统修饰符键：.ctrl,.alt,.shift,.meta,.exact 修饰符允许你控制由精确的系统修饰符组合触发的事件。
+
+## 11、表单输入
+
+- 对于需要使用输入法 (如中文、日文、韩文等) 的语言，你会发现 v-model 不会在输入法组合文字过程中得到更新。如果你也想处理这个过程，请使用 input 事件。
+- 单选按钮：单个复选框，绑定到布尔值，多个复选框，绑定到同一个数组
+
+```html
+<div id="example-4">
+  <input type="radio" id="one" value="One" v-model="picked">
+  <label for="one">One</label>
+  <br>
+  <input type="radio" id="two" value="Two" v-model="picked">
+  <label for="two">Two</label>
+  <br>
+  <span>Picked: {{ picked }}</span>
+</div>
+<script>
+new Vue({
+  el: '#example-4',
+  data: {
+    picked: ''
+  }
+})
+</script>
+```
+
+- 输入框修饰符
+  - .lazy
+  在默认情况下，v-model 在每次 input 事件触发后将输入框的值与数据进行同步 (除了上述输入法组合文字时)。你可以添加 lazy 修饰符，从而转为在 change 事件_之后_进行同步：
+
+  <!-- 在“change”时而非“input”时更新 -->
+  `<input v-model.lazy="msg">`
+
+  - .number
+  如果想自动将用户的输入值转为数值类型，可以给 v-model 添加 number 修饰符：
+
+  `<input v-model.number="age" type="number">`
+
+  这通常很有用，因为即使在 type="number" 时，HTML 输入元素的值也总会返回字符串。如果这个值无法被 parseFloat() 解析，则会返回原始的值。
+
+  - .trim
+  如果要自动过滤用户输入的首尾空白字符，可以给 v-model 添加 trim 修饰符：
+
+  `<input v-model.trim="msg">`
+
+## 12、组件基础
+
+- 自定义组件的名称必须是 kebab-case（短横线分隔命名，例如 my-component
+- 如果使用了三个相同个组件名的组件，他们的data是独立的
+- 组件的data必须是一个函数:因此每个实例可以维护一份被返回对象的独立的拷贝
+
+```js
+data: function () {
+  return {
+    count: 0
+  }
+}
+```
+
+- 组件树->组件注册：全局注册和局部注册
+  - 全局注册在vue实例里都是通用的，但是会增加无效组件打包的开销
+  - 局部注册：我们可以通过js文件来编写组件`var ComponentA = { /* ... */ }`,然后在components选项中定义我们想要使用的组件
+  - 组件也可以互相嵌套
+
+  ```js
+    new Vue({
+    el: '#app',
+    components: {
+      'component-a': ComponentA,
+      'component-b': ComponentB
+    }
+  })
+  ```
+
+- prop：Prop 是你可以在组件上注册的一些自定义 attribute。当一个值传递给一个 prop attribute 的时候，它就变成了那个组件实例的一个 property
+- 当然不仅可以传一个属性还可以传一个复杂的对象在组件里解析
+
+```html
+<script>
+Vue.component('blog-post', {
+  props: ['title'],
+  template: '<h3>{{ title }}</h3>'
+})
+</script>
+<blog-post title="My journey with Vue"></blog-post>
+<blog-post title="Blogging with Vue"></blog-post>
+<blog-post title="Why Vue is so fun"></blog-post>
+```
+
+- 监听子组件事件:与父组件通信
+  - $emit：是 Vue 实例中的一个方法，用于触发当前实例上的自定义事件。它接受两个参数
+  - 使用事件抛出一个值：例如我们可能想让 <blog-post> 组件决定它的文本要放大多少。这时可以使用 $emit 的第二个参数来提供这个值，后当在父级组件监听这个事件的时候，我们可以通过 $event 访问到被抛出的这个值
+  - 如果这个事件处理函数是一个方法：那么这个值将会作为第一个参数传入这个方法：
+
+```html
+<body>
+  <div id="app">
+    <div :style="{ fontSize: postFontSize + 'em' }">
+      <mycomponent 
+      v-for="post in posts"
+      :post="post"
+      :key="post.id"
+      v-on:enlarge-text="postFontSize += 0.1"
+      ></mycomponent>
+    </div>
+  </div>
+</body>
+<script>
+  Vue.component('mycomponent', {
+    template: `
+        <div class="blog-post">
+        <h3>{{ post.id }}</h3>
+        <div>{{ post.title }}</div>
+        <button v-on:click="$emit('enlarge-text')">
+          Enlarge text
+        </button>
+      </div>
+    `,
+    props: ['post','id','postFontSize']
+  })
+  new Vue({ el: '#app',
+    data:{
+      posts: [
+        { id: 1, title: 'My journey with Vue' },
+        { id: 2, title: 'Blogging with Vue' },
+        { id: 3, title: 'Why Vue is so fun' }
+      ],
+      postFontSize: 1
+    } 
+  })
+</script>
+```
+
+- 在组件上使用 v-model
+
+```html
+<input v-model="searchText">
+<!-- 等价 -->
+<input
+  v-bind:value="searchText"
+  v-on:input="searchText = $event.target.value"
+>
+<custom-input
+  v-bind:value="searchText"
+  v-on:input="searchText = $event"
+></custom-input>
+<!-- 所以当组件写成如下形式的时候就可以使用v-model了 -->
+<script>
+Vue.component('custom-input', {
+  props: ['value'],
+  template: `
+    <input
+      v-bind:value="value"
+      v-on:input="$emit('input', $event.target.value)"
+    >
+  `
+})
+</script>
+<custom-input v-model="searchText"></custom-input>
+```
+
+- 通过插槽分发内容:类似react放在组件内部的东西会变成children
+
+```html
+<alert-box>
+  Something bad happened.
+</alert-box>
+<script>
+Vue.component('alert-box', {
+  template: `
+    <div class="demo-alert-box">
+      <strong>Error!</strong>
+      <slot></slot>
+    </div>
+  `
+})
+</script>
+```
+
+- 动态组件:is,类似useEffect监听事件
+
+```html
+<!-- 组件会在 `currentTabComponent` 改变时改变 -->
+ <body>
+    <div id="dynamic-component-demo" class="demo">
+      <button
+        v-for="tab in tabs"
+        v-bind:key="tab"
+        v-bind:class="['tab-button', { active: currentTab === tab }]"
+        v-on:click="currentTab = tab"
+      >
+        {{ tab }}
+      </button>
+
+      <component v-bind:is="currentTabComponent" class="tab"></component>
+    </div>
+
+    <script>
+      Vue.component("tab-home", {
+        template: "<div>Home component</div>"
+      });
+      Vue.component("tab-posts", {
+        template: "<div>Posts component</div>"
+      });
+      Vue.component("tab-archive", {
+        template: "<div>Archive component</div>"
+      });
+
+      new Vue({
+        el: "#dynamic-component-demo",
+        data: {
+          currentTab: "Home",
+          tabs: ["Home", "Posts", "Archive"]
+        },
+        computed: {
+          currentTabComponent: function() {
+            return "tab-" + this.currentTab.toLowerCase();
+          }
+        }
+      });
+    </script>
+  </body>
+```
+
+- 解析 DOM 模板时的注意事项
+  - 有些 HTML 元素，诸如 `<ul>`、`<ol>`、`<table>` 和 `<select>`，对于哪些元素可以出现在其内部是有严格限制的。而有些元素，诸如 `<li>`、`<tr>` 和 `<option>`，只能出现在其它某些特定的元素内部。
+  - 这个自定义组件 `<blog-post-row>` 会被作为无效的内容提升到外部，并导致最终渲染结果出错。幸好这个特殊的 is attribute 给了我们一个变通的办法
+  - 需要注意的是如果我们从以下来源使用模板的话，这条限制是不存在的：字符串 (例如：template: '...')单文件组件 (.vue)`<script type="text/x-template">`
+
+```html
+<table>
+  <blog-post-row></blog-post-row>
+</table>
+<table>
+  <tr is="blog-post-row"></tr>
+</table>
+```
+
+## 13、深入了解组件
