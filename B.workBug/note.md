@@ -377,3 +377,208 @@ Host oms-prod
   - 然而，对于源代码文件夹中的其他文件夹，如 src 文件夹中的文件，它们通常需要通过模块导入的方式引用import，而不是使用相对路径。
 
 39. 如果接口返回异常，但是postman返回正常，要考虑是不是拦截器里面写的内容有问题
+
+40. oss没有缓存，通过oss的到的CDN是有缓存的，需要到域名服务器上去刷新一下CDN缓存
+
+41. 想要对比组件刷新前后某一个状态的变化，不能使用useState，因为useState会导致组件强制刷新，状态会回复为初始值，要用useRef获得引用类型
+
+42. git Actions
+
+- 其实很多actions脚本都可以用github官方的去做，极大的降低了我们去编写脚本的压力
+- 在这个脚本里public-path作为参数传入了另一个webBUild脚本，webBuild抛出在process.env里，这样我们就可以通过vite去配置静态资源的base路径为upload以后的路径
+
+```yml
+name: SuidaoAI 发布
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  vars:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kokoroX/get-version-action@main
+        id: get-version
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+      service-name: magelesi 官网
+      test-enviroment: 测试环境
+      test-service-url: https://www.magelesi.com/
+      local-path: dist
+      oss-region: oss-cn-shanghai
+      oss-bucket: magelesi
+
+  build:
+    needs: vars
+    uses: 0xTeams/reuse-workflows/.github/workflows/web.build.yml@main
+    secrets: inherit
+    with:
+      build-run: npm run build
+      public-path: https://oss.magelesi.com/
+      version: ${{ needs.vars.outputs.version }}
+      local-path: ${{ needs.vars.outputs.local-path }}
+
+  upload:
+    needs: [vars, build]
+    uses: 0xTeams/reuse-workflows/.github/workflows/web.upload-ali-oss.yml@main
+    secrets:
+      oss-key-id: ${{ secrets.OSS_KEY_ID }}
+      oss-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+    with:
+      version: ${{ needs.vars.outputs.version }}
+      oss-path: ${{ needs.vars.outputs.oss-path }}
+      local-path: ${{ needs.vars.outputs.local-path }}
+      oss-region: ${{ needs.vars.outputs.oss-region }}
+      oss-bucket: ${{ needs.vars.outputs.oss-bucket }}
+
+  deployment:
+    needs: upload
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: build-artifact-index.html
+          path: build
+
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SOURCE: "build/index.html"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: /home/htdocs/magelesi/index.html
+
+  dev-success-notice:
+    needs: [deployment, vars]
+    uses: 0xTeams/reuse-workflows/.github/workflows/feishu.success.notice.yml@main
+    secrets: inherit
+    with:
+      version: ${{ needs.vars.outputs.version }}
+      service-name: ${{ needs.vars.outputs.service-name }}
+      service-url: ${{ needs.vars.outputs.test-service-url }}
+      enviroment-name: ${{ needs.vars.outputs.test-enviroment }}
+
+  dev-failure-notice:
+    if: failure()
+    needs: [build, deployment, vars]
+    uses: 0xTeams/reuse-workflows/.github/workflows/feishu.failure.notice.yml@main
+    secrets: inherit
+    with:
+      service-name: ${{ needs.vars.outputs.service-name }}
+      version: ${{ needs.vars.outputs.version }}
+      enviroment-name: ${{ needs.vars.outputs.test-enviroment }}
+```
+
+- 这是一个 GitHub Actions，用于获取个人规则的版本号。它的主要内容包括：
+  - name：指定这个 Action 的名称为 "Get version"。
+  - description：对这个 Action 进行描述，即获取个人规则版本号。
+  - outputs：定义 Action 的输出参数，包括一个名为 "version" 的输出参数，用于保存获取到的个人规则版本号。
+  - runs：定义 Action 的运行方式，使用 "composite" 运行模式，即由多个步骤组成。
+  - 在 runs 中，这个 Action 包含两个步骤：
+    - 第一个步骤使用了 benjlevesque/short-sha@v2.1 Action，用于获取 Git 提交的短 SHA 值。
+    - 第二个步骤是一个自定义步骤，用于生成个人规则的版本号。它首先设置了时区为 "Asia/Shanghai"，然后获取当前日期，将分支名中"/" - 替换为 "_"，最后将获取到的日期、分支名和短 SHA 值拼接成一个版本号，并将其输出到 $GITHUB_OUTPUT 中。
+  - 最终，这个 Action 会将生成的版本号保存到 "version" 输出参数中，供其他 Action 使用。
+
+```yml
+name: 'Get version'
+description: '获取个人规则版本号'
+outputs:
+  version:
+    description: "个人规则版本号"
+    value: ${{ steps.version-generator.outputs.version }}
+runs:
+  using: "composite"
+  steps:
+    - uses: benjlevesque/short-sha@v2.1
+      id: short-sha
+      with:
+        length: 8
+    - id: version-generator
+      run: |
+        export TZ='Asia/Shanghai'
+        DATE=$(date +'%Y%m%d')
+        export ORIGIN_REF_NAME=${{ github.ref_name }}
+        export REF_NAME=${ORIGIN_REF_NAME//\//\_}
+        echo "version=$DATE-$REF_NAME-${{ steps.short-sha.outputs.sha }}" >> $GITHUB_OUTPUT
+      shell: bash
+```
+
+- 这是一个 GitHub Actions 的工作流文件，用于将本地文件上传到阿里云 OSS 对象存储中。该工作流文件包含以下内容：
+  - name: 工作流的名称为 Upload Ali OSS。
+  - on: 触发工作流的事件为 workflow_call，即通过其他工作流调用该工作流。
+  - inputs: 工作流需要的输入参数包括 oss-path、local-path、version、oss-region 和 oss-bucket，均为字符串类型，并且都是必须- 的。
+  - secrets: 工作流需要的秘钥包括 oss-key-id 和 oss-key-secret，均为必须的。
+  - jobs: 工作流的主要任务为上传文件到 OSS，其中 upload 为任务名称，runs-on 表示运行环境为 ubuntu-latest。
+  - steps: 任务的具体步骤包括：使用 actions/checkout 拉取代码，使用 actions/download-artifact 下载构建产物，使用tvrcgo/upload-to-oss 将本地文件上传到 OSS。其中，upload_to_oss 为步骤名称，id 表示该步骤的唯一标识符，uses 表示使用的 action,with 表示传递给 action 的参数，其中 assets 表示上传的文件路径。
+
+```yml
+name: Upload Ali OSS
+
+on:
+  workflow_call:
+    inputs:
+      oss-path:
+        required: true
+        type: string
+      local-path:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+      oss-region:
+        required: true
+        type: string
+      oss-bucket:
+        required: true
+        type: string
+    secrets:
+      oss-key-id:
+        required: true
+      oss-key-secret:
+        required: true
+        
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: build-dist-artifact
+          path: ${{ inputs.local-path }}
+
+      - name: Upload to oss
+        id: upload_to_oss
+        uses: tvrcgo/upload-to-oss@master
+        with:
+          key-id: ${{ secrets.oss-key-id }}
+          key-secret: ${{ secrets.oss-key-secret }}
+          region: ${{ inputs.oss-region }}
+          bucket: ${{ inputs.oss-bucket }}
+          assets: |
+            ${{ inputs.local-path }}/**:/${{ inputs.oss-path }}/${{ inputs.version }}/
+```
+
+43. 服务器相关
+
+- 创建密钥，打开tcp，22端口，ssh，可以远程连接
+- 默认服务器不带nginx，需要自己安装
+  - sudo apt update
+  - sudo apt install nginx
+  - nginx -t：就能看到nginx在哪里进行配置了，然后再去配置try files让SPA的应用可以正常访问
+
+44. 部署SPA网站到服务器上需要的注意事项
+
+- 步骤
+  - 获得版本号和一些变量，用于判断区分版本，新建文件夹
+  - build
+  - upload 静态资源 至 oss
+  - upload index.html 至 服务器
+  - 需要后端协助配置nginx的try files
+  - 修改vite.config.js的base，让静态资源的指向为oss存放地址，这里注意是通过actions中抛出的文件路径
