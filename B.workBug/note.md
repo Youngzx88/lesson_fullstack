@@ -181,6 +181,24 @@ server {
 }
 ```
 
+- 可以将多个前端项目放在同一个服务器端口上。在nginx中，您可以为每个前端项目配置一个不同的location，用于指定该项目的静态资源文件路径。例如，如果将多个前端项目部署在同一个服务器上，并且它们的静态资源文件都存放在/var/www目录下，可以使用以下nginx配置，这样在访问example.com/project1的时候就会访问对应的文件夹：
+
+Copy
+server {
+    listen 80;
+    server_name example.com;
+
+    location /project1 {
+        root /var/www/project1;
+        index index.html;
+    }
+
+    location /project2 {
+        root /var/www/project2;
+        index index.html;
+    }
+}
+
 - 为了不让有权限问题，打包后的 dist 最好放在 nginx 文件夹下
 - spa 应用，只有一个 html，路由都在 html 里，其他都是用 js 静态资源引入，jsx 本质就是 js(vite 和 webpack 做的事情)
 - 所以我们配 try file，不过是为了访问`/index.js`是文件就访问真实的文件，不是文件就打到`index.html`上,让 react 路由发挥作用找到对应的资源
@@ -581,4 +599,22 @@ jobs:
   - upload 静态资源 至 oss
   - upload index.html 至 服务器
   - 需要后端协助配置nginx的try files
+    - etc/nginx/default.d/nginx.config 下是`nginx`的配置文件
+    - 为了分离，我们一般自己建一个`config.d`，并被`nginx.config`引入`include /etc/nginx/conf.d/*.conf;`
+    - nginx默认对home页面的文件没有读取能力，所以需要你给他权限：`sudo chmod a+r /home/htdocs/starbucks/index.html`
+    - 不要忘记为单页应用配置try files
+
+      ```conf
+      server {
+        listen 80;
+        listen [::]:80;
+        server*name *;
+        root /usr/share/nginx/dist;
+        location / {
+        index /index.html;
+        try_files $uri /$uri /index.html;
+        }
+      }
+      ```
+
   - 修改vite.config.js的base，让静态资源的指向为oss存放地址，这里注意是通过actions中抛出的文件路径
