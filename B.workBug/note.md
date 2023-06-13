@@ -106,7 +106,7 @@
       ```
 
 13. 关闭 ts 类型监测
-14. 项目手机端预览要在同一局域网 ip 下
+14. 项目手机端预览要在同一局域网 ip 下，vite配置0.0.0.0
 15. css module taro 中使用在 config 下 index.js 中修改，h5 在 vite.config.js 中修改
 
 ```js
@@ -208,7 +208,7 @@ server {
 - state，action 分开写
 - 不要在拿到的同时打 log，同步任务优先执行
 
-23.
+23. ssh
 
 - 连接服务器用 vscode server 就好
 - command shift p :ssh
@@ -639,3 +639,82 @@ export default {
   }
 }
 ```
+
+47. 组件之间的数据不要耦合
+
+- 不要过度依赖其他组件的数据，要独立
+
+48. taro
+
+- 当你创建一个 Taro 应用时，在项目的根目录下会有一个 app.tsx（或 app.jsx）文件，其中定义了一个名为 App 的组件。这个 App 组件是 Taro 框架默认的应用程序组件，用于承载整个应用程序的内容。
+
+- Taro 框架会在运行时自动找到 app.ts 文件并调用 App 组件，然后将 App 组件的内容渲染到应用程序的页面中。
+
+- 因此，你不需要在其他文件中手动调用 App 组件。只需确保 app.ts 文件中定义了 App 组件，并且通过 return props.children 将子组件渲染到页面上即可。Taro 框架会负责调用和渲染 App 组件，并将子组件作为内容进行渲染。
+
+49. post请求
+
+- body默认会toString
+- 所以需要我们`body: JSON.stringify(params),`
+
+50. useCallback,useMemo的使用❌
+
+51. taro修改tabbar和navigation❌
+
+- navigation默认会占据一部分高度
+
+52. taro 像素 自适应❌
+
+```js
+// config
+// 设计稿给的750，如果我们的设计稿宽度是w，24px实际就应该是24*(750/w)*deviceRatio
+// 注意这里deviceRatio也有区别，不同宽度不一样，所以如果设计图是375就要*2
+const config = {
+  projectName: 'wechatmall',
+  date: '2023-6-1',
+  designWidth: 750,
+  deviceRatio: {
+    640: 2.34 / 2,
+    750: 1,
+    828: 1.81 / 2
+  },
+}
+```
+
+53. figma判断两个东西之间的高度
+
+- 用b的y-a的y-a的height
+
+54. 配置@路径别名❌
+
+55. 子元素超出父元素的高度，但是没出现滑动条
+
+- 给父元素增加css属性`overflow: auto`
+- overflow: auto; 是 CSS 中的一个属性，用于控制容器元素在内容超出容器尺寸时的表现方式。
+- 当将 overflow 属性设置为 auto 时，容器会根据内容是否溢出来自动显示滚动条。如果容器的内容没有超出容器的尺寸，则不会显示滚动条。当容器的内容超出容器的尺寸时，会自动显示滚动条，以便用户可以滚动查看超出部分的内容。
+- 具体原理是，当容器的内容超出容器的尺寸时，容器会创建一个滚动框，其中包含内容并显示滚动条。用户可以通过滚动条或触摸滚动操作来滚动内容。滚动框可以水平和垂直滚动，具体取决于内容的溢出方向。
+- 因此，通过将 overflow: auto; 应用于容器元素，您可以实现在内容超出容器时显示滚动条并允许用户滚动查看内容的效果。
+
+56. image导致的间隙
+
+- 当你将 Image 组件的样式设置为 display: block; 时，它会以块级元素的形式显示。这会导致 Image 元素在布局中占据整个可用宽度，并且不会有默认的行内元素间隙。这样可以消除 Image 元素周围的间隙，使其紧密贴合父容器。
+- 在默认情况下，Image 组件可能被视为行内元素，会保留一些行内元素的特性，例如基线对齐和字间距等。这可能会导致一些额外的间隙或布局问题。通过将其样式设置为 display: block;，可以将其转换为块级元素，以更好地控制布局和间隙。
+
+57. taro小程序高度计算
+
+- 记得要减去安全区域的高度
+
+58. icon
+
+- 非tabbar尽量用svg
+
+59. svg做网状图大屏项目❌
+
+-
+
+60. 给backgroundcolor设置一个中间向四周的渐变色怎么设置？❌
+
+-
+
+61. useSate像设置数组的ts类型
+`const [swiperPic,setSwiperPic] = useState<string[]>([]);`
