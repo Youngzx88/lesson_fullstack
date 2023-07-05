@@ -106,7 +106,7 @@
       ```
 
 13. 关闭 ts 类型监测
-14. 项目手机端预览要在同一局域网 ip 下，vite配置0.0.0.0
+14. 项目手机端预览要在同一局域网 ip 下，vite 配置 0.0.0.0
 15. css module taro 中使用在 config 下 index.js 中修改，h5 在 vite.config.js 中修改
 
 ```js
@@ -181,12 +181,12 @@ server {
 }
 ```
 
-- 可以将多个前端项目放在同一个服务器端口上。在nginx中，您可以为每个前端项目配置一个不同的location，用于指定该项目的静态资源文件路径。例如，如果将多个前端项目部署在同一个服务器上，并且它们的静态资源文件都存放在/var/www目录下，可以使用以下nginx配置，这样在访问example.com/project1的时候就会访问对应的文件夹：
+- 可以将多个前端项目放在同一个服务器端口上。在 nginx 中，您可以为每个前端项目配置一个不同的 location，用于指定该项目的静态资源文件路径。例如，如果将多个前端项目部署在同一个服务器上，并且它们的静态资源文件都存放在/var/www 目录下，可以使用以下 nginx 配置，这样在访问 example.com/project1 的时候就会访问对应的文件夹：
 
 Copy
 server {
-    listen 80;
-    server_name example.com;
+listen 80;
+server_name example.com;
 
     location /project1 {
         root /var/www/project1;
@@ -197,6 +197,7 @@ server {
         root /var/www/project2;
         index index.html;
     }
+
 }
 
 - 为了不让有权限问题，打包后的 dist 最好放在 nginx 文件夹下
@@ -376,8 +377,8 @@ export const createInventoryMission = (formData: any) => {
 
 38. ssh
 
-- 一种远程连接主机的方式，vscode中command+shift+p
-- 配置好对应的ssh config进行连接
+- 一种远程连接主机的方式，vscode 中 command+shift+p
+- 配置好对应的 ssh config 进行连接
 - 密码或者证书登陆
 
 ```config
@@ -387,23 +388,23 @@ Host oms-prod
   IdentityFile /Users/youngzx/xxxx/neobio-prodFile/xxxx
 ```
 
-39. react静态资源导入问题
+39. react 静态资源导入问题
 
-- 为什么使用react开发，静态资源放在public文件夹下可以直接用相对路径而其他文件夹不可以？
+- 为什么使用 react 开发，静态资源放在 public 文件夹下可以直接用相对路径而其他文件夹不可以？
   - 在 React 开发中，静态资源（如图片、样式文件等）通常被放置在 public 文件夹下，而不是放置在源代码文件夹中。这是因为 public 文件夹中的内容会被直接复制到构建输出的目录中，而不经过 webpack 或其他构建工具的处理。
   - 当你将静态资源放在 public 文件夹下时，可以使用相对路径来引用这些资源。这是因为浏览器会相对于当前页面的 URL 来解析这些资源的相对路径，并正确加载它们。
-  - 然而，对于源代码文件夹中的其他文件夹，如 src 文件夹中的文件，它们通常需要通过模块导入的方式引用import，而不是使用相对路径。
+  - 然而，对于源代码文件夹中的其他文件夹，如 src 文件夹中的文件，它们通常需要通过模块导入的方式引用 import，而不是使用相对路径。
 
-39. 如果接口返回异常，但是postman返回正常，要考虑是不是拦截器里面写的内容有问题
+39. 如果接口返回异常，但是 postman 返回正常，要考虑是不是拦截器里面写的内容有问题
 
-40. oss没有缓存，通过oss的到的CDN是有缓存的，需要到域名服务器上去刷新一下CDN缓存
+40. oss 没有缓存，通过 oss 的到的 CDN 是有缓存的，需要到域名服务器上去刷新一下 CDN 缓存
 
-41. 想要对比组件刷新前后某一个状态的变化，不能使用useState，因为useState会导致组件强制刷新，状态会回复为初始值，要用useRef获得引用类型
+41. 想要对比组件刷新前后某一个状态的变化，不能使用 useState，因为 useState 会导致组件强制刷新，状态会回复为初始值，要用 useRef 获得引用类型
 
 42. git Actions
 
-- 其实很多actions脚本都可以用github官方的去做，极大的降低了我们去编写脚本的压力
-- 在这个脚本里public-path作为参数传入了另一个webBUild脚本，webBuild抛出在process.env里，这样我们就可以通过vite去配置静态资源的base路径为upload以后的路径
+- 其实很多 actions 脚本都可以用 github 官方的去做，极大的降低了我们去编写脚本的压力
+- 在这个脚本里 public-path 作为参数传入了另一个 webBUild 脚本，webBuild 抛出在 process.env 里，这样我们就可以通过 vite 去配置静态资源的 base 路径为 upload 以后的路径
 
 ```yml
 name: SuidaoAI 发布
@@ -465,7 +466,7 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SOURCE: "build/index.html"
+          SOURCE: 'build/index.html'
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: /home/htdocs/magelesi/index.html
@@ -498,7 +499,7 @@ jobs:
   - runs：定义 Action 的运行方式，使用 "composite" 运行模式，即由多个步骤组成。
   - 在 runs 中，这个 Action 包含两个步骤：
     - 第一个步骤使用了 benjlevesque/short-sha@v2.1 Action，用于获取 Git 提交的短 SHA 值。
-    - 第二个步骤是一个自定义步骤，用于生成个人规则的版本号。它首先设置了时区为 "Asia/Shanghai"，然后获取当前日期，将分支名中"/" - 替换为 "_"，最后将获取到的日期、分支名和短 SHA 值拼接成一个版本号，并将其输出到 $GITHUB_OUTPUT 中。
+    - 第二个步骤是一个自定义步骤，用于生成个人规则的版本号。它首先设置了时区为 "Asia/Shanghai"，然后获取当前日期，将分支名中"/" - 替换为 "\_"，最后将获取到的日期、分支名和短 SHA 值拼接成一个版本号，并将其输出到 $GITHUB_OUTPUT 中。
   - 最终，这个 Action 会将生成的版本号保存到 "version" 输出参数中，供其他 Action 使用。
 
 ```yml
@@ -506,10 +507,10 @@ name: 'Get version'
 description: '获取个人规则版本号'
 outputs:
   version:
-    description: "个人规则版本号"
+    description: '个人规则版本号'
     value: ${{ steps.version-generator.outputs.version }}
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - uses: benjlevesque/short-sha@v2.1
       id: short-sha
@@ -531,7 +532,7 @@ runs:
   - inputs: 工作流需要的输入参数包括 oss-path、local-path、version、oss-region 和 oss-bucket，均为字符串类型，并且都是必须- 的。
   - secrets: 工作流需要的秘钥包括 oss-key-id 和 oss-key-secret，均为必须的。
   - jobs: 工作流的主要任务为上传文件到 OSS，其中 upload 为任务名称，runs-on 表示运行环境为 ubuntu-latest。
-  - steps: 任务的具体步骤包括：使用 actions/checkout 拉取代码，使用 actions/download-artifact 下载构建产物，使用tvrcgo/upload-to-oss 将本地文件上传到 OSS。其中，upload_to_oss 为步骤名称，id 表示该步骤的唯一标识符，uses 表示使用的 action,with 表示传递给 action 的参数，其中 assets 表示上传的文件路径。
+  - steps: 任务的具体步骤包括：使用 actions/checkout 拉取代码，使用 actions/download-artifact 下载构建产物，使用 tvrcgo/upload-to-oss 将本地文件上传到 OSS。其中，upload_to_oss 为步骤名称，id 表示该步骤的唯一标识符，uses 表示使用的 action,with 表示传递给 action 的参数，其中 assets 表示上传的文件路径。
 
 ```yml
 name: Upload Ali OSS
@@ -559,7 +560,7 @@ on:
         required: true
       oss-key-secret:
         required: true
-        
+
 jobs:
   upload:
     runs-on: ubuntu-latest
@@ -585,24 +586,26 @@ jobs:
 
 43. 服务器相关
 
-- 创建密钥，打开tcp，22端口，ssh，可以远程连接
-- 默认服务器不带nginx，需要自己安装
+- 创建密钥，打开 tcp，22 端口，ssh，可以远程连接
+- 默认服务器不带 nginx，需要自己安装
   - sudo apt update
   - sudo apt install nginx
-  - nginx -t：就能看到nginx在哪里进行配置了，然后再去配置try files让SPA的应用可以正常访问
+  - nginx -t：就能看到 nginx 在哪里进行配置了，然后再去配置 try files 让 SPA 的应用可以正常访问
 
-44. 部署SPA网站到服务器上需要的注意事项
+44. 部署 SPA 网站到服务器上需要的注意事项
 
 - 步骤
+
   - 获得版本号和一些变量，用于判断区分版本，新建文件夹
   - build
   - upload 静态资源 至 oss
   - upload index.html 至 服务器
-  - 需要后端协助配置nginx的try files
+  - 需要后端协助配置 nginx 的 try files
+
     - etc/nginx/default.d/nginx.config 下是`nginx`的配置文件
     - 为了分离，我们一般自己建一个`config.d`，并被`nginx.config`引入`include /etc/nginx/conf.d/*.conf;`
-    - nginx默认对home页面的文件没有读取能力，所以需要你给他权限：`sudo chmod a+r /home/htdocs/starbucks/index.html`
-    - 不要忘记为单页应用配置try files
+    - nginx 默认对 home 页面的文件没有读取能力，所以需要你给他权限：`sudo chmod a+r /home/htdocs/starbucks/index.html`
+    - 不要忘记为单页应用配置 try files
 
       ```conf
       server {
@@ -617,26 +620,26 @@ jobs:
       }
       ```
 
-  - 修改vite.config.js的base，让静态资源的指向为oss存放地址，这里注意是通过actions中抛出的文件路径
+  - 修改 vite.config.js 的 base，让静态资源的指向为 oss 存放地址，这里注意是通过 actions 中抛出的文件路径
 
-45. 创建oss服务
+45. 创建 oss 服务
 
-- 想要使用图形化工具需要开启ram访问控制
+- 想要使用图形化工具需要开启 ram 访问控制
 
-46. 如何让同一个ip下局域网都能访问本地起的项目？
+46. 如何让同一个 ip 下局域网都能访问本地起的项目？
 
-- 将Vite服务器绑定到0.0.0.0地址，意味着它将监听所有可用的网络接口，包括您的局域网IP地址。
+- 将 Vite 服务器绑定到 0.0.0.0 地址，意味着它将监听所有可用的网络接口，包括您的局域网 IP 地址。
 
-- 在默认情况下，Vite服务器会监听localhost地址（即127.0.0.1），这意味着只有本地主机可以访问它。但是，如果您将服务器绑定到0.0.0.0地址，它将监听所有可用的网络接口，包括您的局域网IP地址。这样，您的局域网中的其他设备就可以通过使用您的局域网IP地址和端口来访问Vite服务器了。
+- 在默认情况下，Vite 服务器会监听 localhost 地址（即 127.0.0.1），这意味着只有本地主机可以访问它。但是，如果您将服务器绑定到 0.0.0.0 地址，它将监听所有可用的网络接口，包括您的局域网 IP 地址。这样，您的局域网中的其他设备就可以通过使用您的局域网 IP 地址和端口来访问 Vite 服务器了。
 
-- 例如，如果您将Vite服务器绑定到0.0.0.0地址，并使用端口号3000，则可以通过在局域网中的其他设备上使用以下地址来访问它：
+- 例如，如果您将 Vite 服务器绑定到 0.0.0.0 地址，并使用端口号 3000，则可以通过在局域网中的其他设备上使用以下地址来访问它：
 
 ```js
 // vite.config.js
 export default {
   server: {
-    host: "0.0.0.0"
-  }
+    host: '0.0.0.0',
+  },
 }
 ```
 
@@ -652,18 +655,19 @@ export default {
 
 - 因此，你不需要在其他文件中手动调用 App 组件。只需确保 app.ts 文件中定义了 App 组件，并且通过 return props.children 将子组件渲染到页面上即可。Taro 框架会负责调用和渲染 App 组件，并将子组件作为内容进行渲染。
 
-49. post请求
+49. post 请求
 
-- body默认会toString
+- body 默认会 toString
 - 所以需要我们`body: JSON.stringify(params),`
 
-50. useCallback,useMemo的使用❌
+50. useCallback,useMemo 的使用 ❌
 
-51. taro修改tabbar和navigation❌
+51. taro 修改 tabbar 和 navigation
 
-- navigation默认会占据一部分高度
+- navigation 用了掘金写好的
+- tabbar 自定义会出现闪烁问题
 
-52. taro 像素 自适应❌
+52. taro 像素 自适应
 
 ```js
 // config
@@ -676,45 +680,454 @@ const config = {
   deviceRatio: {
     640: 2.34 / 2,
     750: 1,
-    828: 1.81 / 2
+    828: 1.81 / 2,
   },
 }
 ```
 
-53. figma判断两个东西之间的高度
+53. figma 判断两个东西之间的高度
 
-- 用b的y-a的y-a的height
+- insepcet
 
-54. 配置@路径别名❌
+54. 配置@路径别名 ❌
 
 55. 子元素超出父元素的高度，但是没出现滑动条
 
-- 给父元素增加css属性`overflow: auto`
+- 给父元素增加 css 属性`overflow: auto`
 - overflow: auto; 是 CSS 中的一个属性，用于控制容器元素在内容超出容器尺寸时的表现方式。
 - 当将 overflow 属性设置为 auto 时，容器会根据内容是否溢出来自动显示滚动条。如果容器的内容没有超出容器的尺寸，则不会显示滚动条。当容器的内容超出容器的尺寸时，会自动显示滚动条，以便用户可以滚动查看超出部分的内容。
 - 具体原理是，当容器的内容超出容器的尺寸时，容器会创建一个滚动框，其中包含内容并显示滚动条。用户可以通过滚动条或触摸滚动操作来滚动内容。滚动框可以水平和垂直滚动，具体取决于内容的溢出方向。
 - 因此，通过将 overflow: auto; 应用于容器元素，您可以实现在内容超出容器时显示滚动条并允许用户滚动查看内容的效果。
 
-56. image导致的间隙
+56. image 导致的间隙
 
 - 当你将 Image 组件的样式设置为 display: block; 时，它会以块级元素的形式显示。这会导致 Image 元素在布局中占据整个可用宽度，并且不会有默认的行内元素间隙。这样可以消除 Image 元素周围的间隙，使其紧密贴合父容器。
 - 在默认情况下，Image 组件可能被视为行内元素，会保留一些行内元素的特性，例如基线对齐和字间距等。这可能会导致一些额外的间隙或布局问题。通过将其样式设置为 display: block;，可以将其转换为块级元素，以更好地控制布局和间隙。
 
-57. taro小程序高度计算
+57. taro 小程序高度计算
 
 - 记得要减去安全区域的高度
 
 58. icon
 
-- 非tabbar尽量用svg
+- 非 tabbar 尽量用 svg
 
-59. svg做网状图大屏项目❌
+59. svg 做网状图大屏项目
+
+- svg 起点 move to
+
+60. 给 backgroundcolor 设置一个中间向四周的渐变色怎么设置？❌
 
 -
 
-60. 给backgroundcolor设置一个中间向四周的渐变色怎么设置？❌
+61. useSate 像设置数组的 ts 类型
+    `const [swiperPic,setSwiperPic] = useState<string[]>([]);`
 
--
+62. ts 定义完类型初始化数据报错？
 
-61. useSate像设置数组的ts类型
-`const [swiperPic,setSwiperPic] = useState<string[]>([]);`
+- 这里 couponList 必须要设置为`couponListItemType | null`,
+- 如果设置为`couponListItemType | {}`,在初始化你给了{},就无法推导至 couponListItemType 类型了
+
+```js
+type couponInfo = {
+  couponName: string,
+  couponDeadLine: string,
+  couponPrice: string,
+  couponStrict: string,
+  couponRange: string,
+}
+
+type couponListItemType = {
+  trueCoupon: number
+  falseCoupon: number
+  trueCouponList: couponInfo[]
+  falseCouponList: couponInfo[]
+}
+interface orderStateType {
+  state:{
+    couponList: couponListItemType | null
+  },
+  actions:{
+    setCouponList: (data:couponListItemType) => void
+  }
+}
+
+export const useCouponState = create<orderStateType>((set,get) => ({
+    state:{
+      couponList: null
+    },
+    actions:{
+      setCouponList (data) {
+        set(produce(draft => {
+          draft.state.couponList = data
+        }))
+      }
+    }
+}))
+```
+
+63. 箭头函数
+
+- 箭头函数的 this 由上下文决定不会被 call，apply 修改
+
+64. 策略模式
+
+- 当 if else 很多的情况下，需要用到策略模式
+- 常用的写法是
+
+  - 先写一个策略方案，可以是对象，可以是函数
+
+    ```js
+    const sortingStrategies = {
+      bubbleSort: (arr) => {
+        // 实现冒泡排序算法
+        // ...
+        return sortedArr
+      },
+      quickSort: (arr) => {
+        // 实现快速排序算法
+        // ...
+        return sortedArr
+      },
+      mergeSort: (arr) => {
+        // 实现归并排序算法
+        // ...
+        return sortedArr
+      },
+    }
+    ```
+
+  - 创建上下文对象：上下文对象用于管理策略的使用。它可以接收外部输入并将其传递给适当的策略对象。上下文对象可以根据特定条件选择不同的策略，并在需要时调用所选策略的方法或函数。
+
+    ```js
+    // 创建上下文对象
+    class SortContext {
+      constructor(strategy) {
+        this.strategy = strategy
+      }
+
+      setStrategy(strategy) {
+        this.strategy = strategy
+      }
+
+      sort(arr) {
+        if (typeof this.strategy === 'function') {
+          return this.strategy(arr)
+        }
+        throw new Error('Invalid strategy')
+      }
+    }
+    ```
+
+  - 调用策略：根据上下文对象中的条件或参数，选择适当的策略对象，并调用相应的方法或函数。
+
+    ```js
+    // 使用策略模式进行排序
+    const sortContext = new SortContext(sortingStrategies)
+
+    const arr = [4, 2, 7, 1, 5]
+
+    // 使用冒泡排序算法
+    sortContext.setStrategy(sortingStrategies.bubbleSort)
+    const sortedArr = sortContext.sort(arr)
+    console.log(sortedArr) // 输出排序结果
+
+    // 使用快速排序算法
+    sortContext.setStrategy(sortingStrategies.quickSort)
+    const sortedArr = sortContext.sort(arr)
+    console.log(sortedArr) // 输出排序结果
+
+    // 使用归并排序算法
+    sortContext.setStrategy(sortingStrategies.mergeSort)
+    const sortedArr = sortContext.sort(arr)
+    console.log(sortedArr) // 输出排序结果
+    ```
+
+65. grid 布局 ❌
+
+66. Taro 和 Taro-ui 版本不兼容
+
+- Taro-ui 报错
+- 执行 pnpm i taro-ui@next
+- 然后会安装这个版本的 Taro-ui: `"taro-ui": "3.1.0-beta.6"`,
+
+67. 同一台服务器配置不同的前端项目 ❌
+
+- 给不同的 server
+- 命名不同的 server name
+
+68. 静态资源引用问题
+
+- baseUrl：/ 是绝对路径
+- 修改为./是相对路径，可以在服务器里相对路径去找静态资源
+
+69. Taro 3 只能配合使用 taro-ui@next 版本
+
+70. Taro 使用 axios：<https://juejin.cn/post/7122834229200683022>
+
+71. Taro axios
+
+```jsx
+import { axios } from 'taro-axios'
+import qs from 'qs'
+export const API_PATH = 'https://api.qxd-lab.com/'
+
+export const baseAxios = axios.create({
+  baseURL: API_PATH,
+  timeout: 5000, // 设置超时时间为5秒
+})
+
+enum Method {
+  POST = "POST",
+  GET = "GET"
+}
+
+enum APIPath {
+  用户登录 = "/api/user/login",
+}
+
+// 添加请求拦截器
+baseAxios.interceptors.request.use(
+  async function (config) {
+    // 在发送请求之前做些什么
+    // if (localStorage.getItem('token')) {
+    //   config.headers.Authorization = localStorage.getItem('token')
+    // }
+    return config
+  },
+  function (error) {
+    // 对请求错误做些什么
+  }
+)
+
+// 添加响应拦截器
+baseAxios.interceptors.response.use(
+  async (response): Promise<any> => {
+    return response
+  },
+  function (error) {
+  }
+)
+
+const common = ({ action, method, params }) => {
+  return method === Method.GET
+    ? baseAxios.get("", { params: { ...params, s: action } })
+    : baseAxios.post("", params, { params: { s: action } });
+};
+
+// 登陆
+export function weLogin(params?) {
+  return common({ action: APIPath.用户登录, params, method: Method.POST });
+}
+```
+
+72. 小程序登录
+
+```jsx
+const userLogin = async () => {
+  try {
+    // Taro.getLaunchOptionsSync()
+    // 获取小程序启动时的参数。与 App.onLaunch 的回调参数一致。
+    // 注意 部分版本在无referrerInfo的时候会返回 undefined，建议使用 options.referrerInfo && options.referrerInfo.appId 进行判断。
+    const launchData = Taro.getLaunchOptionsSync()
+    // 获取 code
+    const wxLoginResult = await Taro.login()
+    // 获取用户信息
+    const wxUserInfoRequest = await Taro.getUserInfo()
+
+    const userInfo: any = {
+      ...wxUserInfoRequest.userInfo,
+      channel: launchData.query.channel || '',
+      mobile: launchData.query.mobile || '',
+    }
+    const user_info = JSON.stringify(userInfo)
+    const userData: any = {
+      code: wxLoginResult.code,
+      user_info,
+      encrypted_data: wxUserInfoRequest.encryptedData,
+      iv: wxUserInfoRequest.iv,
+      signature: wxUserInfoRequest.signature,
+      wxapp_id: 10001,
+      referee_id: launchData.query.referee_id || '',
+    }
+    const res = await CommonApi.weLogin({ ...userData })
+    console.log('res', res)
+  } catch (error) {
+    console.log('e', error)
+  }
+  Taro.showToast({
+    title: `登录成功!`,
+    icon: 'success',
+    duration: 2000,
+  })
+}
+```
+
+73. 全局状态初始状态为空应该怎么写？
+
+- 修改前
+
+```jsx
+// 像这种token全局状态，默认为空，我应该怎么写
+import { create } from 'zustand'
+import { produce } from 'immer'
+
+interface SystemStateType {
+  state: {
+    token: string,
+    userId: string,
+    currentTitle: string,
+    userInfo: {
+      isLogin: boolean,
+    },
+  };
+  actions: {
+    setCurrentTitle: (title: string) => void,
+    setUserInfo: (user) => void,
+  };
+}
+
+export const useSystemState =
+  create <
+  SystemStateType >
+  ((set, get) => ({
+    state: {
+      token: '',
+      userId: '',
+      currentTitle: 'pages/index/index',
+      userInfo: {
+        isLogin: false,
+      },
+    },
+    actions: {
+      setCurrentTitle(title) {
+        set(
+          produce((draft) => {
+            draft.state.currentTitle = title
+          })
+        )
+      },
+      setUserInfo(user) {
+        set(
+          produce((draft) => {
+            draft.state.userInfo = { ...draft.state.userInfo, ...user }
+          })
+        )
+      },
+    },
+  }))
+// 我不希望去判断token !== '' 这种判断风险太大
+```
+
+- 修改后
+
+```jsx
+// 将token的类型增加一个null或者undefined
+// 同时增加一个boolean函数去判断是否有token，这样可以不用在前端显式的比较token的字符串值
+import { create } from 'zustand'
+import { produce } from 'immer'
+
+interface SystemStateType {
+  state: {
+    token: string | null,
+    userId: string,
+    currentTitle: string,
+    userInfo: {
+      isLogin: boolean,
+    },
+  };
+  actions: {
+    setCurrentTitle: (title: string) => void,
+    setUserInfo: (user) => void,
+  };
+}
+
+export const useSystemState =
+  create <
+  SystemStateType >
+  ((set, get) => ({
+    state: {
+      token: '',
+      userId: '',
+      currentTitle: 'pages/index/index',
+      userInfo: {
+        isLogin: false,
+      },
+    },
+    actions: {
+      setCurrentTitle(title) {
+        set(
+          produce((draft) => {
+            draft.state.currentTitle = title
+          })
+        )
+      },
+      setUserInfo(user) {
+        set(
+          produce((draft) => {
+            draft.state.userInfo = { ...draft.state.userInfo, ...user }
+          })
+        )
+      },
+    },
+  }))
+
+interface SystemStateType {
+  // ...
+  helpers: {
+    hasToken: () => boolean,
+  };
+}
+
+export const useSystemState =
+  create <
+  SystemStateType >
+  ((set, get) => ({
+    // ...
+    helpers: {
+      hasToken: () => {
+        return get().state.token !== ''
+      },
+    },
+  }))
+```
+
+74. React.memo
+
+- React.memo() 默认使用浅比较来比较 props 的变化。如果 props 包含复杂的对象或数组，且其引用没有发生变化，但内部数据发生了变化，React.memo() 可能会导致组件不会重新渲染。
+- 在这种情况下，可以通过传递自定义的比较函数作为第二个参数给 React.memo() 来实现更精确的比较。
+
+75. useMemo/useCallback
+
+- useMemo
+
+  - 当你在使用 React 中的函数组件时，有时候你可能会遇到以下情况：
+    - 计算结果的缓存：某个函数的计算结果依赖于一些输入值，但是这些输入值没有发生变化时，你希望避免重复计算。这时可以使用 useMemo 钩子来缓存计算结果。
+    - useMemo 用于对复杂计算的结果进行记忆化，只有当依赖项发生变化时才重新计算。它避免了不必要的重复计算，有助于优化性能。特别是在计算资源密集或耗时较长的情况下，它非常有用。
+
+    ```jsx
+    const Component = ({ data }) => {
+      // 依赖于 data 的计算结果，避免重复计算
+      const result = useMemo(() => expensiveCalculation(data), [data])
+
+      return <div>{result}</div>
+    }
+    ```
+
+- useCallback
+  - 避免不必要的函数重复创建：当你将一个函数作为 prop 传递给子组件时，如果该函数在父组件重新渲染时会被重新创建，可能会导致子组件不必要地重新渲染。这时可以使用 useCallback 钩子来缓存函数引用，确保它只在依赖项发生变化时才会重新创建。
+  - 当父组件传递给子组件的 onClick 函数发生变化时，handleClick 函数会被重新创建。通过使用 useCallback，我们确保只有当 onClick 发生变化时，handleClick 才会重新创建。这样可以避免不必要的子组件重新渲染。
+  - 另一方面，useCallback 用于记忆化函数引用，确保只有在依赖项发生变化时才重新创建函数。在将函数作为 prop 传递给子组件的场景中，它可以避免不必要的子组件重新渲染。通过缓存函数引用，你可以确保一致的行为并优化性能。
+
+    ```jsx
+    const Component = ({ onClick }) => {
+      // 缓存函数引用，避免不必要的重复创建
+      const handleClick = useCallback(() => {
+        console.log('Button clicked')
+        onClick()
+      }, [onClick])
+      return <button onClick={handleClick}>Click me</button>
+    }
+    ```
+
+- 需要注意的是，对于一些简单的计算或短小的函数，过度使用 useMemo 和 useCallback 可能会带来额外的开销。因此，在使用这两个钩子时，需要权衡性能和代码可读性，避免过度优化。只在真正需要优化的情况下使用它们，确保优化带来的收益大于开销。
