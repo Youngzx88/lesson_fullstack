@@ -921,45 +921,86 @@ export function weLogin(params?) {
 }
 ```
 
-72. 小程序登录
+72. 小程序登录/获取手机号
+
+- 登录用 code 换 token
+- 获取手机号也是用 code 换 sessionkey，然后用 sessionkey/encrypted_data/iv(这里的 encrypted_data/iv 是 onGetPhoneNumber 回调函数里的 e) 解密手机号
+- 注意一个 code 只能用于一次登录，用于登录以后获取手机号需要另外一个 code 来计算
 
 ```jsx
-const userLogin = async () => {
+const confirmInfo = async (e) => {
   try {
-    // Taro.getLaunchOptionsSync()
-    // 获取小程序启动时的参数。与 App.onLaunch 的回调参数一致。
-    // 注意 部分版本在无referrerInfo的时候会返回 undefined，建议使用 options.referrerInfo && options.referrerInfo.appId 进行判断。
-    const launchData = Taro.getLaunchOptionsSync()
-    // 获取 code
-    const wxLoginResult = await Taro.login()
-    // 获取用户信息
-    const wxUserInfoRequest = await Taro.getUserInfo()
+    if (e.detail.errMsg !== 'getPhoneNumber:fail user deny') {
+      const launchData = Taro.getLaunchOptionsSync()
+      // 获取 code
+      const wxLoginResult = await Taro.login()
+      // 获取用户信息
+      const wxUserInfoRequest = await Taro.getUserInfo()
 
-    const userInfo: any = {
-      ...wxUserInfoRequest.userInfo,
-      channel: launchData.query.channel || '',
-      mobile: launchData.query.mobile || '',
+      const userInfo: any = {
+        ...wxUserInfoRequest.userInfo,
+        channel: launchData.query.channel || '',
+        mobile: launchData.query.mobile || '',
+      }
+      userInfo.nickName = userState.nickName || ''
+      userInfo.avatarUrl = userState.avatar || ''
+      // 转成json后端才能正常接受
+      const user_info = JSON.stringify(userInfo)
+
+      const userData: any = {
+        code: wxLoginResult.code,
+        user_info,
+        encrypted_data: wxUserInfoRequest.encryptedData,
+        iv: wxUserInfoRequest.iv,
+        signature: wxUserInfoRequest.signature,
+        wxapp_id: 10001,
+        referee_id: launchData.query.referee_id || '',
+      }
+      const { data } = await CommonApi.weLogin({ ...userData })
+      const userReturn = data.data
+      const token = userReturn.token
+      const userId = userReturn.user_id
+      systemActions.setAuthInfo({ token: token, userId: userId })
+      // 这里存一份到全局的状态里去
+      Taro.setStorage({
+        key: 'token',
+        data: token,
+      })
+      Taro.setStorage({
+        key: 'userId',
+        data: userId,
+      })
+      if (userReturn.mobile == '') {
+        const phoneCode = await Taro.login()
+        const sessionKeyResponse = await CommonApi.getSessionKey({
+          code: phoneCode.code,
+        })
+        const sessionKey = sessionKeyResponse.data.data.session_key
+        await CommonApi.bindPhoneNumber({
+          encrypted_data: e.detail.encryptedData,
+          iv: e.detail.iv,
+          session_key: sessionKey,
+        })
+      }
+      Taro.showToast({
+        title: `登录成功!`,
+        icon: 'success',
+        duration: 2000,
+      })
+      Taro.navigateBack()
+    } else {
+      Taro.showToast({
+        title: '取消授权',
+      })
     }
-    const user_info = JSON.stringify(userInfo)
-    const userData: any = {
-      code: wxLoginResult.code,
-      user_info,
-      encrypted_data: wxUserInfoRequest.encryptedData,
-      iv: wxUserInfoRequest.iv,
-      signature: wxUserInfoRequest.signature,
-      wxapp_id: 10001,
-      referee_id: launchData.query.referee_id || '',
-    }
-    const res = await CommonApi.weLogin({ ...userData })
-    console.log('res', res)
   } catch (error) {
-    console.log('e', error)
+    console.log('er', error)
+    Taro.showToast({
+      title: `登录失败!`,
+      icon: 'error',
+      duration: 2000,
+    })
   }
-  Taro.showToast({
-    title: `登录成功!`,
-    icon: 'success',
-    duration: 2000,
-  })
 }
 ```
 
@@ -1102,6 +1143,7 @@ export const useSystemState =
 - useMemo
 
   - 当你在使用 React 中的函数组件时，有时候你可能会遇到以下情况：
+
     - 计算结果的缓存：某个函数的计算结果依赖于一些输入值，但是这些输入值没有发生变化时，你希望避免重复计算。这时可以使用 useMemo 钩子来缓存计算结果。
     - useMemo 用于对复杂计算的结果进行记忆化，只有当依赖项发生变化时才重新计算。它避免了不必要的重复计算，有助于优化性能。特别是在计算资源密集或耗时较长的情况下，它非常有用。
 
@@ -1115,6 +1157,7 @@ export const useSystemState =
     ```
 
 - useCallback
+
   - 避免不必要的函数重复创建：当你将一个函数作为 prop 传递给子组件时，如果该函数在父组件重新渲染时会被重新创建，可能会导致子组件不必要地重新渲染。这时可以使用 useCallback 钩子来缓存函数引用，确保它只在依赖项发生变化时才会重新创建。
   - 当父组件传递给子组件的 onClick 函数发生变化时，handleClick 函数会被重新创建。通过使用 useCallback，我们确保只有当 onClick 发生变化时，handleClick 才会重新创建。这样可以避免不必要的子组件重新渲染。
   - 另一方面，useCallback 用于记忆化函数引用，确保只有在依赖项发生变化时才重新创建函数。在将函数作为 prop 传递给子组件的场景中，它可以避免不必要的子组件重新渲染。通过缓存函数引用，你可以确保一致的行为并优化性能。
@@ -1131,3 +1174,61 @@ export const useSystemState =
     ```
 
 - 需要注意的是，对于一些简单的计算或短小的函数，过度使用 useMemo 和 useCallback 可能会带来额外的开销。因此，在使用这两个钩子时，需要权衡性能和代码可读性，避免过度优化。只在真正需要优化的情况下使用它们，确保优化带来的收益大于开销。
+
+76. 如果多状态不用三目运算符应该怎么写？
+
+```jsx
+function renderPage(pageState) {
+  switch (pageState) {
+    case 'state1':
+      return <Page1 />
+    case 'state2':
+      return <Page2 />
+    case 'state3':
+      return <Page3 />
+    default:
+      return null
+  }
+}
+
+return <div>{renderPage(pageState)}</div>
+```
+
+77. 总结出的切图规律
+
+- 不要给最外层设置 padding，这样会导致滚动条出现在内层
+- 能用 flex 就用 flex
+- 多封装 flexBetween，flexCenter，flexBetweenCol 之类的固定样式
+
+78. 小程序上传阿里云 oss
+
+```tsx
+if (avartar !== '' && nickName != '') {
+  const ossData: any = await CommonApi.upLoadUserProfile()
+  const ossInfo = ossData.data.data
+  const uploadTask = await Taro.uploadFile({
+    url: ossInfo.host,
+    filePath: avartar,
+    name: 'file',
+    formData: {
+      key: `${avartar}`,
+      policy: ossInfo.policy,
+      OSSAccessKeyId: ossInfo.accessKeyId,
+      signature: ossInfo.signature,
+      success_action_status: '200',
+      'x-oss-security-token': ossInfo.securityToken,
+    },
+  })
+  userActions.setUserInfo({
+    nickName: nickName,
+    avatar: `https://static.qxd-lab.com/${avartar}`,
+  })
+}
+```
+
+79. 当一个 useState 有 2 个类型
+
+- 首先用联合类型
+- 其次中途修改类型没有问题
+- 但是当赋值的时候你从 a 类型改成 b 类型，ts 不知道你是在给哪个类型赋值，所以会出现 a 类型没有 xxx 属性
+- 解决方案：赋值的时候使用 as 告诉 ts 这个类型具体是哪个类型
