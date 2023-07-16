@@ -146,3 +146,65 @@ type ReplaceStr<originalStr extends string,strWhoReplace extends string,replaceS
 originalStr extends `${infer pre}${strWhoReplace}${infer next}` ? `${pre}${replaceStr}${next}` : originalStr
 const a10 = 'youngzx'
 const b:ReplaceStr<'youngzx','ng','cj'> = 'youcjzx'
+
+
+// 实现trim
+type trimRight<originalStr extends string> = originalStr extends `${infer Rest}${' ' | '\n' | '\t'}` ? trimRight<Rest> : originalStr
+type trimLeft<originalStr extends string> = originalStr extends `${' ' | '\n' | '\t'}${infer Rest}` ? trimLeft<Rest> : originalStr
+
+const s2:trimRight<'asdkja    '> = 'asdkja'
+const s3:trimLeft<'    asdkja'> = 'asdkja'
+
+const s4:trimRight<trimLeft<'    asdkja    '>> = 'asdkja'
+// 甚至可以写 type TrimAll = trimRight<trimLeft<'    asdkja    '>
+
+
+function trimString<Str extends string>(str: trimRight<trimLeft<Str>>): string {
+  return str;
+}
+
+let s = '   asdkja    ';
+let sTrimmed = trimString(s);  
+console.log(sTrimmed)
+
+
+// 函数的模式匹配
+// func类型被 (...args: infer Args)  unknown ? Args : never 给继承了
+// 用infer声明变量为func的参数，返回值可以是任意类型，这里用unknown，
+// 无论函数的返回值是什么，返回提取到的Args
+// 函数的参数本身可以视为一个元组，所以没有参数会返回空元组
+type GetParameters<func extends Function> = func extends (...args: infer Args) => unknown ? Args : never
+
+type HaveArgs = GetParameters< (name:string,age:number) => string >
+type noArgs = GetParameters< () => string >
+
+const hanshu:HaveArgs = ['1',19]
+const hansh2u:noArgs = []
+
+
+// 提取返回值类型
+type GetReturnType<func extends Function> = func extends (...args:infer Args) => infer ReturnType  ? ReturnType : never; 
+
+type returnType= GetReturnType<()=> number>
+
+const returnT:returnType = 3
+
+// 为什么不能这么写？
+// 在 TypeScript 中，infer关键字只能在extends条件类型的上下文中使用。
+// 它不能在函数体或者对象字面量中使用。因此，你不能在函数体{ return infer ReturnType }中使用infer。
+// type GetReturnType<func extends Function> = func extends (...args:infer Args) => {
+//   return infer ReturnType  ? ReturnType : never; 
+// } 
+
+
+type getKeyOf = {
+  name: string,
+  age: number
+}
+
+type getKeys =  keyof getKeyOf
+
+const a12:getKeys = "age"
+
+
+type mapKeyOf<T> = { [key in keyof T]: T[key]}

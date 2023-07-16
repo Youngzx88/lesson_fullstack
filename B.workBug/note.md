@@ -1232,3 +1232,27 @@ if (avartar !== '' && nickName != '') {
 - 其次中途修改类型没有问题
 - 但是当赋值的时候你从 a 类型改成 b 类型，ts 不知道你是在给哪个类型赋值，所以会出现 a 类型没有 xxx 属性
 - 解决方案：赋值的时候使用 as 告诉 ts 这个类型具体是哪个类型
+
+80. 图片刚出现被拉伸一下
+
+- 需要设置一个图片的最大高度
+
+81. 使用插件后微信开发者工具可以打开项目，手机不行
+
+- qs版本降到5.0.0即可
+
+82. 为什么有的时候后端让我用formData传输但是我用form-urlencoded也可以正常传输？
+
+- 这两种方式（application/x-www-form-urlencoded和multipart/form-data）都是用于发送表单数据的，但是它们适用于不同的场景。
+
+- application/x-www-form-urlencoded: 这种方式将表单数据编码为URL参数形式，即名称/值对。这种方式适合于小量数据的传输，尤其是当表单只包含文本字段时。如果你尝试使用这种方式发送文件，它将不起作用，因为它不能用于传输二进制数据。
+
+- multipart/form-data: 这种方式将表单数据分为多个部分，每个部分包含一个表单字段的数据。这种方式既可以发送文本数据，也可以发送二进制数据（如文件）。当表单包含文件上传控件时，通常使用这种方式。
+
+- 如果你的请求只包含文本数据，那么使用哪种方式可能并不重要，因为它们都可以正确地发送数据。但是，如果你的请求需要包含文件或其他二进制数据，那么你必须使用multipart/form-data。
+
+- 后端可能会建议你使用multipart/form-data，因为这种方式更加通用，既可以处理文本数据，也可以处理二进制数据。此外，如果后端预计表单将来可能会添加文件上传功能，那么建议使用multipart/form-data也是有前瞻性的。
+
+- form-urlencoded：直接用 form 表单提交数据就是这种，它和 query 字符串的方式的区别只是放在了 body 里，然后指定下 content-type 是 application/x-www-form-urlencoded。
+
+- form data 不再是通过 & 分隔数据，而是用 --------- + 一串数字做为 boundary 分隔符。因为不是 url 的方式了，自然也不用再做 url encode。form-data 需要指定 content type 为 multipart/form-data，然后指定 boundary 也就是分割线。body 里面就是用 boundary 分隔符分割的内容。很明显，这种方式适合传输文件，而且可以传输多个文件。但是毕竟多了一些只是用来分隔的 boundary，所以请求体会增大。
