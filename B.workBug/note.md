@@ -1256,3 +1256,12 @@ if (avartar !== '' && nickName != '') {
 - form-urlencoded：直接用 form 表单提交数据就是这种，它和 query 字符串的方式的区别只是放在了 body 里，然后指定下 content-type 是 application/x-www-form-urlencoded。
 
 - form data 不再是通过 & 分隔数据，而是用 --------- + 一串数字做为 boundary 分隔符。因为不是 url 的方式了，自然也不用再做 url encode。form-data 需要指定 content type 为 multipart/form-data，然后指定 boundary 也就是分割线。body 里面就是用 boundary 分隔符分割的内容。很明显，这种方式适合传输文件，而且可以传输多个文件。但是毕竟多了一些只是用来分隔的 boundary，所以请求体会增大。
+
+83. 修改node_modules
+
+- 使用pnpm patch <pkg> 其中是自己需要修改的包，需要明确指定版本号。
+- 该命令会生成一个本地的地址，将该地址导入到vscode。修改完成后执行pnpm patch-commit <地址>
+- 最后一定要使用pnpm 执行命令，否则不生效
+
+- 例如pnpm patch taro-ui@
+- 会生成一个临时的项目地址，在缓存文件中，打开它并修改
