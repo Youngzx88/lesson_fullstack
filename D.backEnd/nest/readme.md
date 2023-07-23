@@ -892,8 +892,9 @@ bootstrap()
   - guard，传入的是 ExecutionContext，ExecutionContext 是 ArgumentHost 的子类，扩展了 getClass、getHandler 方法。
   - 调用下 context.getClass 和 getHandler：会发现这俩分别是要调用的 controller 的 class 以及要调用的方法。
     - 因为 Guard、Interceptor 的逻辑可能要根据目标 class、handler 有没有某些装饰而决定怎么处理。
-    - 比如权限验证的时候，我们会先定义几个角色，然后在 handler 上添加这个装饰器，参数为 admin，也就是给这个 handler 添加了一个 roles 为 admin 的metadata。
-    - 这样在 Guard 里就可以根据这个 metadata 决定是否放行了(执行context.getHandler)
+    - 比如权限验证的时候，我们会先定义几个角色，然后在 handler 上添加这个装饰器，参数为 admin，也就是给这个 handler 添加了一个 roles 为 admin 的 metadata。
+    - 这样在 Guard 里就可以根据这个 metadata 决定是否放行了(执行 context.getHandler)
+
 - 同样，在 interceptor 里也有这个：ExecutionContext
 
 ## 10.3、总结
@@ -908,12 +909,13 @@ bootstrap()
 
 - 在写 Filter、Guard、Exception Filter 的时候，是需要用到这些 api 的。
 
-# 11、Nest是如何实现装饰器注入的？
+# 11、Nest 是如何实现装饰器注入的？
 
 ## 11.1、 Nest 最核心的一些 api
 
 - Reflect 的 metadata 的 api
 - 操作对象的属性、方法、构造器的一些 api
+
   - Reflect.get 是获取对象属性值
   - Reflect.set 是设置对象属性值
   - Reflect.has 是判断对象属性是否存在
@@ -921,22 +923,23 @@ bootstrap()
 
     ```ts
     function greet(name) {
-      return `Hello, ${name}!`;
+      return `Hello, ${name}!`
     }
 
-    const thisArg = { greeting: "Hi" };
-    const args = ["John"];
+    const thisArg = { greeting: 'Hi' }
+    const args = ['John']
 
     // 使用 Reflect.apply 调用函数
-    const result = Reflect.apply(greet, thisArg, args);
-    console.log(result); // 输出: "Hello, John!"
+    const result = Reflect.apply(greet, thisArg, args)
+    console.log(result) // 输出: "Hello, John!"
 
     // 等价于以下代码
-    const result2 = greet.apply(thisArg, args);
-    console.log(result2); // 输出: "Hello, John!"
+    const result2 = greet.apply(thisArg, args)
+    console.log(result2) // 输出: "Hello, John!"
     ```
 
-- nest的api：
+- nest 的 api：
+
   - `Reflect.defineMetadata(metadataKey, metadataValue, target);`
   - `Reflect.defineMetadata(metadataKey, metadataValue, target, propertyKey);`
   - `let result = Reflect.getMetadata(metadataKey, target);`
@@ -947,10 +950,8 @@ bootstrap()
     ```ts
     @Reflect.metadata(metadataKey, metadataValue)
     class C {
-
       @Reflect.metadata(metadataKey, metadataValue)
-      method() {
-      }
+      method() {}
     }
     ```
 
@@ -963,12 +964,12 @@ bootstrap()
 - 这就不得不提到 TypeScript 的优势了，TypeScript 支持编译时自动添加一些 metadata 数据
 
   ```ts
-  import "reflect-metadata";
-  
+  import 'reflect-metadata'
+
   class Guang {
-    @Reflect.metadata("名字", "光光")
+    @Reflect.metadata('名字', '光光')
     public say(a: number): string {
-      return '加油鸭';
+      return '加油鸭'
     }
   }
   // 按理说我们只添加了一个元数据，生成的代码也确实是这样的
@@ -977,7 +978,88 @@ bootstrap()
   // 然后创建对象的时候就可以通过 design:paramtypes 来拿到构造器参数的类型了，那不就知道怎么注入依赖了么？
   ```
 
-- 拿到Class上的metaData：`context.getClass()`
-- 拿到方法上的metaData：`context.getHandler()`
+- 拿到 Class 上的 metaData：`context.getClass()`
+- 拿到方法上的 metaData：`context.getHandler()`
 
-## 12、解决Module和Provider的循环依赖
+## 12、解决 Module 和 Provider 的循环依赖
+
+- aaaModule
+- bbbModule
+- aaa import 了 bbb，bbb 又 import 了 aaa
+- 跑服务的时候会报错，意思是在解析 BbbModule 的时候，它的第一个 imports 是 undefined。
+  - 这有两个原因，一个是这个值本来就是 undefined，第二个就是形成了循环依赖。
+  - 因为 Nest 创建 Module 的时候会递归创建它的依赖，而它的依赖又依赖了这个 Module，所以没法创建成功，拿到的就是 undefined。
+- 其实我们可以先单独创建这两个 Module，然后再让两者关联起来：==forwardRef==
+
+  ```ts
+  //aaaModule
+  @Module({
+    imports: [
+      forwardRef(() => BbbModule)
+    ]
+  })
+  // nest 会单独创建两个 Module，之后再把 Module 的引用转发过去，也就是 forwardRef 的含义。
+  ```
+
+## 13、动态模块
+
+## 13.1、动态模块基础
+
+- 有的时候我们希望 import 的时候给这个模块传一些参数，动态生成模块的内容
+- 我们给 DynamicTestController 加一个 register 的静态方法，返回模块定义的对象。
+- 而且我们还可以把参数传入的 options 对象作为一个新的 provider。
+
+  ```ts
+  import { DynamicModule, Module } from '@nestjs/common'
+  import { DynamicTestService } from './dynamic-test.service'
+  import { DynamicTestController } from './dynamic-test.controller'
+
+  @Module({
+    controllers: [DynamicTestController],
+    providers: [DynamicTestService],
+  })
+  export class DynamicTestModule {
+    static register(options: Record<string, any>): DynamicModule {
+      return {
+        module: DynamicTestModule,
+        controllers: [DynamicTestController],
+        providers: [
+          {
+            provide: 'CONFIG_OPTIONS',
+            useValue: options,
+          },
+          DynamicTestService,
+        ],
+        exports: [],
+      }
+    }
+  }
+  // import 的时候就得这样用了，通过 register 方法传入参数，返回值就是模块定义
+  @Module({
+    imports: [DynamicTestModule.register({
+      a: '1',
+      b: '2'
+    })],
+    controllers: [AppController],
+    providers: [AppService],
+  })
+  ```
+
+- 这里的 register 方法其实叫啥都行，但 nest 约定了 3 种方法名：
+  - register:用一次模块传一次配置，比如这次调用是 BbbModule.register({aaa:1})，下一次就是 BbbModule.register({aaa:2}) 了
+  - forRoot:配置一次模块用多次，比如 XxxModule.forRoot({}) 一次，之后就一直用这个 Module，一般在 AppModule 里 import
+  - forFeature:用了 forRoot 固定了整体模块，用于局部的时候，可能需要再传一些配置，比如用 forRoot 指定了数据库链接信息，再用 forFeature 指定某个模块访问哪个数据库和表
+
+## 13.2、动态模块使用场景
+
+- @nestjs/typeorm 的动态模块：forRoot 传入配置，动态产生 provider 和 exports，返回模块定义。
+  - 比如传入数据库的配置文件(register)
+  - 用forRoot去配置具体连接哪个表
+- forRootAsync，区别就是可以用 async 的 useFactory 动态产生 provider，比如异步请求别的服务拿到配置返回，作为 options。
+- forFeature 则是传入局部的一些配置，来动态产生局部用的模块：
+
+## 13.3、其他方式生产动态模块
+
+- 用 ConfigurableModuleBuilder 生成一个 class，这个 class 里就带了 register、registerAsync 方法。
+- 返回的 ConfigurableModuleClass、MODULE_OPTIONS_TOKEN 分别是生成的 class 、options 对象的 token。然后 Module 继承它
+- 那现在如何在 Module 内注入这个 options 呢？ 就用build class 的时候返回的 token
