@@ -1239,58 +1239,58 @@ if (avartar !== '' && nickName != '') {
 
 81. 使用插件后微信开发者工具可以打开项目，手机不行
 
-- qs版本降到5.0.0即可
+- qs 版本降到 5.0.0 即可
 
-82. 为什么有的时候后端让我用formData传输但是我用form-urlencoded也可以正常传输？
+82. 为什么有的时候后端让我用 formData 传输但是我用 form-urlencoded 也可以正常传输？
 
-- 这两种方式（application/x-www-form-urlencoded和multipart/form-data）都是用于发送表单数据的，但是它们适用于不同的场景。
+- 这两种方式（application/x-www-form-urlencoded 和 multipart/form-data）都是用于发送表单数据的，但是它们适用于不同的场景。
 
-- application/x-www-form-urlencoded: 这种方式将表单数据编码为URL参数形式，即名称/值对。这种方式适合于小量数据的传输，尤其是当表单只包含文本字段时。如果你尝试使用这种方式发送文件，它将不起作用，因为它不能用于传输二进制数据。
+- application/x-www-form-urlencoded: 这种方式将表单数据编码为 URL 参数形式，即名称/值对。这种方式适合于小量数据的传输，尤其是当表单只包含文本字段时。如果你尝试使用这种方式发送文件，它将不起作用，因为它不能用于传输二进制数据。
 
 - multipart/form-data: 这种方式将表单数据分为多个部分，每个部分包含一个表单字段的数据。这种方式既可以发送文本数据，也可以发送二进制数据（如文件）。当表单包含文件上传控件时，通常使用这种方式。
 
-- 如果你的请求只包含文本数据，那么使用哪种方式可能并不重要，因为它们都可以正确地发送数据。但是，如果你的请求需要包含文件或其他二进制数据，那么你必须使用multipart/form-data。
+- 如果你的请求只包含文本数据，那么使用哪种方式可能并不重要，因为它们都可以正确地发送数据。但是，如果你的请求需要包含文件或其他二进制数据，那么你必须使用 multipart/form-data。
 
-- 后端可能会建议你使用multipart/form-data，因为这种方式更加通用，既可以处理文本数据，也可以处理二进制数据。此外，如果后端预计表单将来可能会添加文件上传功能，那么建议使用multipart/form-data也是有前瞻性的。
+- 后端可能会建议你使用 multipart/form-data，因为这种方式更加通用，既可以处理文本数据，也可以处理二进制数据。此外，如果后端预计表单将来可能会添加文件上传功能，那么建议使用 multipart/form-data 也是有前瞻性的。
 
 - form-urlencoded：直接用 form 表单提交数据就是这种，它和 query 字符串的方式的区别只是放在了 body 里，然后指定下 content-type 是 application/x-www-form-urlencoded。
 
 - form data 不再是通过 & 分隔数据，而是用 --------- + 一串数字做为 boundary 分隔符。因为不是 url 的方式了，自然也不用再做 url encode。form-data 需要指定 content type 为 multipart/form-data，然后指定 boundary 也就是分割线。body 里面就是用 boundary 分隔符分割的内容。很明显，这种方式适合传输文件，而且可以传输多个文件。但是毕竟多了一些只是用来分隔的 boundary，所以请求体会增大。
 
-83. 修改node_modules
+83. 修改 node_modules
 
-- 使用pnpm patch <pkg> 其中是自己需要修改的包，需要明确指定版本号。
-- 该命令会生成一个本地的地址，将该地址导入到vscode。修改完成后执行pnpm patch-commit <地址>
-- 最后一定要使用pnpm 执行命令，否则不生效
+- 使用 pnpm patch <pkg> 其中是自己需要修改的包，需要明确指定版本号。
+- 该命令会生成一个本地的地址，将该地址导入到 vscode。修改完成后执行 pnpm patch-commit <地址>
+- 最后一定要使用 pnpm 执行命令，否则不生效
 
-- 例如pnpm patch taro-ui@
+- 例如 pnpm patch taro-ui@
 - 会生成一个临时的项目地址，在缓存文件中，打开它并修改
 
 84. immer
 
-- immer可以像直接修改可变对象一样来修改不可变对象
+- immer 可以像直接修改可变对象一样来修改不可变对象
 - 不可变对象例子
 
   ```js
   // 1.在涉及到引用传递的情况下。这可能会在代码中引入难以追踪的错误
-  const originalPerson = { name: 'Alice', age: 30 };
+  const originalPerson = { name: 'Alice', age: 30 }
 
   // modifiedPerson 实际上是引用了 originalPerson 对象。
   // 当你将 originalPerson 赋值给 modifiedPerson 时，它们两者都指向了相同的内存位置，即同一个对象。
   // 因此，当你修改 modifiedPerson 的 age 属性时，实际上是在修改原始的 originalPerson 对象。
-  const modifiedPerson = originalPerson;
-  modifiedPerson.age = 31;
+  const modifiedPerson = originalPerson
+  modifiedPerson.age = 31
 
-  console.log(originalPerson.age); // 输出 31，但预期应该是 30
+  console.log(originalPerson.age) // 输出 31，但预期应该是 30
 
   // 2.如果使用不可变性原则，应该创建一个新的对象来表示修改后的状态，以避免直接修改对象引发的问题
-  const originalPerson = { name: 'Alice', age: 30 };
+  const originalPerson = { name: 'Alice', age: 30 }
 
   // 正确的做法：创建新的对象表示修改后的状态
-  const modifiedPerson = { ...originalPerson, age: 31 };
+  const modifiedPerson = { ...originalPerson, age: 31 }
 
-  console.log(originalPerson.age); // 输出 30
-  console.log(modifiedPerson.age); // 输出 31
+  console.log(originalPerson.age) // 输出 30
+  console.log(modifiedPerson.age) // 输出 31
   ```
 
 - 但是当对象的层次非常深的时候进行解构会十分困难
@@ -1299,15 +1299,20 @@ if (avartar !== '' && nickName != '') {
   // 3. 使用immer的写法
   import { produce } from 'immer'
   const originalPerson3 = { name: 'Alice', age: 30 }
-  const modifiedPerson3 = produce(originalPerson3 ,draft=> {
+  const modifiedPerson3 = produce(originalPerson3, (draft) => {
     draft.age = 33
   })
 
-  console.log('originalPerson3', originalPerson3)//30
-  console.log('modifiedPerson3', modifiedPerson3)//33
+  console.log('originalPerson3', originalPerson3) //30
+  console.log(
+    'modifiedPerson3',
+    modifiedPerson3
+  ) //33
   ``
+  ```
 
-- 结合zustand的写法
+- 结合 zustand 的写法
+
   - set 函数会隐式地传入当前的状态对象。这样，你在使用 set 函数时，不需要显式传递整个状态对象，而是只需要传递一个修改函数。
   - 这种设计的目的是让你在修改状态时更加简洁和方便，避免了手动传递整个状态对象的繁琐。当你在 set 函数中调用 produce 时，produce 的第一个参数 draft 会被自动设置为当前状态对象，你只需要在其中描述你要修改的部分即可。
   - 传递给 produce 函数的参数（无论叫什么名字）实际上都是 zustand 初始化时的状态。
@@ -1326,17 +1331,64 @@ if (avartar !== '' && nickName != '') {
   }
   ```
 
-85. require和import
+85. require 和 import
 
 - require:
   - require 是 CommonJS 规范中定义的一种模块引入语法，通常用于 Node.js 环境或支持 CommonJS 规范的 JavaScript 运行时环境。它是同步的，意味着在调用 require 时，代码会等待被引入的模块加载完成后才继续执行后续代码。语法示例：`const module = require('module-name');`
 - import:
   - import 是 ECMAScript（ES）模块规范中定义的一种模块引入语法，用于现代浏览器、Node.js 的 ES 模块环境，以及 TypeScript。
-它是异步的，允许更好的并行加载，不会阻塞代码的执行。语法示例：`import module from 'module-name';`
+    它是异步的，允许更好的并行加载，不会阻塞代码的执行。语法示例：`import module from 'module-name';`
 
 86. 为什么 TypeScript 中只能使用 import 而 JavaScript 中可以使用 require 呢？
 
 - 这是因为 TypeScript 在设计时更加现代化，从 ES 模块规范中获得灵感，并且为了兼容未来的 JavaScript 标准。在 TypeScript 中，你可以通过设置编译目标为 ES5 或更高版本来使用 import 语法。而 require 是 CommonJS 规范的一部分，与 ES 模块规范不兼容，所以在 TypeScript 中选择了支持更为标准和现代的 import。
 - 至于为什么 JavaScript 中可以使用 require，主要是因为 Node.js 最初使用了 CommonJS 规范作为模块系统，而 Node.js 团队后来引入了对 ES 模块的支持，所以在 Node.js 环境中，你可以同时使用 require 和 import。
+
+87. zustand 中为什么要使用 immer
+
+- 对于简单的数据结构可以这么修改
+
+  ```js
+  const useBearStore = create((set) => ({
+    bears: 0,
+    increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+    removeAllBears: () => set({ bears: 0 }),
+  }))
+  ```
+
+- 但是对于对象嵌套对象的数据结构，这么修改无法修改深层对象的数据,需要用到 immer/手动返回不可变对象
+  - 手动修改
+
+    ```js
+    const useBearStore = create((set, get) => ({
+      bears: {
+        bears2: 0,
+        relate: {
+          mom: '',
+          faf: '',
+        },
+      },
+      increasePopulation: () =>
+        set(
+          produce((draft) => {
+            draft.bears.bears2++
+          })
+        ),
+      increasePopulation2: () =>
+        set((draft: any) => ({
+          // 这样的写法会返回新的对象，不会修改原来的对象
+          bears: {
+            ...draft.bears,
+            relate: {
+              ...draft.bears.relate,
+              mom: 'mom',
+            },
+          },
+        })),
+    }))
+    ```
+
+  - immer
+    - 使用produce包裹
 
 87. zustand：createWithEqualityFn/create

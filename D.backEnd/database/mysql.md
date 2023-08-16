@@ -33,6 +33,24 @@ show tables
 
 ## 4、操作数据库
 
+- 列类型
+
+```md
+INT：存储整数
+
+VARCHAR(100): 存储变长字符串，可以指定长度
+
+CHAR：定长字符串，不够的自动在末尾填充空格
+
+DOUBLE：存储浮点数
+
+DATE：存储日期 2023-05-27
+
+TIME：存储时间 10:13
+
+DATETIME：存储日期和时间 2023-05-27 10:13
+```
+
 - 操作数据库
 
 ```sql
@@ -429,4 +447,51 @@ CREATE INDEX id_app_user_name ON app_user(`name`)
 - 规范数据库，但是不一定要完完全全按照这个
 - 性能和规范不可兼得，考虑商业化的需求和目标，关联查询不要超过3个表
 
-## 25、JDBC
+## 25、使用docker启动mysql服务
+
+- 创建一个mysql Image
+- port：3306；挂载volums：本地的/User/youngzx/mysql挂载到container的/var/lib/mysql上；environment variables：MYSQL_ROOT_PASSWORD:youngzx
+- 或者通过docker run 加载密码：`docker run --name mysql_container -e MYSQL_ROOT_PASSWORD=your_password -d mysql`
+
+## 26、常用mysql命令
+
+```md
+where：查询条件，比如 where id=1
+as：别名，比如 select xxx as 'yyy'
+and: 连接多个条件
+in/not in：集合查找，比如 where a in (1,2)
+between and：区间查找，比如 where a between 1 and 10
+limit：分页，比如 limit 0,5
+order by：排序，可以指定先根据什么升序、如果相等再根据什么降序，比如 order by a desc,b asc
+group by：分组，比如 group by aaa
+having：分组之后再过滤，比如 group by aaa having xxx > 5
+distinct：去重
+sql 还可以用很多内置函数：
+
+聚合函数：avg、count、sum、min、max
+字符串函数：concat、substr、length、upper、lower
+数值函数：round、ceil、floor、abs、mod
+日期函数：year、month、day、date、time
+条件函数：if、case
+系统函数：version、datebase、user
+类型转换函数：convert、cast、date_format、str_to_date
+其他函数：nullif、coalesce、greatest、least
+```
+
+## 27、join的区别
+
+- JOIN ON 默认是 INNER JOIN ON：INNER JOIN 是只返回两个表中能关联上的数据。
+- LEFT JOIN 是额外返回左表中没有关联上的数据。
+- RIGHT JOIN 是额外返回右表中没有关联上的数据。
+
+## 28、外键的更新方式
+
+- CASCADE： 主表主键更新，从表关联记录的外键跟着更新，主表记录删除，从表关联记录删除
+
+- SET NULL：主表主键更新或者主表记录删除，从表关联记录的外键设置为 null
+
+- RESTRICT：只有没有从表的关联记录时，才允许删除主表记录或者更新主表记录的主键 id
+
+- NO ACTION： 同 RESTRICT，只是 sql 标准里分了 4 种，但 mysql 里 NO ACTION 等同于 RESTRICT。
+
+- 但是实际场景应该尽量避免使用外键
