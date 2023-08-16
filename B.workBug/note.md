@@ -1265,3 +1265,78 @@ if (avartar !== '' && nickName != '') {
 
 - 例如pnpm patch taro-ui@
 - 会生成一个临时的项目地址，在缓存文件中，打开它并修改
+
+84. immer
+
+- immer可以像直接修改可变对象一样来修改不可变对象
+- 不可变对象例子
+
+  ```js
+  // 1.在涉及到引用传递的情况下。这可能会在代码中引入难以追踪的错误
+  const originalPerson = { name: 'Alice', age: 30 };
+
+  // modifiedPerson 实际上是引用了 originalPerson 对象。
+  // 当你将 originalPerson 赋值给 modifiedPerson 时，它们两者都指向了相同的内存位置，即同一个对象。
+  // 因此，当你修改 modifiedPerson 的 age 属性时，实际上是在修改原始的 originalPerson 对象。
+  const modifiedPerson = originalPerson;
+  modifiedPerson.age = 31;
+
+  console.log(originalPerson.age); // 输出 31，但预期应该是 30
+
+  // 2.如果使用不可变性原则，应该创建一个新的对象来表示修改后的状态，以避免直接修改对象引发的问题
+  const originalPerson = { name: 'Alice', age: 30 };
+
+  // 正确的做法：创建新的对象表示修改后的状态
+  const modifiedPerson = { ...originalPerson, age: 31 };
+
+  console.log(originalPerson.age); // 输出 30
+  console.log(modifiedPerson.age); // 输出 31
+  ```
+
+- 但是当对象的层次非常深的时候进行解构会十分困难
+
+  ```js
+  // 3. 使用immer的写法
+  import { produce } from 'immer'
+  const originalPerson3 = { name: 'Alice', age: 30 }
+  const modifiedPerson3 = produce(originalPerson3 ,draft=> {
+    draft.age = 33
+  })
+
+  console.log('originalPerson3', originalPerson3)//30
+  console.log('modifiedPerson3', modifiedPerson3)//33
+  ``
+
+- 结合zustand的写法
+  - set 函数会隐式地传入当前的状态对象。这样，你在使用 set 函数时，不需要显式传递整个状态对象，而是只需要传递一个修改函数。
+  - 这种设计的目的是让你在修改状态时更加简洁和方便，避免了手动传递整个状态对象的繁琐。当你在 set 函数中调用 produce 时，produce 的第一个参数 draft 会被自动设置为当前状态对象，你只需要在其中描述你要修改的部分即可。
+  - 传递给 produce 函数的参数（无论叫什么名字）实际上都是 zustand 初始化时的状态。
+
+  ```ts
+  // 在使用 immer 库时，虽然看起来我们在修改的过程中似乎是直接修改了原始对象。
+  // 但实际上 immer 在幕后做了一些魔术，让这些修改在不违反不可变性原则的情况下得以实现。
+  // 具体来说，当你使用 produce 函数时，immer 会创建一个被称为 "draft" 的虚拟副本，该副本具有与原始对象相同的结构。
+  // 然后，在你的修改函数中，你可以像修改普通对象一样修改这个 "draft" 对象。
+  // 重要的是要注意，在你的修改函数内部，实际上是在修改 "draft" 而不是原始对象。
+  // 当你通过修改 "draft" 完成所有的更改后，immer 会根据你所做的修改生成一个全新的不可变对象，并将这个新对象返回作为修改的结果。
+  setCartList(data) {
+    set(produce((draft) => {
+      draft.cartList = data;
+    }));
+  }
+  ```
+
+85. require和import
+
+- require:
+  - require 是 CommonJS 规范中定义的一种模块引入语法，通常用于 Node.js 环境或支持 CommonJS 规范的 JavaScript 运行时环境。它是同步的，意味着在调用 require 时，代码会等待被引入的模块加载完成后才继续执行后续代码。语法示例：`const module = require('module-name');`
+- import:
+  - import 是 ECMAScript（ES）模块规范中定义的一种模块引入语法，用于现代浏览器、Node.js 的 ES 模块环境，以及 TypeScript。
+它是异步的，允许更好的并行加载，不会阻塞代码的执行。语法示例：`import module from 'module-name';`
+
+86. 为什么 TypeScript 中只能使用 import 而 JavaScript 中可以使用 require 呢？
+
+- 这是因为 TypeScript 在设计时更加现代化，从 ES 模块规范中获得灵感，并且为了兼容未来的 JavaScript 标准。在 TypeScript 中，你可以通过设置编译目标为 ES5 或更高版本来使用 import 语法。而 require 是 CommonJS 规范的一部分，与 ES 模块规范不兼容，所以在 TypeScript 中选择了支持更为标准和现代的 import。
+- 至于为什么 JavaScript 中可以使用 require，主要是因为 Node.js 最初使用了 CommonJS 规范作为模块系统，而 Node.js 团队后来引入了对 ES 模块的支持，所以在 Node.js 环境中，你可以同时使用 require 和 import。
+
+87. zustand：createWithEqualityFn/create
