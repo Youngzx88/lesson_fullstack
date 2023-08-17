@@ -1,20 +1,22 @@
 # workBug
 
-1. react 中 form 表单 post 请求
-   - ajax
-   - axios,ref 记录,用一个对象包裹,发送
-2. ajax 的不同使用场景
-3. 动态类名解决多状态
-   - classnames
-4. decodeUrlComponent 解码问题
-   - 不能放在参数里解码，容易变成字符串的 undefine(区分不出)
-5. actions 的先后顺序问题
-   - .then 解决
-6. 所有 useEffect，useDidShow 写一个就好
-7. queryString 拿到 url 上的参数
-8. 倒计时 use-timer
-9. 固定高度要用大写的 PX，但是尽量用 rpx 因为是响应式
-10. pc+mobile 响应式切图
+### 1. 动态类名解决多状态
+
+- classnames
+
+### 2. decodeUrlComponent 解码问题
+
+- 不能放在参数里解码，容易变成字符串的 undefine(区分不出)
+
+### 3. 所有 useEffect，useDidShow 写一个就好
+
+### 4. queryString 拿到 url 上的参数
+
+### 5. 倒计时 use-timer
+
+### 6. 固定高度要用大写的 PX，但是尽量用 rpx 因为是响应式
+
+### 7. pc+mobile 响应式切图
 
     - pc 直接切 img ➕ 绝对定位 text
     - mobile img display：none，用 text 撑开文本，用 img 当作 text 的背景图(bgi)
@@ -57,7 +59,7 @@
       }
       ```
 
-11. vite 配置别名解决打包错误/解决本地开发跨域问题
+### 8. vite 配置别名解决打包错误/解决本地开发跨域问题
 
     ```js
     <!-- vite config js -->
@@ -85,7 +87,7 @@
 
     ```
 
-12. 给后端的数据结构
+### 9. 给后端的数据结构
 
     - axios
 
@@ -105,9 +107,9 @@
       axios.post('/foo', qs.stringify({ bar: 123 }))
       ```
 
-13. 关闭 ts 类型监测
-14. 项目手机端预览要在同一局域网 ip 下，vite 配置 0.0.0.0
-15. css module taro 中使用在 config 下 index.js 中修改，h5 在 vite.config.js 中修改
+### 10. 项目手机端预览要在同一局域网 ip 下，vite 配置 0.0.0.0
+
+### 11. css module taro 中使用在 config 下 index.js 中修改，h5 在 vite.config.js 中修改
 
 ```js
 
@@ -135,108 +137,100 @@ export default defineConfig({
   }
 ```
 
-16. 在 vite 中配置 alias,采用 vite + typescript 开发，配置别名时会报错：找不到模块“path”或其相应的类型声明 或者 找不到名称“\_\_dirname”等
+### 12. 在 vite 中配置 alias,采用 vite + typescript 开发，配置别名时会报错：找不到模块“path”或其相应的类型声明 或者 找不到名称“\_\_dirname”等
 
 ```bash
 npm install @types/node --save-dev
 ```
 
-17. pc 端切图不要写高度，用 container 的 padding 撑开上下的高度
+### 13. pc 端切图不要写高度，用 container 的 padding 撑开上下的高度
 
-18. qs 的使用,拿到 url 上的参数
+### 14. qs 的使用,拿到 url 上的参数
 
-```js
-// ?id = 1
-let params = location.search
-console.log('params', params) //params ?id=1
-params = params.replace(/^\?/, '')
-console.log('params2', params) //params2 id=1
-let qs = QueryString.parse(params)
-console.log('qs', qs) //qs {id: '1'}
-```
+  ```js
+  // ?id = 1
+  let params = location.search
+  console.log('params', params) //params ?id=1
+  params = params.replace(/^\?/, '')
+  console.log('params2', params) //params2 id=1
+  let qs = QueryString.parse(params)
+  console.log('qs', qs) //qs {id: '1'}
+  ```
 
-19. #的含义(锚点)
+### 15. #的含义(锚点)
 
 - #代表网页中的一个位置。其右面的字符，就是该位置的标识符。
 - `http://www.example.com/index.html#print` 代表 index.html 中 print 的位置，浏览器读取这个 URL 后，会自动将 print 位置滚动至可视区域。
 - 为网页位置指定标识符，有两个方法。一是使用锚点，比如`<a name="print"></a>`，二是使用 id 属性，比如`<div id="print" >`。
 
-20. 短链接生成工具:草料
+### 16. 短链接生成工具:草料
 
-21. nginx 反向代理（代理服务器端）
+### 17. nginx 反向代理（代理服务器端）
 
 - etc/nginx/default.d/nginx.config 下是`nginx`的配置文件
 - 为了分离，我们一般自己建一个`config.d`，并被`nginx.config`引入`include /etc/nginx/conf.d/*.conf;`
 
-```
-server {
-  listen 80;
-  listen [::]:80;
-  server*name *;
-  root /usr/share/nginx/dist;
-  location / {
-  index /index.html;
-  try_files $uri /$uri /index.html;
+  ```nginx
+  server {
+    listen 80;
+    listen [::]:80;
+    server*name *;
+    root /usr/share/nginx/dist;
+    location / {
+    index /index.html;
+    try_files $uri /$uri /index.html;
+    }
   }
-}
-```
+  ```
 
 - 可以将多个前端项目放在同一个服务器端口上。在 nginx 中，您可以为每个前端项目配置一个不同的 location，用于指定该项目的静态资源文件路径。例如，如果将多个前端项目部署在同一个服务器上，并且它们的静态资源文件都存放在/var/www 目录下，可以使用以下 nginx 配置，这样在访问 example.com/project1 的时候就会访问对应的文件夹：
 
-Copy
-server {
-listen 80;
-server_name example.com;
+  ```nginx
+  Copy
+  server {
+  listen 80;
+  server_name example.com;
 
-    location /project1 {
-        root /var/www/project1;
-        index index.html;
-    }
+      location /project1 {
+          root /var/www/project1;
+          index index.html;
+      }
 
-    location /project2 {
-        root /var/www/project2;
-        index index.html;
-    }
+      location /project2 {
+          root /var/www/project2;
+          index index.html;
+      }
 
-}
+  }
+  ```
 
 - 为了不让有权限问题，打包后的 dist 最好放在 nginx 文件夹下
 - spa 应用，只有一个 html，路由都在 html 里，其他都是用 js 静态资源引入，jsx 本质就是 js(vite 和 webpack 做的事情)
 - 所以我们配 try file，不过是为了访问`/index.js`是文件就访问真实的文件，不是文件就打到`index.html`上,让 react 路由发挥作用找到对应的资源
 
-22. 数据流管理常用逻辑
-
-- state，action 分开写
-- 不要在拿到的同时打 log，同步任务优先执行
-
-23. ssh
-
-- 连接服务器用 vscode server 就好
-- command shift p :ssh
-
-24. 小程序重复扫码得到的是第一次的内容
+### 18. 小程序重复扫码得到的是第一次的内容
 
 - 扫码放到一个页面去判断
 - 不要用`Taro.getLaunchOptionsSync().query.code_ticket code`这个只能接收到第一次扫描的二维码参数
 - 用 useRouter 解析的 parmas 去得到每次的新二维码参数
 
-```js
-const { params } = useRouter()
-```
+  ```js
+  const { params } = useRouter()
+  ```
 
-25. rn 文字不会换行
+### 19. rn 文字不会换行
 
 - 默认视为一个单词了，要用 wrap 给他换行
 
-26. useDidshow 获取数据，返回页面会多加载一次，用 usedidhide 在出页面的时候删掉
+### 20. useDidshow 获取数据，返回页面会多加载一次，用 usedidhide 在出页面的时候删掉
 
-27. postcss 处理兼容
+### 21. postcss 处理兼容
 
-28. we 分析
+### 22. we 分析
 
 - 添加自定义事件
 
-29. rn bable
+### 23. rn bable
 
 - 解决导出模块化的问题
 
@@ -250,13 +244,7 @@ module.exports = {
 }
 ```
 
-30. zustand 跨页面拿数据
-
-```js
-useGlobalState.getState().state
-```
-
-31. rn 持久化存储，用户鉴权
+### 24. rn 持久化存储，用户鉴权
 
 - <https://react-native-async-storage.github.io/async-storage/docs/install>
 - 配合 zustand 全局状态管理
@@ -266,7 +254,7 @@ useGlobalState.getState().state
   - 这样更新后的 token 就会同步传递到路由组件当中
   - 注意存取 token 是异步的，需要加 loading 判断后再展示页面
 
-32. 导出 x 倍图，缩小展示
+### 25. 导出 x 倍图，缩小展示
 
 ```jsx
 <Image
@@ -277,47 +265,35 @@ useGlobalState.getState().state
 // 定死宽高
 ```
 
-33. axios
+### 25. axios
 
 - get 请求带参
 
-```js
-const res = await actions.searchMaterial({params2})
-export const shopSearch =
-    ({params2}:any) => return baseAxios.get('pumpkin/mobile/sku/search',
-    {params:{
-      plantCode:params2.plantCode,
-      searchTxt:params2.searchTxt,
-      pageSize:params2.pageSize,
-      pageIndex:params2.pageIndex,
-      orderBy:params2.orderBy
-    }})
-```
+  ```js
+  const res = await actions.searchMaterial({params2})
+  export const shopSearch =
+      ({params2}:any) => return baseAxios.get('pumpkin/mobile/sku/search',
+      {params:{
+        plantCode:params2.plantCode,
+        searchTxt:params2.searchTxt,
+        pageSize:params2.pageSize,
+        pageIndex:params2.pageIndex,
+        orderBy:params2.orderBy
+      }})
+  ```
 
 - post 请求
 
-```js
-export const login = (phoneNumber: string, codeNumber: string) =>
-  baseAxios.post('pumpkin/mobile/auth/login', {
-    mobile: phoneNumber,
-    code: codeNumber,
-  })
+  ```js
+  export const login = (phoneNumber: string, codeNumber: string) =>
+    baseAxios.post('pumpkin/mobile/auth/login', {
+      mobile: phoneNumber,
+      code: codeNumber,
+    })
+
 ```
 
-34. rn 学习到了什么
-
-- 路由跳转
-- 路由传参
-- 样式 flex
-- FlatList 调用,下拉刷新
-- ts 字面量类型要注意：直接用类型传参，可能只能推导到 string 类型，要么直接传{}，不先用变量整合，要么把类型导出在要传参的部分声明类型
-- setState 和 actions 先后出发，actions 改变的 state 会重新传递进来，导致 state 被刷新为最初的值
-- 多个页面用到的数据一定要提出来
-- 同一级 modal 数据要遵循先后顺序
-- header
-- 公共数据抽成 modal 在每个页面都能拿到
-
-35. State 的更新可能是异步的
+###27. State 的更新可能是异步的
 
 - 出于性能考虑，React 可能会把多个 setState() 调用合并成一个调用。
 - 因为 props 和 state 可能会异步更新，所以不要依赖他们的值来更新下一个状态。
@@ -338,7 +314,7 @@ this.setState((state, props) => ({
 }))
 ```
 
-36. 传 formdata 的时候和 json 有何不同？
+### 28. 传 formdata 的时候和 json 有何不同？
 
 ```js
 // post请求以formdata的形式请求接口，用qs兼容性更好
@@ -371,11 +347,11 @@ export const createInventoryMission = (formData: any) => {
 }
 ```
 
-37. 私钥读不了，需要加权限才可以 ssh 连接
+### 29. 私钥读不了，需要加权限才可以 ssh 连接
 
 - chmod 600 /position
 
-38. ssh
+### 30. ssh
 
 - 一种远程连接主机的方式，vscode 中 command+shift+p
 - 配置好对应的 ssh config 进行连接
@@ -388,20 +364,20 @@ Host oms-prod
   IdentityFile /Users/youngzx/xxxx/neobio-prodFile/xxxx
 ```
 
-39. react 静态资源导入问题
+### 31. react 静态资源导入问题
 
 - 为什么使用 react 开发，静态资源放在 public 文件夹下可以直接用相对路径而其他文件夹不可以？
   - 在 React 开发中，静态资源（如图片、样式文件等）通常被放置在 public 文件夹下，而不是放置在源代码文件夹中。这是因为 public 文件夹中的内容会被直接复制到构建输出的目录中，而不经过 webpack 或其他构建工具的处理。
   - 当你将静态资源放在 public 文件夹下时，可以使用相对路径来引用这些资源。这是因为浏览器会相对于当前页面的 URL 来解析这些资源的相对路径，并正确加载它们。
   - 然而，对于源代码文件夹中的其他文件夹，如 src 文件夹中的文件，它们通常需要通过模块导入的方式引用 import，而不是使用相对路径。
 
-39. 如果接口返回异常，但是 postman 返回正常，要考虑是不是拦截器里面写的内容有问题
+### 32. 如果接口返回异常，但是 postman 返回正常，要考虑是不是拦截器里面写的内容有问题
 
-40. oss 没有缓存，通过 oss 的到的 CDN 是有缓存的，需要到域名服务器上去刷新一下 CDN 缓存
+### 33. oss 没有缓存，通过 oss 的到的 CDN 是有缓存的，需要到域名服务器上去刷新一下 CDN 缓存
 
-41. 想要对比组件刷新前后某一个状态的变化，不能使用 useState，因为 useState 会导致组件强制刷新，状态会回复为初始值，要用 useRef 获得引用类型
+### 34. 想要对比组件刷新前后某一个状态的变化，不能使用 useState，因为 useState 会导致组件强制刷新，状态会回复为初始值，要用 useRef 获得引用类型
 
-42. git Actions
+### 35. git Actions
 
 - 其实很多 actions 脚本都可以用 github 官方的去做，极大的降低了我们去编写脚本的压力
 - 在这个脚本里 public-path 作为参数传入了另一个 webBUild 脚本，webBuild 抛出在 process.env 里，这样我们就可以通过 vite 去配置静态资源的 base 路径为 upload 以后的路径
@@ -584,7 +560,7 @@ jobs:
             ${{ inputs.local-path }}/**:/${{ inputs.oss-path }}/${{ inputs.version }}/
 ```
 
-43. 服务器相关
+### 36. 服务器相关
 
 - 创建密钥，打开 tcp，22 端口，ssh，可以远程连接
 - 默认服务器不带 nginx，需要自己安装
@@ -592,7 +568,7 @@ jobs:
   - sudo apt install nginx
   - nginx -t：就能看到 nginx 在哪里进行配置了，然后再去配置 try files 让 SPA 的应用可以正常访问
 
-44. 部署 SPA 网站到服务器上需要的注意事项
+### 37. 部署 SPA 网站到服务器上需要的注意事项
 
 - 步骤
 
@@ -622,11 +598,11 @@ jobs:
 
   - 修改 vite.config.js 的 base，让静态资源的指向为 oss 存放地址，这里注意是通过 actions 中抛出的文件路径
 
-45. 创建 oss 服务
+### 38. 创建 oss 服务
 
 - 想要使用图形化工具需要开启 ram 访问控制
 
-46. 如何让同一个 ip 下局域网都能访问本地起的项目？
+### 39. 如何让同一个 ip 下局域网都能访问本地起的项目？
 
 - 将 Vite 服务器绑定到 0.0.0.0 地址，意味着它将监听所有可用的网络接口，包括您的局域网 IP 地址。
 
@@ -643,11 +619,12 @@ export default {
 }
 ```
 
-47. 组件之间的数据不要耦合
+### 40. 组件之间的数据不要耦合
 
 - 不要过度依赖其他组件的数据，要独立
+- 面向测试编程
 
-48. taro
+### 41. taro
 
 - 当你创建一个 Taro 应用时，在项目的根目录下会有一个 app.tsx（或 app.jsx）文件，其中定义了一个名为 App 的组件。这个 App 组件是 Taro 框架默认的应用程序组件，用于承载整个应用程序的内容。
 
@@ -655,19 +632,19 @@ export default {
 
 - 因此，你不需要在其他文件中手动调用 App 组件。只需确保 app.ts 文件中定义了 App 组件，并且通过 return props.children 将子组件渲染到页面上即可。Taro 框架会负责调用和渲染 App 组件，并将子组件作为内容进行渲染。
 
-49. post 请求
+### 42. post 请求
 
 - body 默认会 toString
 - 所以需要我们`body: JSON.stringify(params),`
 
-50. useCallback,useMemo 的使用 ❌
+### 43. useCallback,useMemo 的使用 ❌
 
-51. taro 修改 tabbar 和 navigation
+### 44. taro 修改 tabbar 和 navigation
 
 - navigation 用了掘金写好的
 - tabbar 自定义会出现闪烁问题
 
-52. taro 像素 自适应
+### 45. taro 像素 自适应
 
 ```js
 // config
@@ -685,13 +662,7 @@ const config = {
 }
 ```
 
-53. figma 判断两个东西之间的高度
-
-- insepcet
-
-54. 配置@路径别名 ❌
-
-55. 子元素超出父元素的高度，但是没出现滑动条
+### 46. 子元素超出父元素的高度，但是没出现滑动条
 
 - 给父元素增加 css 属性`overflow: auto`
 - overflow: auto; 是 CSS 中的一个属性，用于控制容器元素在内容超出容器尺寸时的表现方式。
@@ -699,31 +670,28 @@ const config = {
 - 具体原理是，当容器的内容超出容器的尺寸时，容器会创建一个滚动框，其中包含内容并显示滚动条。用户可以通过滚动条或触摸滚动操作来滚动内容。滚动框可以水平和垂直滚动，具体取决于内容的溢出方向。
 - 因此，通过将 overflow: auto; 应用于容器元素，您可以实现在内容超出容器时显示滚动条并允许用户滚动查看内容的效果。
 
-56. image 导致的间隙
+### 47. image 导致的间隙
 
 - 当你将 Image 组件的样式设置为 display: block; 时，它会以块级元素的形式显示。这会导致 Image 元素在布局中占据整个可用宽度，并且不会有默认的行内元素间隙。这样可以消除 Image 元素周围的间隙，使其紧密贴合父容器。
 - 在默认情况下，Image 组件可能被视为行内元素，会保留一些行内元素的特性，例如基线对齐和字间距等。这可能会导致一些额外的间隙或布局问题。通过将其样式设置为 display: block;，可以将其转换为块级元素，以更好地控制布局和间隙。
 
-57. taro 小程序高度计算
+### 48. taro 小程序高度计算
 
 - 记得要减去安全区域的高度
 
-58. icon
+### 49. icon
 
 - 非 tabbar 尽量用 svg
 
-59. svg 做网状图大屏项目
+### 50. svg 做网状图大屏项目
 
 - svg 起点 move to
 
-60. 给 backgroundcolor 设置一个中间向四周的渐变色怎么设置？❌
+### 51. useSate 像设置数组的 ts 类型
 
--
-
-61. useSate 像设置数组的 ts 类型
     `const [swiperPic,setSwiperPic] = useState<string[]>([]);`
 
-62. ts 定义完类型初始化数据报错？
+### 52. ts 定义完类型初始化数据报错？
 
 - 这里 couponList 必须要设置为`couponListItemType | null`,
 - 如果设置为`couponListItemType | {}`,在初始化你给了{},就无法推导至 couponListItemType 类型了
@@ -766,11 +734,11 @@ export const useCouponState = create<orderStateType>((set,get) => ({
 }))
 ```
 
-63. 箭头函数
+### 53. 箭头函数
 
 - 箭头函数的 this 由上下文决定不会被 call，apply 修改
 
-64. 策略模式
+### 54. 策略模式
 
 - 当 if else 很多的情况下，需要用到策略模式
 - 常用的写法是
@@ -843,29 +811,27 @@ export const useCouponState = create<orderStateType>((set,get) => ({
     console.log(sortedArr) // 输出排序结果
     ```
 
-65. grid 布局 ❌
-
-66. Taro 和 Taro-ui 版本不兼容
+### 55. Taro 和 Taro-ui 版本不兼容
 
 - Taro-ui 报错
 - 执行 pnpm i taro-ui@next
 - 然后会安装这个版本的 Taro-ui: `"taro-ui": "3.1.0-beta.6"`,
 
-67. 同一台服务器配置不同的前端项目 ❌
+### 56. 同一台服务器配置不同的前端项目 ❌
 
 - 给不同的 server
 - 命名不同的 server name
 
-68. 静态资源引用问题
+### 57. 静态资源引用问题
 
 - baseUrl：/ 是绝对路径
 - 修改为./是相对路径，可以在服务器里相对路径去找静态资源
 
-69. Taro 3 只能配合使用 taro-ui@next 版本
+### 58. Taro 3 只能配合使用 taro-ui@next 版本
 
-70. Taro 使用 axios：<https://juejin.cn/post/7122834229200683022>
+### 59. Taro 使用 axios：<https://juejin.cn/post/7122834229200683022>
 
-71. Taro axios
+### 60. Taro axios
 
 ```jsx
 import { axios } from 'taro-axios'
@@ -921,7 +887,7 @@ export function weLogin(params?) {
 }
 ```
 
-72. 小程序登录/获取手机号
+### 61. 小程序登录/获取手机号
 
 - 登录用 code 换 token
 - 获取手机号也是用 code 换 sessionkey，然后用 sessionkey/encrypted_data/iv(这里的 encrypted_data/iv 是 onGetPhoneNumber 回调函数里的 e) 解密手机号
@@ -1004,7 +970,7 @@ const confirmInfo = async (e) => {
 }
 ```
 
-73. 全局状态初始状态为空应该怎么写？
+### 62. 全局状态初始状态为空应该怎么写？
 
 - 修改前
 
@@ -1133,12 +1099,12 @@ export const useSystemState =
   }))
 ```
 
-74. React.memo
+### 63. React.memo
 
 - React.memo() 默认使用浅比较来比较 props 的变化。如果 props 包含复杂的对象或数组，且其引用没有发生变化，但内部数据发生了变化，React.memo() 可能会导致组件不会重新渲染。
 - 在这种情况下，可以通过传递自定义的比较函数作为第二个参数给 React.memo() 来实现更精确的比较。
 
-75. useMemo/useCallback
+### 64. useMemo/useCallback
 
 - useMemo
 
@@ -1175,7 +1141,7 @@ export const useSystemState =
 
 - 需要注意的是，对于一些简单的计算或短小的函数，过度使用 useMemo 和 useCallback 可能会带来额外的开销。因此，在使用这两个钩子时，需要权衡性能和代码可读性，避免过度优化。只在真正需要优化的情况下使用它们，确保优化带来的收益大于开销。
 
-76. 如果多状态不用三目运算符应该怎么写？
+### 65. 如果多状态不用三目运算符应该怎么写？
 
 ```jsx
 function renderPage(pageState) {
@@ -1194,13 +1160,13 @@ function renderPage(pageState) {
 return <div>{renderPage(pageState)}</div>
 ```
 
-77. 总结出的切图规律
+### 66. 总结出的切图规律
 
 - 不要给最外层设置 padding，这样会导致滚动条出现在内层
 - 能用 flex 就用 flex
 - 多封装 flexBetween，flexCenter，flexBetweenCol 之类的固定样式
 
-78. 小程序上传阿里云 oss
+### 67. 小程序上传阿里云 oss
 
 ```tsx
 if (avartar !== '' && nickName != '') {
@@ -1226,22 +1192,22 @@ if (avartar !== '' && nickName != '') {
 }
 ```
 
-79. 当一个 useState 有 2 个类型
+### 68. 当一个 useState 有 2 个类型
 
 - 首先用联合类型
 - 其次中途修改类型没有问题
 - 但是当赋值的时候你从 a 类型改成 b 类型，ts 不知道你是在给哪个类型赋值，所以会出现 a 类型没有 xxx 属性
 - 解决方案：赋值的时候使用 as 告诉 ts 这个类型具体是哪个类型
 
-80. 图片刚出现被拉伸一下
+### 69. 图片刚出现被拉伸一下
 
 - 需要设置一个图片的最大高度
 
-81. 使用插件后微信开发者工具可以打开项目，手机不行
+### 70. 使用插件后微信开发者工具可以打开项目，手机不行
 
 - qs 版本降到 5.0.0 即可
 
-82. 为什么有的时候后端让我用 formData 传输但是我用 form-urlencoded 也可以正常传输？
+### 71. 为什么有的时候后端让我用 formData 传输但是我用 form-urlencoded 也可以正常传输？
 
 - 这两种方式（application/x-www-form-urlencoded 和 multipart/form-data）都是用于发送表单数据的，但是它们适用于不同的场景。
 
@@ -1257,7 +1223,7 @@ if (avartar !== '' && nickName != '') {
 
 - form data 不再是通过 & 分隔数据，而是用 --------- + 一串数字做为 boundary 分隔符。因为不是 url 的方式了，自然也不用再做 url encode。form-data 需要指定 content type 为 multipart/form-data，然后指定 boundary 也就是分割线。body 里面就是用 boundary 分隔符分割的内容。很明显，这种方式适合传输文件，而且可以传输多个文件。但是毕竟多了一些只是用来分隔的 boundary，所以请求体会增大。
 
-83. 修改 node_modules
+### 72. 修改 node_modules
 
 - 使用 pnpm patch <pkg> 其中是自己需要修改的包，需要明确指定版本号。
 - 该命令会生成一个本地的地址，将该地址导入到 vscode。修改完成后执行 pnpm patch-commit <地址>
@@ -1266,7 +1232,7 @@ if (avartar !== '' && nickName != '') {
 - 例如 pnpm patch taro-ui@
 - 会生成一个临时的项目地址，在缓存文件中，打开它并修改
 
-84. immer
+### 73. immer
 
 - immer 可以像直接修改可变对象一样来修改不可变对象
 - 不可变对象例子
@@ -1331,7 +1297,7 @@ if (avartar !== '' && nickName != '') {
   }
   ```
 
-85. require 和 import
+### 74. require 和 import
 
 - require:
   - require 是 CommonJS 规范中定义的一种模块引入语法，通常用于 Node.js 环境或支持 CommonJS 规范的 JavaScript 运行时环境。它是同步的，意味着在调用 require 时，代码会等待被引入的模块加载完成后才继续执行后续代码。语法示例：`const module = require('module-name');`
@@ -1339,12 +1305,12 @@ if (avartar !== '' && nickName != '') {
   - import 是 ECMAScript（ES）模块规范中定义的一种模块引入语法，用于现代浏览器、Node.js 的 ES 模块环境，以及 TypeScript。
     它是异步的，允许更好的并行加载，不会阻塞代码的执行。语法示例：`import module from 'module-name';`
 
-86. 为什么 TypeScript 中只能使用 import 而 JavaScript 中可以使用 require 呢？
+### 75. 为什么 TypeScript 中只能使用 import 而 JavaScript 中可以使用 require 呢？
 
 - 这是因为 TypeScript 在设计时更加现代化，从 ES 模块规范中获得灵感，并且为了兼容未来的 JavaScript 标准。在 TypeScript 中，你可以通过设置编译目标为 ES5 或更高版本来使用 import 语法。而 require 是 CommonJS 规范的一部分，与 ES 模块规范不兼容，所以在 TypeScript 中选择了支持更为标准和现代的 import。
 - 至于为什么 JavaScript 中可以使用 require，主要是因为 Node.js 最初使用了 CommonJS 规范作为模块系统，而 Node.js 团队后来引入了对 ES 模块的支持，所以在 Node.js 环境中，你可以同时使用 require 和 import。
 
-87. zustand 中为什么要使用 immer
+### 76. zustand 中为什么要使用 immer
 
 - 对于简单的数据结构可以这么修改
 
@@ -1357,6 +1323,7 @@ if (avartar !== '' && nickName != '') {
   ```
 
 - 但是对于对象嵌套对象的数据结构，这么修改无法修改深层对象的数据,需要用到 immer/手动返回不可变对象
+
   - 手动修改
 
     ```js
@@ -1386,9 +1353,59 @@ if (avartar !== '' && nickName != '') {
           },
         })),
     }))
+    //另一个例子
+    export const useBearStore = create((set) => ({
+      name: {
+        name2: {
+          mom: 'wu',
+          fat: 'young',
+        },
+      },
+      //这样写会重新返回新的name2对象
+      changeName: () =>
+        set((draft: any) => ({
+          name: {
+            name2: {
+              ...draft.name.name2,
+              mom: 'wuhuhu',
+            },
+          },
+        })),
+      // immer的写法
+      changeName2: () =>
+        set(
+          produce((draft) => {
+            draft.name.name2.mom = 'hahahah'
+          })
+        ),
+    }))
     ```
 
   - immer
-    - 使用produce包裹
+    - 使用 produce 包裹
 
-87. zustand：createWithEqualityFn/create
+- 为什么要这么做？
+
+  - 在 React 或状态管理库中，有一个重要的概念是不可变性（immutability）。不可变性指的是一旦创建了一个对象，它的值就不会再被改变，而是通过创建一个新的对象来代表改变后的值。
+
+  - 在代码中，为什么要使用不可变性来修改对象属性？
+
+  - 触发重新渲染： React 通过比较新旧状态来决定是否触发重新渲染。如果你直接修改了对象的属性，状态的引用不会改变，从而 React 可能无法正确检测到状态的变化。而通过创建一个新的对象，状态的引用会改变，从而能够触发重新渲染。
+
+  - 避免副作用： 直接修改对象可能会引发副作用，特别是在共享状态或并发环境下。通过不可变性，你可以避免在多个地方使用同一个对象时造成的意外修改和冲突。
+
+  - 时间旅行和性能优化： 不可变性为时间旅行（time travel）和性能优化提供了便利。在开发者工具中，你可以查看历史状态的变化，因为每个状态的变化都被保留了下来。此外，通过不可变性，可以更容易地判断两个对象是否相等，从而进行更高效的比较。
+
+  - 总之，使用不可变性是为了确保状态的可预测性、可控性和性能优化。在状态管理中，建议遵循不可变性的原则，通过创建新的对象来表示状态的变化，而不是直接修改原对象。这也是为什么在状态管理库中通常使用不可变性的一种原因。
+
+### 77. zustand：createWithEqualityFn/create
+
+- `createWithEqualityFn`是为了控制更精细的渲染颗粒度而出现的 api
+- 正常情况下我们在重新渲染的时候是进行全比较，===，逐一比较对象的每个属性
+- 但是在某些情况下，我们只需要比较对象中的一部分属性/关心对象是否引用了相同的值
+- 首先我们需要在 create 的时候设置 zustand 的比较为颗粒度更小的浅比较:`shallow`
+- 其次我们在需要重新渲染的地方仅引用需要修改的 zustand 变量
+- 举例说明
+  - 又一个 zustand 单对象其中包含`{name:,age,email}`
+  - 因为是全局状态，当 A 去修改 name 以后，尽管 A 页面只用到了 email，但是 A 页面也会重新渲染(zustand好像优化了，不会重新渲染)
+  - 这个时候我们需要控制渲染的颗粒度
