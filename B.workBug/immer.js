@@ -24,3 +24,24 @@ const modifiedPerson3 = produce(originalPerson3 ,draft=> {
 
 console.log('originalPerson3', originalPerson3)//30
 console.log('modifiedPerson3', modifiedPerson3)//33
+
+
+// 4. immer 的 curry 写法
+const initialState = {
+  todos: []
+};
+
+// 通用的 recipe 函数用于更新待办事项列表
+const updateTodos = (draft, newTodo) => {
+  draft.todos.push(newTodo);
+};
+
+// 创建柯里化的 produce 函数，固定了 updateTodos 作为 recipe
+const curriedUpdate = produce(updateTodos);
+
+// 调用 curriedUpdate 函数来更新状态
+const state1 = curriedUpdate(initialState, { text: 'Buy groceries' });
+const state2 = curriedUpdate(state1, { text: 'Write blog post' });
+
+console.log("state1",state1);
+console.log("state1",state2);

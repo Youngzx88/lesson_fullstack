@@ -1382,7 +1382,35 @@ if (avartar !== '' && nickName != '') {
     ```
 
   - immer
-    - 使用 produce 包裹
+
+- 为什么zustand中的Immer不需要传入原始修改的对象，draft是怎么映射到原对象的？
+  - 实际上，这个问题涉及到 JavaScript 的作用域和闭包机制。produce 函数内部会通过闭包将你的更新函数与原始数据关联起来，所以 draft 对象实际上是对原始数据的一个引用。
+  - 所以，尽管你在 produce 函数中没有明确传递原始对象，但是通过 JavaScript 的作用域和闭包机制，draft 对象会正确映射到你要修改的对象。
+
+  ```js
+  class Component extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+        todos: [...], // 初始状态
+      };
+    }
+
+    handleToggle = (id) => {
+      this.setState((currentState) => {
+        // 在这里，currentState 就是当前的状态
+        return produce(currentState, (draft) => {
+          const todo = draft.find((todo) => todo.id === id);
+          todo.done = !todo.done;
+        });
+      });
+    }
+
+    render() {
+      // ...
+    }
+  }
+  ```
 
 - 为什么要这么做？
 
@@ -1409,3 +1437,136 @@ if (avartar !== '' && nickName != '') {
   - 又一个 zustand 单对象其中包含`{name:,age,email}`
   - 因为是全局状态，当 A 去修改 name 以后，尽管 A 页面只用到了 email，但是 A 页面也会重新渲染(zustand好像优化了，不会重新渲染)
   - 这个时候我们需要控制渲染的颗粒度
+
+### 78. 不可变数据
+
+- 为什么handleClick不会触发重新渲染？
+- 在代码中，handleClick 函数中虽然对 list 进行了修改，但由于你直接使用了 list.push("add")，这并不会触发 React 的重新渲染。
+- React 的重新渲染是通过检测状态（state）的变化来触发的，以及调用组件的渲染函数来更新视图。在函数式组件中，每次组件函数被调用时，都会创建一个新的闭包，其中包含了组件函数内部的局部变量。
+- 在 handleClick 函数中，在修改 list 时实际上是在修改闭包内的局部变量 list，而并没有触发 React 对状态的更新。所以，虽然调用了 setList(list) 来更新 list，但实际上 list 并没有发生变化，React 并不会重新渲染。
+- 因为react比较的是引用，所以需要创建一个新的对象，来触发重新渲染
+
+```ts
+import React, { useState, useCallback } from "react";
+import ReactDom from "react-dom";
+
+const Child = function ({ list }) {
+  console.log("child render");
+  return <div>{list.map((_) => _)}</div>;
+};
+function App() {
+  const [list, setList] = useState([]);
+  const handleClick = useCallback(() => {
+    list.push("add");
+    console.log("新增数据");
+    setList(list);
+  }, [list]);
+
+  return (
+    <>
+      <div onClick={handleClick}>
+        click me
+        <Child list={list} />
+      </div>
+    </>
+  );
+}
+
+export default App;
+
+```
+
+### 79. 如何写出优雅的前端代码
+
+- 面向测试编程，每个模块独立运行
+- 函数尽量不要嵌套而是平级，可以用参数传入函数当作参数add(a,b,function)
+
+### 80. 为什么hashRoute的publicPath: './',是这样的，而browserRoute的时候是'/'这样的
+
+- 在 Web 应用中，路由分为两种主要模式：哈希路由（Hash Routing）和浏览器路由（Browser Routing）。
+
+- 哈希路由（Hash Routing）：
+  - 在哈希路由中，路由信息被存储在 URL 的哈希部分（#后面），而不会导致页面的完全刷新。这是传统的单页面应用（SPA）的路由方式。哈希路由适用于不需要服务器端配置支持的情况，因为哈希部分的变化不会被发送到服务器，因此可以在客户端直接进行路由处理。
+
+  - 当使用哈希路由时，通常会设置 publicPath 为 './'，这是因为相对路径会相对于当前目录进行解析，而哈希路由不会影响服务器上的文件路径，因此使用相对路径相对稳定。
+
+- 浏览器路由（Browser Routing）：
+浏览器路由通过使用 HTML5 的 history.pushState 和 history.replaceState API，使路由信息存储在实际的 URL 路径中。这种方式更加友好，能够在没有哈希部分的情况下展示清晰的 URL。
+
+  - 使用浏览器路由时，通常会设置 publicPath 为 '/'，因为浏览器路由使用实际路径来处理路由，所以 '/' 通常被用作根路径，不管应用部署在哪个子路径下。
+
+  - 需要注意的是，设置 publicPath 主要是为了确保资源（例如 CSS、JavaScript 文件等）的加载路径正确，以适应不同的路由模式和部署情况。选择 './' 还是 '/' 取决于你的应用部署环境以及使用的路由模式。
+
+## 80. formily5和antd5
+
+- 需要使用formily5
+- "@formily/antd-v5": "^1.1.1"
+
+## 81. formily的使用
+
+```tsx
+import React from 'react'
+import { createForm } from '@formily/core'
+import { FormProvider, FormConsumer, Field } from '@formily/react'
+import {
+  FormItem,
+  FormLayout,
+  Input,
+  FormButtonGroup,
+  Submit,
+} from '@formily/antd'
+
+const form = createForm()
+
+export default () => {
+  return (
+    <FormProvider form={form}>
+      <FormLayout layout="vertical">
+        <Field
+          name="input"
+          title="输入框"
+          required
+          initialValue="Hello world"
+          decorator={[FormItem]}
+          component={[Input]}
+        />
+      </FormLayout>
+      <FormConsumer>
+        {() => (
+          <div
+            style={{
+              marginBottom: 20,
+              padding: 5,
+              border: '1px dashed #666',
+            }}
+          >
+            实时响应：{form.values.input}
+          </div>
+        )}
+      </FormConsumer>
+      <FormButtonGroup>
+        <Submit onSubmit={console.log}>提交</Submit>
+      </FormButtonGroup>
+    </FormProvider>
+  )
+}
+```
+
+- createForm用来创建表单核心领域模型，它是作为MVVM设计模式的标准 ViewModel
+- FormProvider组件是作为视图层桥接表单模型的入口，它只有一个参数，就是接收 createForm 创建出来的 Form 实例，并将 Form 实例以上下文形式传递到子组件中
+- FormLayout组件是用来批量控制FormItem样式的组件，这里我们指定布局为上下布局，也就是标签在上，组件在下
+- Field组件是用来承接普通字段的组件
+  - name 属性，标识字段在表单最终提交数据中的路径
+  - title 属性，标识字段的标题
+    - 如果 decorator 指定为 FormItem，那么在 FormItem 组件中会默认以接收 title 属性作为标签
+    - 如果指定为某个自定义组件，那么 title 的消费方则由自定义组件来承接
+    - 如果不指定 decorator，那么 title 则不会显示在 UI 上
+  - required 属性，必填校验的极简写法，标识该字段必填
+    - 如果 decorator 指定为 FormItem，那么会自动出现星号提示，同时校验失败也会有对应的状态反馈，这些都是 FormItem 内部做的默认处理
+    - 如果 decorator 指定为自定义组件，那么对应的 UI 样式则需要自定义组件实现方自己实现
+    - 如果不指定 decorator，那么 required 只是会阻塞提交，校验失败不会有任何 UI 反馈。
+  - initialValue 属性，代表字段的默认值
+  - decorator 属性，代表字段的 UI 装饰器，通常我们都会指定为 FormItem
+    - 注意 decorator 属性传递的是数组形式，第一个参数代表指定组件类型，第二个参数代表指定组件属性
+  - component 属性，代表字段的输入控件，可以是 Input，也可以是 Select，等等
+    -注意 component 属性传递的是数组形式，第一个参数代表指定组件类型，第二个参数代表指定组件属性
