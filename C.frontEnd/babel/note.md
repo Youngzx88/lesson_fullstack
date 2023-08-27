@@ -62,3 +62,36 @@
 ## 4. babel 8
 
 - 更好的解决了按需引入polyfill
+
+## 5、入门
+
+- 插件和预设（preset）
+  - 代码转换功能以插件的形式出现，插件是小型的 JavaScript 程序，用于指导 Babel 如何对代码进行转换。你甚至可以编写自己的插件将你所需要的任何代码转换功能应用到你的代码上。例如将 ES2015+ 语法转换为 ES5 语法，我们可以使用诸如 `@babel/plugin-transform-arrow-functions`之类的官方插件:`npx src --out-dir lib --plugins=@babel/plugin-transform-arrow-functions`
+
+    ```js
+    pnpm install --save-dev @babel/plugin-transform-arrow-functions
+    npx babel src --out-dir lib --plugins=@babel/plugin-transform-arrow-functions
+    ```
+
+  - 预设：就像插件一样，你也可以根据自己所需要的插件组合创建一个自己的 preset 并将其分享出去。J对于当前的用例而言，我们可以使用一个名称为 env 的 preset
+
+    ```js
+    npm install --save-dev @babel/preset-env
+    npx babel src --out-dir lib --presets=@babel/env
+    ```
+
+- babel相关
+
+  - @babel/cli: 用于执行相应命令
+
+  - @babel/core: 核心包，将 js 代码分析成 AST
+
+  - @babel/preset-env: 包含 es6+ 的语法转换规则，如箭头函数、const 等
+
+  - @babel/polyfill: es6 内置对象和函数的垫片，如 Promise、Array.from 等
+
+  - @babel/plugin-transform-runtime: 防止 polyfill 污染全局变量
+
+  - @babel/runtime: 与 @babel/plugin-transform-runtime 配套使用
+
+## 6、babelCore是怎么将js代码分析成AST的
