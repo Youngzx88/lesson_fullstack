@@ -245,6 +245,25 @@ ENV aaa=${aaa} \
 
 ## 8.2、跑项目
 
+- 常用命令
+
+```dockerfile
+# 先编写dockerfile
+
+# build镜像
+  # 注意不能是驼峰，这里只是例
+docker build -t dockerName:dockerTagName .
+# run起来
+  # 通过 xxx-image 镜像跑起来一个叫做 xxx-container 的容器。
+
+  # -p 指定端口映射，映射宿主机的 3000 到容器的 3000 端口。
+
+  # -v 指定数据卷挂载，挂载宿主机的 /aaa 到容器的 /bbb/ccc 目录。
+
+  # 这个镜像是通过 Dockerfile 经过 build 产生的。
+docker run -p 3000:3000 -v /aaa:/bbb/ccc --name xxx-container xxx-image
+```
+
 - `pm2 start ./dist/main.js`
 - 首先看下日志，执行
   - `pm2 logs/pm2 logs 进程名/pm2 logs 进程id`
