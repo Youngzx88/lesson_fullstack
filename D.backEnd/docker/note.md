@@ -322,6 +322,46 @@ docker run -p 3000:3000 -v /aaa:/bbb/ccc --name xxx-container xxx-image
 
 ## 8.4、为什么有docker还需要pm2？
 
+- 总结一下常用的pm2指令
+  - `pm2 start ./dist/main.js`
+  - `pm2 delete 0`
+  - `pm2 start app.js -i max;pm2 start app.js -i 0`:控制使用几个cpu
+  - `pm2 scale main 3`:动态调整进程数
+  - `pm2 monit`:性能监控
+  - `pm2 ecosystem`:会创建一个配置文件, 然后 `pm2 start ecosystem.config.js` 就可以批量跑一批应用。
+- 修改后的dockerfile
+
+  ```dockerfile
+  FROM node:18.0-alpine3.14 as build-stage
+
+  WORKDIR /app
+
+  COPY package.json .
+
+
+
+  RUN npm install
+
+  COPY . .
+
+  RUN npm run build
+
+  # production stage
+  FROM node:18.0-alpine3.14 as production-stage
+
+  COPY --from=build-stage /app/dist /app
+  COPY --from=build-stage /app/package.json /app/package.json
+
+  WORKDIR /app
+
+  RUN npm install --production
+
+  EXPOSE 3000
+
+  CMD ["pm2-runtime", "/app/main.js"]
+
+  ```
+
 - 万一 docker 容器内 node 服务崩溃了，是不是需要重启？
 
 - docker 容器内的进程同样有日志管理、进程管理和监控的需求。

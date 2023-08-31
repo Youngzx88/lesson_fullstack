@@ -310,8 +310,7 @@ bootstrap()
   - ==构造器注入==:
 
     ```ts
-    // 第二种方式构造器注入
-    constructor(private readonly appService: AppService) {}
+    constructor(private readonly appService: AppService) {}//用构造器注入appService
     // 在app.module
     @Module({
       providers: [AppService]
@@ -633,6 +632,34 @@ bootstrap()
 - 同样，ExceptionFilter 也可以选择全局生效或者某个路由生效`@UseFilters(new HttpExceptionFilter())`,`app.useGlobalFilters(new HttpExceptionFilter())`
 
 ## 8.6、几种 AOP 机制的顺序
+
+- 常用命令
+
+  ```bash
+  # 创建项目：
+  nest new project-name
+
+  # 创建模块：
+  nest generate module module-name
+
+  # 创建控制器：
+  nest generate controller controller-name
+
+  # 创建服务：
+  nest generate service service-name
+
+  # 创建拦截器：
+  nest generate interceptor interceptor-name
+
+  # 创建管道：
+  nest generate pipe pipe-name
+
+  # 创建中间件：
+  nest generate middleware middleware-name
+
+  # 创建过滤器：
+  nest generate filter filter-name
+  ```
 
 - 进入路由的时候，会先调用 Guard，判断是否有权限等，如果没有权限，这里就抛异常了
 - 抛出的 ForbiddenException 会被 ExceptionFilter 处理，返回 403 状态码。
