@@ -777,3 +777,103 @@ const mysql = require('mysql2/promise')
 
   console.log(ics);
   ```
+
+### 30.4、typeorm 1 对 多 映射关系/CRUD
+
+- 通过 @ManyToOne 或者 @OneToMany 装饰器。
+- TypeORM 会自动在多的那一方添加外键，不需要通过 @JoinColumn 指定，不过你可以通过 @JoinColumn 来修改外键列的名字。
+- 双方只能有一方 cascade，不然会无限循环。设置了 cascade 之后，只要一方保存，关联的另一方就会自动保存。
+- 删除的话，如果设置了外键的 CASCADE 或者 SET NULL，那只删除主表（一的那一方）对应的 Entity 就好了，msyql 会做后续的关联删除或者 id 置空。否则就要先删除所有的从表（多的那一方）对应的 Entity 再删除主表对应的 Entity。
+
+  ```ts
+  @Entity()
+  export class Department {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column({
+      length: 50
+    })
+    name: string;
+
+    // 因为一对多关系中，一个实体可以关联到多个其他实体，而一个实体只能关联到一个其他实体。
+    // 假设有两个实体：Department（部门）和Employee（员工）。一个部门可以有多个员工，而一个员工只属于一个部门。
+    // 由于一个员工只属于一个部门，所以将外键保存在Employee实体中更合适。在Employee实体中，使用@ManyToOne装饰器指定了与Department实体的多对一关系，并使用department属性来表示关联。这样，Employee实体会自动创建一个外键列（例如"department_id"），用于关联到Department实体的id主键。
+    @OneToMany(()=>Employee,(employee)=>{employee.department})
+    employee: Employee[];
+  }
+
+  @Entity()
+  export class Employee {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column({
+        length: 50
+    })
+    name: string;
+
+    @ManyToOne(()=> Department,{
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    })
+    department: Department
+  }
+
+      // 1. 1对多
+      // const d1 = new Department();
+      // d1.name = '技术部';
+
+      // const e1 = new Employee();
+      // e1.name = '张三';
+      // e1.department = d1;
+
+      // const d2 = new Department();
+      // d2.name = '设备部';
+
+      // await AppDataSource.manager.save(Department,d2)
+
+      // const e2 = new Employee();
+      // e2.name = '李四';
+      // e2.department = d1;
+
+      // const e3 = new Employee();
+      // e3.name = '王五';
+      // e3.department = d1;
+
+      // const e4 = new Employee();
+      // e4.name = '赵五';
+      // e4.department = d2;
+
+      // await AppDataSource.manager.save(Department, d2);
+      // await AppDataSource.manager.save(Employee,e4);
+
+      // 2. 级联查询
+      // const deps = await AppDataSource.manager.createQueryBuilder()
+      // .select("emp")
+      // .from(Employee,"emp")
+      // .leftJoinAndSelect("emp.department","epmDid")
+      // .where("emp.departmentId = :id",{id:2})
+      // .getMany()
+      // console.log(deps)
+
+      // 3. 删除某一个主表行，关联的从表也会被设置为null（或者同步删除）
+      // await AppDataSource.manager.createQueryBuilder()
+      // .delete()
+      // .from(Employee)
+      // .where("departmentId = :id", { id: 2 })
+      // .execute();
+
+      await AppDataSource.manager.createQueryBuilder()
+      .delete()
+      .from(Department)
+      .where("id = :id", { id: 1 })
+      .execute();
+
+  ```
+
+### 30.5、多对多映射
+
+- 一对一我们是通过 @OneToOne 和 @JoinColumn 来把 Entity 映射成数据库表
+- 一对多我们是通过 @OneToMany 和 @ManyToOne 来把 Entity 映射成数据库表，它并不需要 @JoinColumn 来指定外键列，因为外键一定在多的那一边。
+- 前面讲过，在数据库里，我们是通过中间表来保存这种多对多的关系的：把多对多拆成了两个一对多
