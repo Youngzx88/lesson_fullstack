@@ -1081,7 +1081,7 @@ bootstrap()
 
 - @nestjs/typeorm 的动态模块：forRoot 传入配置，动态产生 provider 和 exports，返回模块定义。
   - 比如传入数据库的配置文件(register)
-  - 用forRoot去配置具体连接哪个表
+  - 用 forRoot 去配置具体连接哪个表
 - forRootAsync，区别就是可以用 async 的 useFactory 动态产生 provider，比如异步请求别的服务拿到配置返回，作为 options。
 - forFeature 则是传入局部的一些配置，来动态产生局部用的模块：
 
@@ -1089,4 +1089,103 @@ bootstrap()
 
 - 用 ConfigurableModuleBuilder 生成一个 class，这个 class 里就带了 register、registerAsync 方法。
 - 返回的 ConfigurableModuleClass、MODULE_OPTIONS_TOKEN 分别是生成的 class 、options 对象的 token。然后 Module 继承它
-- 那现在如何在 Module 内注入这个 options 呢？ 就用build class 的时候返回的 token
+- 那现在如何在 Module 内注入这个 options 呢？ 就用 build class 的时候返回的 token
+
+## 14、nestJs 通过 typeorm 连接数据库
+
+- nest new nest-typeorm -p pnpm
+- nest g resource user
+- pnpm install --save @nestjs/typeorm typeorm mysql2
+
+1. 先在 app.module.ts 注册 typeorm
+2. 编写对应的实体类
+3. 在实体类中注入 manager 以操作数据库
+
+```ts
+@InjectEntityManager()
+private manager:EntityManager
+```
+
+4. 编写 service 方法实现效果
+
+```ts
+// app.module.ts
+import { Module } from '@nestjs/common'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
+import { UserModule } from './user/user.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { User } from './user/entities/user'
+
+@Module({
+  imports: [
+    UserModule,
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: '12345678',
+      database: 'typeorm-nest',
+      entities: [User],
+      synchronize: true,
+      poolSize: 10,
+      connectorPackage: 'mysql2',
+      logging: true,
+    }),
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+
+// users.service.ts
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+
+@Entity({
+  name: 'aaa_user',
+})
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number
+
+  @Column({
+    name: 'aaa_name',
+    length: 50,
+  })
+  name: string
+}
+
+// 然后是增删改查，我们在service中可以注入 EntityManager
+
+@Injectable()
+export class UserService {
+  @InjectEntityManager()
+  private manager: EntityManager
+
+  create(createUserDto: CreateUserDto) {
+    return this.manager.save(User, createUserDto)
+  }
+
+  findAll() {
+    return this.manager.find(User)
+  }
+
+  findOne(id: number) {
+    return this.manager.findOne(User, {
+      where: { id },
+    })
+  }
+
+  update(id: number, updateUserDto: UpdateUserDto) {
+    this.manager.save(User, {
+      id: id,
+      ...updateUserDto,
+    })
+  }
+
+  remove(id: number) {
+    this.manager.delete(User, id)
+  }
+}
+```
