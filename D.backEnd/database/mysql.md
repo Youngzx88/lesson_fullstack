@@ -1,13 +1,13 @@
 ## 1、数据库
 
-- 关系型SQL
+- 关系型 SQL
   - 通过表和表之间，行和列之间的关系进行存储
   - Mysql，Oracle，SqlServer，DB2，SQLlite
-- 非关系型Not only SQL
+- 非关系型 Not only SQL
   - 对象存储，通过对象的属性来决定
   - redis，MongDB
 - DBMS：数据库管理系统
-- mysql：5.7稳，8.0新
+- mysql：5.7 稳，8.0 新
 
 ## 2、连接数据库
 
@@ -28,7 +28,7 @@ show databases;
 create database xxx;
 - 看表
 show tables
-- 
+-
 ```
 
 ## 4、操作数据库
@@ -55,7 +55,7 @@ DATETIME：存储日期和时间 2023-05-27 10:13
 
 ```sql
 CREATE DATABASE IF NOT EXISTS mydatabase
-DROP DATABASE IF EXISTS mydatabase 
+DROP DATABASE IF EXISTS mydatabase
 ```
 
 - 操作数据库中的表
@@ -70,17 +70,17 @@ SHOW DATABASE `mydatabase`
 ## 5、数据库中数据类型
 
 - 数值
-  - tinyint 1字节
-  - smallint 2字节
-  - int 4字节(常用)
-  - mediumint 3字节
-  - bigint 8字节
-  - float 4字节
-  - double 8字节
+  - tinyint 1 字节
+  - smallint 2 字节
+  - int 4 字节(常用)
+  - mediumint 3 字节
+  - bigint 8 字节
+  - float 4 字节
+  - double 8 字节
   - decimal 字符串形式的浮点数(金融计算的时候)
 - 字符串
-  - char 字符串固定大小的0-255
-  - varchar 可变字符串0-65535(常用)
+  - char 字符串固定大小的 0-255
+  - varchar 可变字符串 0-65535(常用)
   - tinytext 微型文本 2^8-1
   - text 文本串 大型文本 2^16-1
 - 时间日期
@@ -91,7 +91,7 @@ SHOW DATABASE `mydatabase`
   - year：年份
 - null
   - 没有值，位置
-  - 注意不要使用NULL进行运算，结果为NUll
+  - 注意不要使用 NULL 进行运算，结果为 NUll
 
 ## 6、数据库的字段属性
 
@@ -99,9 +99,9 @@ SHOW DATABASE `mydatabase`
   - 无符号整数
   - 不能声明为负数
 - zerofill
-  - 0填充
-  - 不足的位数使用0来填充，int(3),5,005
-- auto increament自增：通常用来设计唯一主键，必须是整数类型
+  - 0 填充
+  - 不足的位数使用 0 来填充，int(3),5,005
+- auto increament 自增：通常用来设计唯一主键，必须是整数类型
 - null/not null：是否必填
 
 ## 7、创建数据库表
@@ -124,13 +124,13 @@ CREATE TABLE IF NOT EXISTS `student` (
 - 查看创建数据库的定义语句
 
 ```sql
-SHOW CREATE DATABASE school -- 查看创建学生表的定义语句 
+SHOW CREATE DATABASE school -- 查看创建学生表的定义语句
 ```
 
 - 查看创建数据表的定义语句
 
 ```sql
-SHOW CREATE TABLE student -- 查看创建学生表的定义语句 
+SHOW CREATE TABLE student -- 查看创建学生表的定义语句
 ```
 
 - 显示表的结构
@@ -139,26 +139,26 @@ SHOW CREATE TABLE student -- 查看创建学生表的定义语句
 DESC student -- 显示表的结构
 ```
 
-## 8、MyISAM和InnoDB的区别
+## 8、MyISAM 和 InnoDB 的区别
 
 - ENGINE=MYISAM //早些年使用的
 - ENGINE=INNODB //默认使用的
 
 - 事务支持
-  - MYISAM不支持
-  - INNODB支持
+  - MYISAM 不支持
+  - INNODB 支持
 - 数据行锁定
-  - MYISAM不支持
-  - INNODB支持
+  - MYISAM 不支持
+  - INNODB 支持
 - 外键约束
-  - MYISAM不支持
-  - INNODB支持
+  - MYISAM 不支持
+  - INNODB 支持
 - 全文索引
-  - MYISAM支持
-  - INNODB不支持
+  - MYISAM 支持
+  - INNODB 不支持
 - 表空间大小
-  - MYISAM较小
-  - INNODB约等于前者的2倍
+  - MYISAM 较小
+  - INNODB 约等于前者的 2 倍
 
 ## 9、修改和删除数据库表
 
@@ -187,13 +187,13 @@ ALERT TABLE teacher CHANGE age age1 INT(11) -- 修改约束
 ALERT TABLE teacher DROP ag1 -- 重命名
 ```
 
-- 删除尽量加上EXISTS判断
+- 删除尽量加上 EXISTS 判断
 
 ## 10、数据管理
 
 #### 10.1、外键
 
-- a表中x字段称为b表中y字段的约束
+- a 表中 x 字段称为 b 表中 y 字段的约束
 - 有外键的表删除不掉
 - 创建表的时候没有外键，如何增加
 
@@ -207,7 +207,7 @@ ADD CONSTRAINT `FK_gradeid` FOREIGN KEY (`作为外键的列`) REFERENCES `哪�
   - 数据库就是单纯的表，只用来存数据，只有行列
   - 想要使用多张表的数据，想使用外键(程序实现)
 
-#### 10.2、DML语言
+#### 10.2、DML 语言
 
 - insert
 - update
@@ -230,7 +230,7 @@ INSERT INTO `grade`(gradeId,gradeName) values('1','大二'),('xx','xx')
 DELETE FROM `student` where id = 1
 ```
 
-- TRUNCATE命令：完全清空一个表,表的结构和索引约束不会改变
+- TRUNCATE 命令：完全清空一个表,表的结构和索引约束不会改变
 
 ```sql
 TRUNCATE `student`
@@ -252,7 +252,7 @@ UPDATE `grade` set `gradename`='Youngzx' WHERE gradeid = 1
 UPDATE `grade` set `gradename`='Youngzx',`email`='1216238955@qq.com' WHERE gradeid = 1
 ```
 
-- BETWEEN 2 AND 5 ->在2到5之间
+- BETWEEN 2 AND 5 ->在 2 到 5 之间
 - AND &&
 - OR ||
 
@@ -270,7 +270,7 @@ SELECT DISTINCT subjectno from result;//去除重复的subjectno
 -- where 条件子句
 SELECT `studentNo`,`StudentResult` from result
 WHERE StudentResult >=20 AND StudentResult <=100
--- 模糊查询Like，%代表0到任意一个字符，_后面只有一个字 
+-- 模糊查询Like，%代表0到任意一个字符，_后面只有一个字
 SELECT `studentNo`,`studentname` from student
 WHERE studentname LIKE '%强'
 -- 模糊查询in(查询1001，1002，1003号学员),in是一个具体的值
@@ -290,8 +290,8 @@ WHERE s.studentNo = r.studentNo/ON s.studentNo = r.studentNo
 ## 11、自连接
 
 - 自己的表和自己的表连接
-- 核心：一张表拆为2张
-![alt](./selfContact.png)
+- 核心：一张表拆为 2 张
+  ![alt](./selfContact.png)
 
 ```sql
 SELECT a.categoryname as 父,b.categoryname as 子
@@ -318,42 +318,42 @@ LIMIT 0,5 -- 第一开始加载五条数据
 
 ## 13、子查询和嵌套查询
 
-- 在where语句中嵌套一个子查询语句
+- 在 where 语句中嵌套一个子查询语句
 
 ```sql
 where (select * from ...)
 ```
 
-## 14、mysql常用函数
+## 14、mysql 常用函数
 
 ## 15、聚合函数以及分组过滤
 
-- COUNT()：COUNT(*),COUNT(1)几乎相等
+- COUNT()：COUNT(\*),COUNT(1)几乎相等
 - SUM()
 - AVG()
 - MAX()
 - MIN()
 - 分组
 
-- where不能接聚合函数，groupby以后要用HAVING去过滤
+- where 不能接聚合函数，groupby 以后要用 HAVING 去过滤
 
 ```sql
 GROUP BY 表名.字段
 HAVING xxx > 80
 ```
 
-## 16、拓展MD5
+## 16、拓展 MD5
 
-- MD5加密
+- MD5 加密
 - 不可逆
 - MD5()
 
-## 17、事务ACID原则
+## 17、事务 ACID 原则
 
 - 事务
   - 要么都成功,要么都失败
-- 一组sql放在一个批次中去执行
-- ACID原则
+- 一组 sql 放在一个批次中去执行
+- ACID 原则
   - 原子性
   - 一致性
   - 隔离性
@@ -361,7 +361,7 @@ HAVING xxx > 80
 
 ## 18、测试事务实现转账
 
-- mysql是默认开始事务自动提交的
+- mysql 是默认开始事务自动提交的
 
 ```sql
 SET autocommit = 0; -- 关闭
@@ -373,7 +373,7 @@ INSERT xxx
 INSERT xxx
 COMMIT -- 提交，一旦提交就被持久化了
 ROLLBACK -- 回滚
-SAVEPOINT 保存点名 -- 设置一个事物的保存点 
+SAVEPOINT 保存点名 -- 设置一个事物的保存点
 BACK TO SAVEPOINT 保存点名 -- 回滚到保存点
 RELEASE SAVEPOINT <保存点名> -- 撤销指定的保存点
 ```
@@ -385,11 +385,13 @@ RELEASE SAVEPOINT <保存点名> -- 撤销指定的保存点
 - 唯一索引
   - 避免重复的列出现，唯一索引可以重复，多个列都可以标识为唯一索引
 - 常规索引
-  - 默认的，index，key关键字来设置
+  - 默认的，index，key 关键字来设置
 - 全文索引
+
   - 特定的数据库下才有，快速定位数据
 
 - 索引的使用
+
   - 在创建表的时候给字段增加索引
   - 创建完毕后，增加索引
 
@@ -405,7 +407,7 @@ SHOW INDEX FROM student
 ALTER TABLE `student` ADD FULLTEXT INDEX `studentName` (studentName)
 ```
 
-- EXPLAIN去分析查找语句
+- EXPLAIN 去分析查找语句
 - 时间长？添加索引
 
 ```sql
@@ -422,7 +424,7 @@ CREATE INDEX id_app_user_name ON app_user(`name`)
 
 ## 21、数据库用户管理
 
-- 本质还是对mysql.user这张表进行增删改查
+- 本质还是对 mysql.user 这张表进行增删改查
 
 ## 22、数据库备份
 
@@ -436,6 +438,7 @@ CREATE INDEX id_app_user_name ON app_user(`name`)
 ## 24、三大范式
 
 - 为什么需要数据规范化？
+
   - 信息重复
   - 更新异常
   - 插入异常
@@ -445,15 +448,15 @@ CREATE INDEX id_app_user_name ON app_user(`name`)
 - 第二范式：满足第一范式的前提下，每张表只描述一件事，每张表的每一列都要和逐渐相关，而不能只与主键某一部分相关
 - 第三范式：满足前两个的前提下，确保每一列的数据都和主键直接相关，而不是间接相关
 - 规范数据库，但是不一定要完完全全按照这个
-- 性能和规范不可兼得，考虑商业化的需求和目标，关联查询不要超过3个表
+- 性能和规范不可兼得，考虑商业化的需求和目标，关联查询不要超过 3 个表
 
-## 25、使用docker启动mysql服务
+## 25、使用 docker 启动 mysql 服务
 
-- 创建一个mysql Image
-- port：3306；挂载volums：本地的/User/youngzx/mysql挂载到container的/var/lib/mysql上；environment variables：MYSQL_ROOT_PASSWORD:youngzx
-- 或者通过docker run 加载密码：`docker run --name mysql_container -e MYSQL_ROOT_PASSWORD=your_password -d mysql`
+- 创建一个 mysql Image
+- port：3306；挂载 volums：本地的/User/youngzx/mysql 挂载到 container 的/var/lib/mysql 上；environment variables：MYSQL_ROOT_PASSWORD:youngzx
+- 或者通过 docker run 加载密码：`docker run --name mysql_container -e MYSQL_ROOT_PASSWORD=your_password -d mysql`
 
-## 26、常用mysql命令
+## 26、常用 mysql 命令
 
 ```md
 where：查询条件，比如 where id=1
@@ -478,7 +481,7 @@ sql 还可以用很多内置函数：
 其他函数：nullif、coalesce、greatest、least
 ```
 
-## 27、join的区别
+## 27、join 的区别
 
 - JOIN ON 默认是 INNER JOIN ON：INNER JOIN 是只返回两个表中能关联上的数据。
 - LEFT JOIN 是额外返回左表中没有关联上的数据。
@@ -495,3 +498,282 @@ sql 还可以用很多内置函数：
 - NO ACTION： 同 RESTRICT，只是 sql 标准里分了 4 种，但 mysql 里 NO ACTION 等同于 RESTRICT。
 
 - 但是实际场景应该尽量避免使用外键
+
+## 29、一对多，多对多
+
+- 一对多主要是通过外键来建立关联关系
+- 多对多通常是通过中间表来进行映射
+  - 例如`article`表的 id，是`article_tag`表中 article_id 的外键
+  - 同时`tag`表的 id，也是`article_tag`表中 tag_id 的外键
+  - 这样 article 表和 tag 表通过 article_tag 表建立关联关系
+  - 记得中间表的链接方式一定要用 CASCADE，不然删除主表记录时，中间表记录不会跟着删除
+
+## 30、node 如何连接数据库？
+
+### 30.1、mysql2
+
+- mysql2
+
+```js
+const mysql = require('mysql2')
+
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '12345678',
+  database: 'nest-demo',
+})
+
+connection.query(
+  'SELECT * FROM employee WHERE name LIKE ?',
+  ['李%'],
+  function (err, results, fields) {
+    console.log(results)
+    console.log(fields.map((item) => item.name))
+  }
+)
+// promise 版本
+const mysql = require('mysql2/promise')
+
+;(async function () {
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'guang',
+    database: 'nest-demo',
+  })
+
+  const [results, fields] = await connection.query('SELECT * FROM customers')
+
+  console.log(results)
+  console.log(fields.map((item) => item.name))
+})()
+```
+
+- 连接池
+  - 因为数据库的连接建立还是很耗时的，而且一个连接也不够用。
+
+```js
+const mysql = require('mysql2/promise')
+
+;(async function () {
+  const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'guang',
+    database: 'practice',
+    waitForConnections: true,
+    connectionLimit: 10,
+    maxIdle: 10,
+    idleTimeout: 60000,
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0,
+  })
+
+  const [results] = await pool.query('select * from customers')
+  console.log(results)
+})()
+```
+
+### 30.2、typeORM
+
+- npx typeorm@latest init --name typeorm-mysql-test --database mysql
+- npm run start
+- 常用的命令，具体的 EntityManager 和 Repository 的方法有这些：
+
+  - save：新增或者修改 Entity，如果传入了 id 会先 select 再决定修改还新增
+  - update：直接修改 Entity，不会先 select
+  - insert：直接插入 Entity
+  - delete：删除 Entity，通过 id
+  - remove：删除 Entity，通过对象
+  - find：查找多条记录，可以指定 where、order by 等条件
+  - findBy：查找多条记录，第二个参数直接指定 where 条件，更简便一点
+  - findAndCount：查找多条记录，并返回总数量
+  - findByAndCount：根据条件查找多条记录，并返回总数量
+  - findOne：查找单条记录，可以指定 where、order by 等条件
+  - findOneBy：查找单条记录，第二个参数直接指定 where 条件，更简便一点
+  - findOneOrFail：查找失败会抛 EntityNotFoundError 的异常
+  - query：直接执行 sql 语句
+  - createQueryBuilder：创建复杂 sql 语句，比如 join 多个 Entity 的查询
+  - transaction：包裹一层事务的 sql
+  - getRepository：拿到对单个 Entity 操作的类，方法同 EntityManager
+
+  ```ts
+  AppDataSource.initialize().then(async () => {
+    const user = new User()
+    user.id = 1
+    user.firstName = 'aaa111'
+    user.lastName = 'bbb'
+    user.age = 25
+    await AppDataSource.manager.save(user)
+
+    await AppDataSource.manager.save(User, [
+      { firstName: 'ccc', lastName: 'ccc', age: 21 },
+      { firstName: 'ddd', lastName: 'ddd', age: 22 },
+      { firstName: 'eee', lastName: 'eee', age: 23 },
+    ])
+    await AppDataSource.manager.save(User, [
+      { id: 2, firstName: 'ccc111', lastName: 'ccc', age: 21 },
+      { id: 3, firstName: 'ddd222', lastName: 'ddd', age: 22 },
+      { id: 4, firstName: 'eee333', lastName: 'eee', age: 23 },
+    ])
+
+    await AppDataSource.manager.delete(User, 1)
+    await AppDataSource.manager.delete(User, [2, 3])
+
+    const users = await AppDataSource.manager.find(User)
+    console.log(users)
+
+    const users = await AppDataSource.manager.findBy(User, {
+      age: 23,
+    })
+    console.log(users)
+
+    const [users, count] = await AppDataSource.manager.findAndCount(User)
+    console.log(users, count)
+
+    const [users, count] = await AppDataSource.manager.findAndCountBy(User, {
+      age: 23,
+    })
+    console.log(users, count)
+
+    const user = await await AppDataSource.manager.findOne(User, {
+      select: {
+        firstName: true,
+        age: true,
+      },
+      where: {
+        id: 4,
+      },
+      order: {
+        age: 'ASC',
+      },
+    })
+    console.log(user)
+
+    const users = await await AppDataSource.manager.find(User, {
+      select: {
+        firstName: true,
+        age: true,
+      },
+      where: {
+        id: In([4, 8]),
+      },
+      order: {
+        age: 'ASC',
+      },
+    })
+    console.log(users)
+
+    const user = await AppDataSource.manager.findOneBy(User, {
+      age: 23,
+    })
+    console.log(user)
+
+    try {
+      const user = await AppDataSource.manager.findOneOrFail(User, {
+        where: {
+          id: 666,
+        },
+      })
+      console.log(user)
+    } catch (e) {
+      console.log(e)
+      console.log('没找到该用户')
+    }
+
+    const users = await AppDataSource.manager.query(
+      'select * from user where age in(?, ?)',
+      [21, 22]
+    )
+    console.log(users)
+
+    const queryBuilder = await AppDataSource.manager.createQueryBuilder()
+    const user = await queryBuilder
+      .select('user')
+      .from(User, 'user')
+      .where('user.age = :age', { age: 21 })
+      .getOne()
+
+    console.log(user)
+
+    const queryBuilder = await AppDataSource.manager.createQueryBuilder()
+    const query = queryBuilder
+      .select('user.name', 'name')
+      .addSelect('COUNT(post.id)', 'count')
+      .from(User, 'user')
+      .leftJoin(Post, 'post', 'post.userId = user.id')
+      .where('user.id = :id')
+      .andWhere('post.isActive = :isActive')
+      .setParameters({ id: 1, isActive: true })
+      .groupBy('user.name')
+      .having('COUNT(post.id) > :postCount', { postCount: 2 })
+
+    const results = await query.getRawMany()
+
+    await AppDataSource.manager.transaction(async (manager) => {
+      await manager.save(User, {
+        id: 4,
+        firstName: 'eee',
+        lastName: 'eee',
+        age: 20,
+      })
+    })
+  })
+  ```
+
+### 30.3、typeorm 1 对 1 映射关系/CRUD
+
+- `npx init typeorm@latest --name xxx --database mysql`
+- `pnpm i mysql2`
+- 配置 dataSource
+
+  ```ts
+    connectorPackage: 'mysql2',
+    extra: {
+        authPlugin: 'sha256_password',
+    }
+  ```
+
+- 创建表:通过 typeorm entity:create 命令创建`npx typeorm entity:create src/entity/IdCard`
+
+- 设置连接，默认外键为主键，查看效果
+
+  ```ts
+  @JoinColumn()
+  @OneToOne(() => User)
+  user: User
+  // 或者指定外键列
+  // @JoinColumn({name: "userId"})
+  // CASCADE
+  //
+  @OneToOne(() => User,{
+    //这个 cascade 不是数据库的那个级联，而是告诉 typeorm 当你增删改一个 Entity 的时候，是否级联增删改它关联的 Entity。
+    cascade: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+  })
+  // 查找出相关的数据
+    const ics = await AppDataSource.manager.find(IdCard,{
+    relations:{
+      user: true
+    }
+    });
+    console.log(ics);
+  //[
+  // IdCard {
+  //  id: 1,
+  //  cardName: '1',
+  //  user: User { id: 1, firstName: 'Young', lastName: 'zx', age: 20 }
+  //  }
+  //]
+  // 或者用query builder 的方式来查询
+  const ics = await AppDataSource.manager.getRepository(IdCard)
+    .createQueryBuilder("ic")
+    .leftJoinAndSelect("ic.user", "u")
+    .getMany();
+
+  console.log(ics);
+  ```
