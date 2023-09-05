@@ -789,87 +789,92 @@ const mysql = require('mysql2/promise')
   @Entity()
   export class Department {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
     @Column({
-      length: 50
+      length: 50,
     })
-    name: string;
+    name: string
 
     // 因为一对多关系中，一个实体可以关联到多个其他实体，而一个实体只能关联到一个其他实体。
     // 假设有两个实体：Department（部门）和Employee（员工）。一个部门可以有多个员工，而一个员工只属于一个部门。
     // 由于一个员工只属于一个部门，所以将外键保存在Employee实体中更合适。在Employee实体中，使用@ManyToOne装饰器指定了与Department实体的多对一关系，并使用department属性来表示关联。这样，Employee实体会自动创建一个外键列（例如"department_id"），用于关联到Department实体的id主键。
-    @OneToMany(()=>Employee,(employee)=>{employee.department})
-    employee: Employee[];
+    @OneToMany(
+      () => Employee,
+      (employee) => {
+        employee.department
+      }
+    )
+    employee: Employee[]
   }
 
   @Entity()
   export class Employee {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
     @Column({
-        length: 50
+      length: 50,
     })
-    name: string;
+    name: string
 
-    @ManyToOne(()=> Department,{
+    @ManyToOne(() => Department, {
       onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'
+      onUpdate: 'CASCADE',
     })
     department: Department
   }
 
-      // 1. 1对多
-      // const d1 = new Department();
-      // d1.name = '技术部';
+  // 1. 1对多
+  // const d1 = new Department();
+  // d1.name = '技术部';
 
-      // const e1 = new Employee();
-      // e1.name = '张三';
-      // e1.department = d1;
+  // const e1 = new Employee();
+  // e1.name = '张三';
+  // e1.department = d1;
 
-      // const d2 = new Department();
-      // d2.name = '设备部';
+  // const d2 = new Department();
+  // d2.name = '设备部';
 
-      // await AppDataSource.manager.save(Department,d2)
+  // await AppDataSource.manager.save(Department,d2)
 
-      // const e2 = new Employee();
-      // e2.name = '李四';
-      // e2.department = d1;
+  // const e2 = new Employee();
+  // e2.name = '李四';
+  // e2.department = d1;
 
-      // const e3 = new Employee();
-      // e3.name = '王五';
-      // e3.department = d1;
+  // const e3 = new Employee();
+  // e3.name = '王五';
+  // e3.department = d1;
 
-      // const e4 = new Employee();
-      // e4.name = '赵五';
-      // e4.department = d2;
+  // const e4 = new Employee();
+  // e4.name = '赵五';
+  // e4.department = d2;
 
-      // await AppDataSource.manager.save(Department, d2);
-      // await AppDataSource.manager.save(Employee,e4);
+  // await AppDataSource.manager.save(Department, d2);
+  // await AppDataSource.manager.save(Employee,e4);
 
-      // 2. 级联查询
-      // const deps = await AppDataSource.manager.createQueryBuilder()
-      // .select("emp")
-      // .from(Employee,"emp")
-      // .leftJoinAndSelect("emp.department","epmDid")
-      // .where("emp.departmentId = :id",{id:2})
-      // .getMany()
-      // console.log(deps)
+  // 2. 级联查询
+  // const deps = await AppDataSource.manager.createQueryBuilder()
+  // .select("emp")
+  // .from(Employee,"emp")
+  // .leftJoinAndSelect("emp.department","epmDid")
+  // .where("emp.departmentId = :id",{id:2})
+  // .getMany()
+  // console.log(deps)
 
-      // 3. 删除某一个主表行，关联的从表也会被设置为null（或者同步删除）
-      // await AppDataSource.manager.createQueryBuilder()
-      // .delete()
-      // .from(Employee)
-      // .where("departmentId = :id", { id: 2 })
-      // .execute();
+  // 3. 删除某一个主表行，关联的从表也会被设置为null（或者同步删除）
+  // await AppDataSource.manager.createQueryBuilder()
+  // .delete()
+  // .from(Employee)
+  // .where("departmentId = :id", { id: 2 })
+  // .execute();
 
-      await AppDataSource.manager.createQueryBuilder()
-      .delete()
-      .from(Department)
-      .where("id = :id", { id: 1 })
-      .execute();
-
+  await AppDataSource.manager
+    .createQueryBuilder()
+    .delete()
+    .from(Department)
+    .where('id = :id', { id: 1 })
+    .execute()
   ```
 
 ### 30.5、多对多映射
@@ -877,3 +882,28 @@ const mysql = require('mysql2/promise')
 - 一对一我们是通过 @OneToOne 和 @JoinColumn 来把 Entity 映射成数据库表
 - 一对多我们是通过 @OneToMany 和 @ManyToOne 来把 Entity 映射成数据库表，它并不需要 @JoinColumn 来指定外键列，因为外键一定在多的那一边。
 - 前面讲过，在数据库里，我们是通过中间表来保存这种多对多的关系的：把多对多拆成了两个一对多
+
+  ```ts
+  // 1. 创建多对多映射，只需要一边写就好了
+  @JoinTable()//自动创建中间表
+  @ManyToMany(()=>Tag)//与哪个表映射多对多关系
+  tags: Tag[]
+  // 2. 修改
+  const article = await entityManager.createQueryBuilder(Article, "article")
+  .leftJoinAndSelect("article.tags", "tag")
+  .where("article.id = :id", { id: 2 })
+  .getOne();
+  if (article) {
+    article.title = "ccccc";
+    article.tags = article.tags.filter(item => item.name.includes('ttt111'));
+    await entityManager.save(article);
+  }
+  // await entityManager.delete(Article, 1);
+  // await entityManager.delete(Tag, 1);
+
+  // 3. 如果 tag 里也想有文章的引用呢？
+  // 那就加一个 @ManyToMany 的映射属性。只不过它还需要第二个参数指定外键列在哪里。而且不止这里要加，article 里也要加
+  // 因为如果当前 Entity 对应的表是包含外键的，那它自然就知道怎么找到关联的 Entity。但如果当前 Entity 是不包含外键的那一方，怎么找到对方呢？这时候就需要手动指定通过哪个外键列来找当前 Entity 了。之前 OneToOne、OnToMany 都是这样：比如一对一的 user 那方，不维护外键，所以需要第二个参数来指定通过哪个外键找到 user。而多对多的时候，双方都不维护外键，所以都需要第二个参数来指定外键列在哪里，怎么找到当前 Entity。
+
+  // 4. 多对多关系的修改只要查出来之后修改下属性，然后 save，TypeORM 会自动去更新中间表。
+  ```

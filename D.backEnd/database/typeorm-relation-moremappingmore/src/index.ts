@@ -1,20 +1,46 @@
-import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
+import { AppDataSource } from './data-source'
+import { Article } from './entity/Article'
+import { Tag } from './entity/Tag'
 
-AppDataSource.initialize().then(async () => {
+AppDataSource.initialize()
+  .then(async () => {
+    // const a1 = new Article()
+    // a1.title = 'aaaa'
+    // a1.content = 'aaaaaaaaaa'
 
-    console.log("Inserting a new user into the database...")
-    const user = new User()
-    user.firstName = "Timber"
-    user.lastName = "Saw"
-    user.age = 25
-    await AppDataSource.manager.save(user)
-    console.log("Saved a new user with id: " + user.id)
+    // const a2 = new Article()
+    // a2.title = 'bbbbbb'
+    // a2.content = 'bbbbbbbbbb'
 
-    console.log("Loading users from the database...")
-    const users = await AppDataSource.manager.find(User)
-    console.log("Loaded users: ", users)
+    // const t1 = new Tag()
+    // t1.name = 'ttt1111'
 
-    console.log("Here you can setup and run express / fastify / any other framework.")
+    // const t2 = new Tag()
+    // t2.name = 'ttt2222'
 
-}).catch(error => console.log(error))
+    // const t3 = new Tag()
+    // t3.name = 'ttt33333'
+
+    // a1.tags = [t1, t2]
+    // a2.tags = [t1, t2, t3]
+
+    // const entityManager = AppDataSource.manager
+
+    // await entityManager.save(t1)
+    // await entityManager.save(t2)
+    // await entityManager.save(t3)
+
+    // await entityManager.save(a1)
+    // await entityManager.save(a2)
+
+    // 2. 多对多的CRUD
+    // const article = await entityManager
+    // .createQueryBuilder(Article, "a")
+    // .leftJoinAndSelect("a.tags", "t")
+    // .getMany()
+
+    // console.log(article);
+    // console.log(article.map(item=> item.tags))
+    
+  })
+  .catch((error) => console.log(error))
