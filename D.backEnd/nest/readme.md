@@ -1189,3 +1189,52 @@ export class UserService {
   }
 }
 ```
+
+## 15、nest + redis
+
+- 通过 useFactory 动态创建 provider，token 为 REDIS_CLIENT
+
+```ts
+import { Module } from '@nestjs/common'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
+import { createClient } from 'redis'
+
+@Module({
+  imports: [],
+  controllers: [AppController],
+  providers: [
+    AppService,
+    {
+      provide: 'REDIS_CLIENT',
+      async useFactory() {
+        const client = createClient({
+          socket: {
+            host: 'localhost',
+            port: 6379,
+          },
+        })
+        await client.connect()
+        return client
+      },
+    },
+  ],
+})
+export class AppModule {}
+```
+
+- 然后注入到 service 里用就好了（token 注入）
+
+```ts
+@Injectable()
+export class AppService {
+  @Inject('REDIS_CLIENT')
+  private redisClient: RedisClientType
+
+  async getHello() {
+    const value = await this.redisClient.keys('*')
+    console.log('value', value)
+    return 'Hello World!'
+  }
+}
+```
