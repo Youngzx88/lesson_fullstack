@@ -1238,3 +1238,56 @@ export class AppService {
   }
 }
 ```
+
+## 16、nest实现Cookie-Session/JWT
+
+### 16.1、Cookie-Session
+
+- nest new xxx -p pnpm
+- pnpm install express-session @types/express-session
+- main.ts启用express-session
+
+  ```ts
+  // 使用 express-session 中间件，指定加密的密钥 secret。
+
+  // resave 为 true 是每次访问都会更新 session，不管有没有修改 session 的内容，而 false 是只有 session 内容变了才会去更新 session。
+
+  // saveUninitalized 设置为 true 是不管是否设置 session，都会初始化一个空的 session 对象。比如你没有登录的时候，也会初始化一个 session 对象，这个设置为 false 就好。
+
+  import { NestFactory } from '@nestjs/core';
+  import { AppModule } from './app.module';
+  import * as session from 'express-session'
+
+  async function bootstrap() {
+    const app = await NestFactory.create(AppModule);
+
+    app.use(session({
+      secret: 'youngzx',
+      resave: false,
+      saveUninitialized: false
+    }))
+    await app.listen(3000);
+  }
+  bootstrap();
+
+  ```
+
+- 然后在 controller 里就可以注入 session 对象：
+
+  ```ts
+  @Get('sss')
+  sss(@Session() session) {
+      console.log(session)
+      session.count = session.count ? session.count + 1 : 1;
+      return session.count;
+  }
+  ```
+
+- 每次请求会带一个cookie，name为connect.sid是express自动设置的name
+
+  ```ts
+  Session {
+    cookie: { path: '/', _expires: null, originalMaxAge: null, httpOnly: true },
+    count: 3
+  }
+  ```
