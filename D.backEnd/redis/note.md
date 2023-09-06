@@ -86,3 +86,47 @@ lpush list1 333
 - 这是 redis 的第一种用途，作为数据库的缓存，也是主要的用途。
 
 - 第二种用途就是直接作为存储数据的地方了，因为 redis 本身是会做持久化的，也可以把数据直接保存在 redis 里，不存到 mysql。
+
+# node操作redis
+
+- 使用redis的node客户端包
+- pnpm i redis
+
+```js
+//因为用到了 es module、顶层 await，这些的启用需要在 package.json 里添加 type: module
+import { createClient } from 'redis';
+
+const client = createClient({
+    socket: {
+        host: 'localhost',
+        port: 6379
+    }
+});
+
+client.on('error', err => console.log('Redis Client Error', err));
+
+await client.connect();
+
+const value = await client.keys('*');
+
+console.log(value);
+
+await client.hSet('guangguang1', '111', 'value111');
+await client.hSet('guangguang1', '222', 'value222');
+await client.hSet('guangguang1', '333', 'value333');
+
+await client.disconnect();
+
+```
+
+- 第二种方案使用ioredis，pnpm install ioredis
+
+```js
+import Redis from "ioredis";
+
+const redis = new Redis();
+
+const res = await redis.keys('*');
+
+console.log(res);
+```
