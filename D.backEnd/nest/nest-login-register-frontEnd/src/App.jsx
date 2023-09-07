@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { UserOutlined, VerifiedOutlined } from '@ant-design/icons'
 import { Button, Input } from 'antd'
 import './App.css'
+import axios from 'axios'
 function App() {
 
   const [userName,setUserName] = useState('')
@@ -9,12 +10,34 @@ function App() {
   const [registerUserName,setRegisterUserName] = useState('')
   const [registerPwd,setRegisterPwd] = useState('')
 
-  const login = () => {
-    console.log("登录",userName,pwd)
+  const login = async () => {
+    const loginRes = await axios.post('http://127.0.0.1:3000/user/login',{
+      username:userName,
+      password: pwd
+    })
+    if(loginRes.data === 'loginSuss'){
+      localStorage.setItem('token',loginRes.headers['token'])
+    }else{
+      return
+    }
   }
 
-  const register = () => {
-    console.log("注册",registerUserName,registerPwd)
+  const getByJwt = async () => {
+    const infoBack = await axios.get('http://127.0.0.1:3000/user/jwtVertify',{
+      headers: {
+        'authorization': `bearer ${localStorage.getItem('token')}`
+      }
+    })
+    console.log("infoBack",infoBack)
+
+  }
+
+  const register = async () => {
+    const registerRes = await axios.post('http://127.0.0.1:3000/user/register',{
+      username:registerUserName,
+      password: registerPwd
+    })
+    console.log("🚀 ~ file: App.jsx:26 ~ register ~ registerRes:", registerRes)
   }
   
   return (
@@ -59,6 +82,9 @@ function App() {
       <br />
       <br />
       <Button type="primary" onClick={register}>注册</Button>
+      <br />
+      <br />
+      <Button type="primary" onClick={getByJwt}>测试请求携带JWT</Button>
     </div>
   )
 }

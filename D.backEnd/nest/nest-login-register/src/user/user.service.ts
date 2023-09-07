@@ -22,13 +22,11 @@ export class UserService {
       .createQueryBuilder('user')
       .select('username,password')
       .where('username = :username', { username: registerDto.username })
-      .andWhere('password = :password', { password: registerDto.password })
       .getRawMany();
     if (userExistInfo.length !== 0) {
       throw new HttpException('用户已存在', 200);
       // 已经注册
     } else {
-      // 未注册，直接新加并返回jwt在header中❌
       try {
         await this.userRepository
           .createQueryBuilder()
@@ -57,7 +55,6 @@ export class UserService {
       .andWhere('password = :password', { password: loginDto.password })
       .getRawMany();
     if (userExistInfo.length !== 0) {
-      // 返回带上jwt ❌
       return '登录成功'
     } else {
       // 提示还未注册

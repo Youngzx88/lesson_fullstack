@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, Res, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, Res, HttpException, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
+import { JwtCheckGuard } from 'src/jwt-check/jwt-check.guard';
 
 @Controller('user')
 export class UserController {
@@ -12,7 +13,7 @@ export class UserController {
   @Inject(JwtService)
   private jwtService: JwtService
 
-  @Get("login")
+  @Post("login")
   async login(@Body() user:LoginDto,@Res({passthrough: true}) res: Response) {
     const info = await this.userService.login(user)
     if(info === '登录成功'){
@@ -46,4 +47,10 @@ export class UserController {
     }
   }
 
+  // 加一个权限接口判断，自定义路由守卫去校验jwt是否正确
+  @Get('jwtVertify')
+  @UseGuards(JwtCheckGuard)
+  getInfoByAuth(){
+    console.log("校验jwt")
+  }
 }
