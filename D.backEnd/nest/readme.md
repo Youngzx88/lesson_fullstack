@@ -1239,13 +1239,13 @@ export class AppService {
 }
 ```
 
-## 16、nest实现Cookie-Session/JWT
+## 16、nest 实现 Cookie-Session/JWT
 
 ### 16.1、Cookie-Session
 
 - nest new xxx -p pnpm
 - pnpm install express-session @types/express-session
-- main.ts启用express-session
+- main.ts 启用 express-session
 
   ```ts
   // 使用 express-session 中间件，指定加密的密钥 secret。
@@ -1254,22 +1254,23 @@ export class AppService {
 
   // saveUninitalized 设置为 true 是不管是否设置 session，都会初始化一个空的 session 对象。比如你没有登录的时候，也会初始化一个 session 对象，这个设置为 false 就好。
 
-  import { NestFactory } from '@nestjs/core';
-  import { AppModule } from './app.module';
+  import { NestFactory } from '@nestjs/core'
+  import { AppModule } from './app.module'
   import * as session from 'express-session'
 
   async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule)
 
-    app.use(session({
-      secret: 'youngzx',
-      resave: false,
-      saveUninitialized: false
-    }))
-    await app.listen(3000);
+    app.use(
+      session({
+        secret: 'youngzx',
+        resave: false,
+        saveUninitialized: false,
+      })
+    )
+    await app.listen(3000)
   }
-  bootstrap();
-
+  bootstrap()
   ```
 
 - 然后在 controller 里就可以注入 session 对象：
@@ -1283,11 +1284,88 @@ export class AppService {
   }
   ```
 
-- 每次请求会带一个cookie，name为connect.sid是express自动设置的name
+- 每次请求会带一个 cookie，name 为 connect.sid 是 express 自动设置的 name
 
   ```ts
   Session {
     cookie: { path: '/', _expires: null, originalMaxAge: null, httpOnly: true },
     count: 3
   }
+  ```
+
+### 16.2、JWT
+
+- pnpm install @nestjs/jwt
+- appmodule 注入
+
+  - 指定 secret，也就是加密 jwt 的密钥，还有 token 过期时间 expiresIn，设置 7 天。
+
+  ```ts
+  @Module({
+    imports: [
+      JwtModule.registerAsync({
+        async useFactory(){
+          await 111;
+          return {
+            secret: 'youngzx',
+            signOptions: {
+              expiresIn: '7d'
+            }
+          }
+        }
+      })
+    ],
+    controllers: [AppController],
+    providers: [AppService],
+  })
+  ```
+
+- 然后添加一个 handler
+
+  ```ts
+    // 响应的header返回了token
+    // 这里使用 jwtService.sign 来生成一个 jwt token，放到 response header 里。
+    // 因为注入 response 对象之后，默认不会把返回值作为 body 了，需要设置 passthrough 为 true 才可以。
+    // 后面的请求需要带上这个 token，在服务端取出来，然后 +1 之后再放回去
+    @Get('ttt')
+    ttt(
+      @Headers('authorization') authorization: string,
+      @Res({ passthrough: true }) response: Response,
+    ) {
+      if (authorization) {
+        try {
+          const token = authorization.split(' ')[1];
+          const data = this.jwtService.verify(token);
+          const newToken = this.jwtService.sign({
+            count: data.count + 1,
+          });
+          response.setHeader('token', newToken);
+          return data.count + 1;
+        } catch (e) {
+          console.log(e);
+          throw new UnauthorizedException();
+        }
+      } else {
+        const newToken = this.jwtService.sign({
+          count: 1,
+        });
+
+        response.setHeader('token', newToken);
+        return 1;
+      }
+    }
+  ```
+
+- 是如何区分服务端生成的token和用户传来的token是一致的？
+  - 服务端在输入jwt的时候携带了一个secret，每次生成jwt的时候是将header和payload加密，然后和secret拼接，再进行加密，这样就保证了每次加密后的结果都是一样的。
+  - 所以verify的时候只需要用secret再拼一次，一致即可
+
+  ```ts
+  const newToken = this.jwtService.sign({
+    count: 1,
+  })
+  const data = this.jwtService.verify(token)
+  const newToken = this.jwtService.sign({
+    count: data.count + 1,
+  })
   ```
