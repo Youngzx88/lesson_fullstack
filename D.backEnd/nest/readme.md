@@ -1356,9 +1356,10 @@ export class AppService {
     }
   ```
 
-- 是如何区分服务端生成的token和用户传来的token是一致的？
-  - 服务端在输入jwt的时候携带了一个secret，每次生成jwt的时候是将header和payload加密，然后和secret拼接，再进行加密，这样就保证了每次加密后的结果都是一样的。
-  - 所以verify的时候只需要用secret再拼一次，一致即可
+- 是如何区分服务端生成的 token 和用户传来的 token 是一致的？
+
+  - 服务端在输入 jwt 的时候携带了一个 secret，每次生成 jwt 的时候是将 header 和 payload 加密，然后和 secret 拼接，再进行加密，这样就保证了每次加密后的结果都是一样的。
+  - 所以 verify 的时候只需要用 secret 再拼一次，一致即可
 
   ```ts
   const newToken = this.jwtService.sign({
@@ -1369,3 +1370,26 @@ export class AppService {
     count: data.count + 1,
   })
   ```
+
+## 17、综合案例登录注册:typeorm/jwt
+
+- 初始化一个 nest 项目
+- 安装 typeorm，@nestjs/typeorm,mysql2，@nestjs/jwt
+- 注入 typeorm，注入 jwt
+- 创建 user 表，创建 user 实体,跑起来建表
+- 然后我们在 UserModule 引入 TypeOrm.forFeature 动态模块，传入 User 的 entity。
+
+  ```js
+  imports: [
+    TypeOrmModule.forFeature([User])
+  ],
+  ```
+
+- user.service注入User
+
+  ```ts
+  @Inject(User)
+  private userRepository: Repository<User>;
+  ```
+
+- 新增注册登录的controller
