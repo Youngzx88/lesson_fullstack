@@ -1385,11 +1385,30 @@ export class AppService {
   ],
   ```
 
-- user.service注入User
+- user.service 注入 User
 
   ```ts
   @Inject(User)
   private userRepository: Repository<User>;
   ```
 
-- 新增注册登录的controller
+- 新增注册登录的 controller
+- 实现登录注册的逻辑，注意 jwt 的返回是在 controller 中实现的
+- 实现一个路由守卫用来校验 jwt
+- 注意事项:设置跨域/设置暴露jwt的相应头
+
+  ```ts
+  // 设置跨域选项
+  const corsOptions: CorsOptions = {
+    origin: true, // 允许所有来源
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // 允许的请求方法
+    allowedHeaders: 'Content-Type,Authorization', // 允许的请求头
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+  }
+  app.enableCors(corsOptions)
+  app.enableCors({
+    exposedHeaders: 'token', // 在这里列出要暴露的自定义头部信息
+  })
+
+  ```
