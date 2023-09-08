@@ -1395,6 +1395,8 @@ export class AppService {
 - 新增注册登录的 controller
 - 实现登录注册的逻辑，注意 jwt 的返回是在 controller 中实现的
 - 实现一个路由守卫用来校验 jwt
+- 使用 ValidationPipe + class-validator 进行表单参数的校验`pnpm i class-validator class-transformer`
+  - 给user/login 和 user/register添加ValidationPipe
 - 注意事项:设置跨域/设置暴露jwt的相应头
 
   ```ts

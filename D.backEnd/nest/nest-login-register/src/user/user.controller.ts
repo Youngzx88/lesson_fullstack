@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, Res, HttpException, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, Res, HttpException, UseGuards, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -14,7 +14,7 @@ export class UserController {
   private jwtService: JwtService
 
   @Post("login")
-  async login(@Body() user:LoginDto,@Res({passthrough: true}) res: Response) {
+  async login(@Body(ValidationPipe) user:LoginDto,@Res({passthrough: true}) res: Response) {
     const info = await this.userService.login(user)
     if(info === '登录成功'){
       const token = await this.jwtService.signAsync({
@@ -31,7 +31,7 @@ export class UserController {
   }
 
   @Post("register")
-  async register(@Body() user:RegisterDto,@Res({passthrough: true}) res: Response) {
+  async register(@Body(ValidationPipe) user:RegisterDto,@Res({passthrough: true}) res: Response) {
     const info = await this.userService.register(user)
     if(info === '注册成功'){
       const token = await this.jwtService.signAsync({
