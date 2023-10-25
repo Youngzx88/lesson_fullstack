@@ -1008,7 +1008,7 @@ bootstrap()
 - 拿到 Class 上的 metaData：`context.getClass()`
 - 拿到方法上的 metaData：`context.getHandler()`
 
-## 12、解决 Module 和 Provider 的循环依赖
+# 12、解决 Module 和 Provider 的循环依赖
 
 - aaaModule
 - bbbModule
@@ -1028,7 +1028,7 @@ bootstrap()
   // nest 会单独创建两个 Module，之后再把 Module 的引用转发过去，也就是 forwardRef 的含义。
   ```
 
-## 13、动态模块
+# 13、动态模块
 
 ## 13.1、动态模块基础
 
@@ -1091,7 +1091,7 @@ bootstrap()
 - 返回的 ConfigurableModuleClass、MODULE_OPTIONS_TOKEN 分别是生成的 class 、options 对象的 token。然后 Module 继承它
 - 那现在如何在 Module 内注入这个 options 呢？ 就用 build class 的时候返回的 token
 
-## 14、nestJs 通过 typeorm 连接数据库
+# 14、nestJs 通过 typeorm 连接数据库
 
 - nest new nest-typeorm -p pnpm
 - nest g resource user
@@ -1190,7 +1190,7 @@ export class UserService {
 }
 ```
 
-## 15、nest + redis
+# 15、nest + redis
 
 - 通过 useFactory 动态创建 provider，token 为 REDIS_CLIENT
 
@@ -1239,9 +1239,9 @@ export class AppService {
 }
 ```
 
-## 16、nest 实现 Cookie-Session/JWT
+# 16、nest 实现 Cookie-Session/JWT
 
-### 16.1、Cookie-Session
+## 16.1、Cookie-Session
 
 - nest new xxx -p pnpm
 - pnpm install express-session @types/express-session
@@ -1293,7 +1293,7 @@ export class AppService {
   }
   ```
 
-### 16.2、JWT
+## 16.2、JWT
 
 - pnpm install @nestjs/jwt
 - appmodule 注入
@@ -1371,7 +1371,7 @@ export class AppService {
   })
   ```
 
-## 17、综合案例登录注册:typeorm/jwt
+# 17、综合案例登录注册:typeorm/jwt
 
 - 初始化一个 nest 项目
 - 安装 typeorm，@nestjs/typeorm,mysql2，@nestjs/jwt
@@ -1396,8 +1396,8 @@ export class AppService {
 - 实现登录注册的逻辑，注意 jwt 的返回是在 controller 中实现的
 - 实现一个路由守卫用来校验 jwt
 - 使用 ValidationPipe + class-validator 进行表单参数的校验`pnpm i class-validator class-transformer`
-  - 给user/login 和 user/register添加ValidationPipe
-- 注意事项:设置跨域/设置暴露jwt的相应头
+  - 给 user/login 和 user/register 添加 ValidationPipe
+- 注意事项:设置跨域/设置暴露 jwt 的相应头
 
   ```ts
   // 设置跨域选项
@@ -1412,5 +1412,154 @@ export class AppService {
   app.enableCors({
     exposedHeaders: 'token', // 在这里列出要暴露的自定义头部信息
   })
-
   ```
+
+# 18、nest 实现 ACL 权限控制
+
+- 有的接口不一定需要登录，还需要鉴权
+- 身份校验 Jwt 之后还需要做一次鉴权校验
+- 存储一张访问控制表:Access Control list
+- 用户表 User，权限表 Permission，用户表和权限表的关联表 ManyToMany 生成中间的 ACL 表
+- 使用 session 校验登录权限
+- 创建两个 resource：aaa/bbb：用户东东有 aaa 的增删改查权限，而用户光光拥有 bbb 的增删改查权限。
+- 先添加一个 LoginGuard，限制只有登录状态才可以访问这些接口
+- 然后添加一个 PermissionGuard，限制只有拥有某个权限才可以访问这些接口
+- 因为 PermissionGuard 里需要用到 UserService 来查询数据库，所以把它移动到 UserModule 里
+- 使用 setMeta 明需要 query_aaa 的 permission，然后在 PermissionGuard 里通过 reflector 取出来
+- 但是每次触发都是三个表的连表查询，使用 redis 优化
+- 安装`nest g module redis,nest g service redis --no-spec`
+- redisModule 增加 redis 的 provider
+
+```ts
+import { Global, Module } from '@nestjs/common'
+import { createClient } from 'redis'
+import { RedisService } from './redis.service'
+
+@Global()
+@Module({
+  providers: [
+    RedisService,
+    {
+      provide: 'REDIS_CLIENT',
+      async useFactory() {
+        const client = createClient({
+          socket: {
+            host: 'localhost',
+            port: 6379,
+          },
+        })
+        await client.connect()
+        return client
+      },
+    },
+  ],
+  exports: [RedisService],
+})
+export class RedisModule {}
+```
+
+- 写好一些redis的方法
+
+```ts
+import { Inject, Injectable } from '@nestjs/common';
+import { RedisClientType } from 'redis';
+
+@Injectable()
+export class RedisService {
+
+    @Inject('REDIS_CLIENT') 
+    private redisClient: RedisClientType
+
+    async listGet(key: string) {
+        return await this.redisClient.lRange(key, 0, -1);
+    }
+
+    async listSet(key: string, list: Array<string>, ttl?: number) {
+        for(let i = 0; i < list.length;i++) {
+            await this.redisClient.lPush(key, list[i]);
+        }
+        if(ttl) {
+            await this.redisClient.expire(key, ttl);
+        }
+    }
+}
+
+```
+
+- 然后在permissionGuard里注入一下
+
+```ts
+import { RedisService } from './../redis/redis.service';
+import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { Request } from 'express';
+import { UserService } from './user.service';
+
+@Injectable()
+export class PermissionGuard implements CanActivate {
+
+  @Inject(UserService) 
+  private userService: UserService;
+
+  @Inject(Reflector)
+  private reflector: Reflector;
+
+  @Inject(RedisService)
+  private redisService: RedisService;
+
+  async canActivate(
+    context: ExecutionContext,
+  ): Promise<boolean> {
+    const request: Request = context.switchToHttp().getRequest();
+
+    const user = request.session.user;
+    if(!user) {
+      throw new UnauthorizedException('用户未登录');
+    }
+
+    let permissions = await this.redisService.listGet(`user_${user.username}_permissions`); 
+
+    if(permissions.length === 0) {
+      const foundUser = await this.userService.findByUsername(user.username);
+      permissions = foundUser.permission.map(item => item.name);
+
+      this.redisService.listSet(`user_${user.username}_permissions`, permissions, 60 * 30)
+    }
+
+    const permission = this.reflector.get('permission', context.getHandler());
+
+    if(permissions.some(item => item === permission)) {
+      return true;
+    } else {
+      throw new UnauthorizedException('没有权限访问该接口');
+    }
+  }
+}
+
+```
+
+- 注意：在 service 注入的时候可以选择使用什么方式
+
+  ```ts
+  //1. 注入User实体的repository:自己写sql
+  @InjectRepository(User)
+  private userRepository: Repository<User>;
+  async createUser(name: string, age: number) {
+    const query = `INSERT INTO user (name, age) VALUES (?, ?)`;
+    await this.entityManager.query(query, [name, age]);
+  }
+
+  //2. 注入EntityManager实例:使用typeorm的方法
+  @InjectEntityManager()
+  private entityManager: EntityManager,
+  async createUser(name: string, age: number) {
+    const user = this.userRepository.create({ name, age });
+    await this.userRepository.save(user);
+  }
+  ```
+
+# 19、nest实现 RBAC 权限控制
+
+- RBAC 区别于 ACL 是基于角色的访问控制
+- 不给用户分配具体的权限，而是分配角色
+- 每个角色能实现什么权限是写在角色中的

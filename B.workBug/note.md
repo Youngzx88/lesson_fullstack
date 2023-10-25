@@ -1570,3 +1570,34 @@ export default () => {
     - 注意 decorator 属性传递的是数组形式，第一个参数代表指定组件类型，第二个参数代表指定组件属性
   - component 属性，代表字段的输入控件，可以是 Input，也可以是 Select，等等
     -注意 component 属性传递的是数组形式，第一个参数代表指定组件类型，第二个参数代表指定组件属性
+
+### 80. 如何在react中自己实现一个防抖？
+
+- useRef,setTimeOut
+- 试用useRef的原因是因为useRef不受页面刷新影响，不然直接定义debouceTimer(let/useState)会随着页面刷新被更新状态
+
+```js
+import { useRef } from 'react';
+
+const onChangeSearch = (query: any) => {
+  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+
+  if (query !== '') {
+    setSearchQuery(query);
+    // 清除之前的延迟执行函数
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
+    }
+    // 创建新的延迟执行函数
+    debounceTimer.current = setTimeout(() => {
+      setModalVisible(true);
+      setLoading(true);
+      search(query);
+    }, 300); // 设置延迟时间，单位为毫秒
+  } else {
+    setSearchQuery('');
+    setModalVisible(false);
+    setLoading(false);
+  }
+}
+```
