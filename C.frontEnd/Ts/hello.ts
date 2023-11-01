@@ -1,7 +1,3 @@
-console.log('hello typescript222')
-console.log('hello typescript333')
-console.log('hello typescript444')
-
 interface Foo {
   name: string
   age: number
