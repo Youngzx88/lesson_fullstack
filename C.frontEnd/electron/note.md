@@ -155,56 +155,101 @@ window.addEventListener('DOMContentLoaded', () => {
 
   ```js
   // 在渲染进程中
-  import { ipcRenderer } from 'electron';
+  import { ipcRenderer } from 'electron'
 
   // 1. 向主进程发送消息，期望得到应用程序的路径
-  ipcRenderer.send('get-root-path', '');
+  ipcRenderer.send('get-root-path', '')
   // 2. 监听从主进程发送回来的消息
   ipcRenderer.on('reply-root-path', (event, arg: string) => {
     if (arg) {
-      console.log('应用程序路径: ', arg);
+      console.log('应用程序路径: ', arg)
     } else {
-      console.log('获取应用程序的路径出错');
+      console.log('获取应用程序的路径出错')
     }
-  });
-
+  })
   ```
 
   ```js
   // 在主进程中
-  import { app, ipcMain } from 'electron';
+  import { app, ipcMain } from 'electron'
 
-  const ROOT_PATH = app.getAppPath(); // 获取应用程序的路径
+  const ROOT_PATH = app.getAppPath() // 获取应用程序的路径
 
   // 3. 监听渲染进程发送过来的消息
   ipcMain.on('get-root-path', (event, arg) => {
     // 4. 监听到之后，主进程发送消息进行回复
-    event.reply('reply-root-path', ROOT_PATH);
-  });
-
+    event.reply('reply-root-path', ROOT_PATH)
+  })
   ```
 
 - remote
+
   - remote 模块为渲染进程和主进程通信提供了一种简单方法，在 Electron 中, GUI 相关的模块仅在主进程中可用, 在渲染进程中不可用（如 app 模块），所以当我们在渲染进程中需要用到 GUI 相关模块方法的数据时，通常都是在主进程中调用，得到数据之后，通过 ipcMain、ipcRenderer 来告知渲染进程。
   - 开发过程想调用 GUI 模块的方法时，都需要通过 IPC 的方式，是不是很麻烦？于是 remote 模块就发挥它的作用了。它允许你在渲染进程中，调用主进程对象的方法, 而不必显式地发送进程间消息。
 
   ```js
   // 在渲染进程
-  const app = require('electron').remote.app;
+  const app = require('electron').remote.app
 
-  const rootPath = app.getAppPath();
+  const rootPath = app.getAppPath()
   ```
 
   - 官方声明：此模块在 v12.x 版本之后已经被废弃，当然如果出于性能和安全性考虑仍要使用此模块，也不是不行，可通过 @electron/remote 进行使用，但还是慎用！
 
 - 渲染进程之间通信？
+
   - 目前官方并没有提供渲染进程之间互相通信的方式，只能通过主进程建立一个消息中转。比如渲染进程 A 与渲染进程 B 需要进行通信，那么渲染进程 A 先将消息发给主进程，主进程接收消息之后，再分发给渲染进程 B。
 
-  - 我们知道主进程有且只有一个，它工作任务很多，如渲染进程的创建、快捷键事件的定制、菜单栏的自定义等，此时我们再注入一大堆的消息通信逻辑，最终会使得我们的主进程变成一个大杂烩的进程。受Sugar-Electron的启发，它内部封装了一个 ipc 模块，消息进程的逻辑在各自的渲染进程处理，感兴趣的小伙伴业余时间可前往官网进行了解。
+  - 我们知道主进程有且只有一个，它工作任务很多，如渲染进程的创建、快捷键事件的定制、菜单栏的自定义等，此时我们再注入一大堆的消息通信逻辑，最终会使得我们的主进程变成一个大杂烩的进程。受 Sugar-Electron 的启发，它内部封装了一个 ipc 模块，消息进程的逻辑在各自的渲染进程处理，感兴趣的小伙伴业余时间可前往官网进行了解。
 
 - 通信原理
   - 通过官方文档，我们可知 ipcMain 与 ipcRenderer 都是 EventEmitter 类的一个实例，而 EventEmitter 类是由 NodeJS 中的 events 模块导出。
 
-## 最佳实践
+## 简历平台
 
-- 脚手架创建项目`npx create-electron-app my-app --template=react`
+- 脚手架 npm create electron-vite
+- 安装 zustand，immer
+- 持久性数据存储：文件创建/读取/更新/删除/是否存在/是否可读/是否可写
+- 在 Node 10 之后，提供了 fs Promises API ，这里我们通过官方提供的 API 即可实现 Promise 操作 fs 模块。
+- 跳转：electron 提供一个 shell 模块，它模块提供与桌面集成相关的功能。并且此模块也能用于渲染进程中，下面我们通过此模块，实现此功能（👇 部分代码省略）
+
+  ```js
+  const onRouterToLink = (text: string) => {
+    if (text !== '简历') {
+      // 通过 shell 模块，打开默认浏览器，进入 github
+      shell.openExternal('https://github.com/PDKSophia/visResumeMook')
+    } else {
+      history.push('/resume')
+    }
+  }
+  ```
+
+### 1.怎么在 react 里面引入 node 模块？
+
+- electron 中只有主进程可以直接使用 node 模块
+- 但是渲染进程可以通过 contextBridge 允许在主进程中选择性地将 API 暴露给渲染进程，避免了潜在的安全风险。
+- 我们在 preload 中像 react 前端代码抛出 electron 对象，上面有 fs 对象
+
+  ```js
+  import { contextBridge } from 'electron'
+  contextBridge.exposeInMainWorld('electron', {
+    fs: require('fs'),
+  })
+  ```
+
+- 在前端直接使用`window.electron.fs`即可
+
+- 为什么只能读取全局路径不能相对路径？
+
+```js
+window.electron.fileAction
+  .read(
+    '/Users/youngzx/codeRelate/myCode/learn/lesson_fullstack/C.frontEnd/electron/resumeMock/src/pages/home/index.tsx',
+    'utf-8'
+  )
+  .then((data) => {
+    console.log(data)
+  })
+```
+
+- electron 提供一个 app 模块，该模块提供了一个 getAppPath() 方法，用于获取当前应用程序在本机中的目录路径，但有个问题在于，该 app 模块仅能在主进程中使用，而我们期望在渲染进程中得到此目录路径，只能通过 IPC 进程间通信获取。

@@ -1601,3 +1601,26 @@ const onChangeSearch = (query: any) => {
   }
 }
 ```
+
+### 82、布局问题
+
+- 我使用flex-1希望再下面的dom中能占据剩余的高度
+
+```html
+<div>
+  <div h-[30%]></div>
+  <div h-[5%]></div>
+  <div flex-1></div>
+</div>
+```
+
+- 但是我发现当高度非常小的时候，flex-1会占满高度，是我需要设置min-height的原因？如何解决呢
+  - 设置min-height，不适配极端屏幕
+
+```html
+<div>
+  <div min-h-[30%] h-[30%]></div>
+  <div min-h-[5%] h-[5%]></div>
+  <div flex-1></div>
+</div>
+```

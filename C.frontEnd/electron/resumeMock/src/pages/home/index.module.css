@@ -1,0 +1,16 @@
+.homeWrapper{
+  width: 100vw;
+  height: 100vh;
+  padding-top: 300px;
+  background-color: #27292c;
+}
+
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+.contentContainer{
+  height: 100%;
+  color: #fff;
+}
