@@ -926,6 +926,32 @@ bootstrap()
     - 比如权限验证的时候，我们会先定义几个角色，然后在 handler 上添加这个装饰器，参数为 admin，也就是给这个 handler 添加了一个 roles 为 admin 的 metadata。
     - 这样在 Guard 里就可以根据这个 metadata 决定是否放行了(执行 context.getHandler)
 
+```js
+// 自定义Role
+import { SetMetadata } from '@nestjs/common';
+export enum Roles {
+  user= 'user',
+  gm= 'gm'
+}
+export const Role = (...args: Roles[]) => SetMetadata('role', args);
+
+// AaaGuard
+@Injectable()
+export class AaaGuard implements CanActivate {
+  // 通过Reflector拿到Guard对应的装饰器内容
+  constructor(private reflector: Reflector) {}
+
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const requiredRoles = this.reflector.get<Roles[]>('role', context.getHandler());
+    console.log("🚀 ~ file: aaa.guard.ts:14 ~ AaaGuard ~ requiredRoles:", requiredRoles)
+    return false;
+  }
+}
+
+```
+
 - 同样，在 interceptor 里也有这个：ExecutionContext
 
 ## 10.3、总结
