@@ -6,7 +6,7 @@
     "typescript.inlayHints.parameterTypes.enabled": true,
     "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
     "editor.codeActionsOnSave": {
-        "source.fixAll": true
+        "source.fixAll": "explicit"
     },
     "eslint.alwaysShowStatus": true,
     "eslint.format.enable": true,

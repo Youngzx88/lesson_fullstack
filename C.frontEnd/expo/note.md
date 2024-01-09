@@ -11,6 +11,5 @@
 - npx expo install react-native-view-shot expo-media-library:允许访问设备的媒体库以保存图像的库。
 - npx expo install react-native-svg：让非浏览器设备也能识别svg
 - npx expo install @expo/vector-icons：图标库
-- npm install @react-navigation/native @react-navigation/native-stack：路由库
-  - npx expo install react-native-screens react-native-safe-area-context
+- npm install @react-navigation/native @react-navigation/native-stack,npx expo install react-native-screens react-native-safe-area-context:路由库
 - UI组件库：（<https://docs.expo.dev/ui-programming/user-interface-libraries/）>
