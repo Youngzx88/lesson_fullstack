@@ -1,0 +1,14 @@
+lockfileVersion: 5.4
+
+specifiers:
+  source-map: ^0.7.4
+
+dependencies:
+  source-map: 0.7.4
+
+packages:
+
+  /source-map/0.7.4:
+    resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==}
+    engines: {node: '>= 8'}
+    dev: false
