@@ -55,3 +55,72 @@
   - 对于没有变化过的自组件可以用memo包裹，防止重复渲染，props 变的时候，才会重新渲染被包裹的组件，注意memo是高阶组建
   - memo 是防止 props 没变时的重新渲染，useMemo 和 useCallback 是防止 props 的不必要变化。
   - useMemo 用于缓存计算结果，useCallback 用于缓存函数。
+
+## 2. hook必包陷阱
+
+- 这段代码因为每次引用的都是useEffect第一次执行时候count的值，所以永远是1
+
+  ```jsx
+  import { useEffect, useState } from 'react';
+
+  function App() {
+
+      const [count,setCount] = useState(0);
+
+      useEffect(() => {
+          setInterval(() => {
+              console.log(count);
+              setCount(count + 1);
+          }, 1000);
+      }, []);
+
+      return <div>{count}</div>
+  }
+
+  export default App;
+  ```
+
+- 解决方式
+  - setState(pre=>pre+1):这样可以拿到最新的count引用
+  - useReducer：因为useReducer不是直接修改引用值，而是通过action
+  - 将count设置为effect的副作用
+  - useRef：ref.current 的值改了不会触发重新渲染
+
+- 与定时结合并要正确log(封装useRef为一个新的hook)
+
+  ```jsx
+  import { useEffect, useState, useRef } from 'react';
+
+  function useInterval(fn: Function, time: number) {
+      const ref = useRef(fn);
+      ref.current = fn;//确保每次用到最新的setState函数
+
+      let cleanUpFn: Function;
+
+      useEffect(() => {
+          const timer = setInterval(() => ref.current(), time);
+
+          cleanUpFn = ()=> {
+              clearInterval(timer);
+          }
+      }, []);
+
+      return () => {
+          cleanUpFn();
+      }
+  }
+
+  function App() {
+      const [count, setCount] = useState(0);
+
+      const updateCount = () => {
+          setCount(count + 1);
+      };
+
+      useInterval(updateCount, 1000);
+
+      return <div>{count}</div>;
+  }
+
+  export default App;
+  ```

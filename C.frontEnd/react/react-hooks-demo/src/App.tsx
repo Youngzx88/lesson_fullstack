@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import './App.css'
-import MemoHooks from './memo-useMemo-useCallback/index.jsx'
+import Clousure from './closure/index.jsx'
 
 function App() {
   
   return (
     <div className="App">
-      <MemoHooks></MemoHooks>
+      <Clousure></Clousure>
     </div>
   )
 }
