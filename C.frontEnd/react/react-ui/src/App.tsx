@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import Calendar from './components/calendar/index'
+import MiniCalendar from './components/mini-calendar/index'
 
 function App() {
   return (
-    <div style={{margin:10}}>
-      <Calendar></Calendar>
+    <div style={{margin:10,width:300,height:250}}>
+      <MiniCalendar onChange={(date:Date)=>{alert(date)}}></MiniCalendar>
     </div>
   )
 }
