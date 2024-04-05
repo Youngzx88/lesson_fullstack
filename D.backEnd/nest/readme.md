@@ -1,3 +1,13 @@
+# 0、技术栈
+
+- 框架nest
+- 数据库连接typeorm/prisma
+- 数据库压力减少：redis
+- 登录JWT/Cookie、Session
+- 鉴权RBAC、ACL
+- 环境：Docker
+- 利用好AOP的概念
+
 # 1、常用的 Nest CLI
 
 - nest new project-name
