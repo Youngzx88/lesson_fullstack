@@ -1,10 +1,15 @@
 import { useState } from 'react'
 import MiniCalendar from './components/mini-calendar/index'
+import Calendar from './components/calendar/index'
+import dayjs from 'dayjs'
+import { Dayjs } from 'dayjs'
 
 function App() {
+  const [date,setDate] = useState<Dayjs>(dayjs())
+
   return (
-    <div style={{margin:10,width:300,height:250}}>
-      <MiniCalendar onChange={(date:Date)=>{alert(date)}}></MiniCalendar>
+    <div style={{width:'60%',padding:5,boxSizing:'border-box'}}>
+      <Calendar value={date} onChange={()=>{console.log(1)}}></Calendar>
     </div>
   )
 }

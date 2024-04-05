@@ -1,0 +1,100 @@
+.calendar {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 12px;
+  padding: 8px 12px;
+  border: 1.5px solid #eee;
+}
+
+.calendar-header {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  padding: 16px 8px;
+  align-items: center;
+  justify-content: start;
+  &-left {
+    background: #eee;
+    cursor: pointer;
+    border: 0;
+    padding: 0 15px;
+    margin-right: 12px;
+    line-height: 28px;
+    margin: 0px 12px;
+    border-radius: 5px;
+    &:hover {
+      background: #ccc;
+    }
+  }
+  &-value {
+    font-size: 18px;
+    margin: 0px 12px;
+  }
+  &-right {
+    background: #eee;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 0;
+    padding: 0 15px;
+    line-height: 28px;
+    margin: 0px 12px;
+    &:hover {
+      background: #ccc;
+    }
+  }
+}
+
+.calendar-content-week {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  box-sizing: border-box;
+  padding-bottom: 8px;
+  padding-left: 6px;
+  padding-right: 6px;
+  &-item {
+    box-sizing: border-box;
+    width: calc(100% / 7);
+    margin: 0px 6px;
+    padding: 0px 3px;
+  }
+}
+
+.calendar-content-days {
+  width: 100%;
+  display: flex;
+  margin-top: 6px;
+  align-items: center;
+  box-sizing: border-box;
+  padding-left: 6px;
+  flex-wrap: wrap;
+  padding-right: 6px;
+  &-cell {
+    width: calc((100% - 84px) / 7);
+    margin: 0px 6px;
+    border-top: 2px solid #eee;
+    height: 78px;
+    &-item {
+      padding: 6px  0px 6px 12px;
+    }
+    &-item-empty {
+      padding: 6px  0px 6px 12px;
+      color: #ccc;
+    }
+
+  }
+}
+
+.current{
+  border-top: 2px solid #eee;
+  border: 1px solid #166cff;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.selected{
+  border-top: 2px solid #eee;
+  background-color: #e2f2ff;
+  box-sizing: border-box;
+}
