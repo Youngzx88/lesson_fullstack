@@ -40,3 +40,9 @@
   - edit 是使用这个 commit，但是修改这个 commit 的内容，然后重新 amend。
   - squash 是合并这个 commit 到之前的 commit
 - filter-branch。它可以在一系列 commit 上自动执行脚本。比如 --tree-filter 指定的脚本就是用来修改 commit 里的文件的。
+
+## 4、rebase和merge在commit记录的区别
+
+- rebase：10点修改了A分支commit为"fixA",9点修改了B分支commit为"FixB",那么当使用master取rebase这些分支的时候，所有的commit都会被按顺序记录下来，master上的commit记录会变为，"FixB" -> "FixA"
+- merge：修改了A分支commit为"fixA",再修改了B分支commit为"FixB",当在master上merge A分支，master上的会commit带上A分支的commit，然后mergeB分支，如果有冲突，需要合并后增加一次commit表明如何解决这次冲突，然后在mergeB，push到master后，commit会带上B分支的commit和解决冲突的commit
+- 差异就在于解决冲突的时候会多一次commit,rebase则是好比一次一次把新增的内容添加到后面
