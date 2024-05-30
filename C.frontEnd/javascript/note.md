@@ -102,3 +102,5 @@
   - 延时队列：计时器
   - 交互队列：用户操作后产生的
   - 用户存放需要最快执行的任务：promise，MutationObserver
+
+## 9、promise
