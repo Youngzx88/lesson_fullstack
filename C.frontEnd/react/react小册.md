@@ -177,3 +177,10 @@
     clickHandler: MouseEventHandler<HTMLDivElement>
   }
   ```
+
+## 4、受控&非受控
+
+- value 由用户控制就是非受控模式，由代码控制就是受控模式(onChange或ref)
+- 受控模式每次 setValue 都会导致组件重新渲染
+- 其实绝大多数情况下，非受控就可以了，因为我们只是要拿到用户的输入，不需要手动去修改表单值(并且可以减少渲染)
+- 除了原生表单元素外，组件也需要考虑受控和非受控的情况。比如日历组件：它的参数就要考虑是支持非受控模式的 `defaultValue`，还是用受控模式的 `value + onChange`。
