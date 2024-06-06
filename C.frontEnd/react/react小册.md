@@ -180,7 +180,10 @@
 
 ## 4、受控&非受控
 
-- value 由用户控制就是非受控模式，由代码控制就是受控模式(onChange或ref)
-- 受控模式每次 setValue 都会导致组件重新渲染
+- value 由用户控制就是非受控模式，由代码控制就是受控模式(onChange或ref),受控模式每次 setValue 都会导致组件重新渲染
 - 其实绝大多数情况下，非受控就可以了，因为我们只是要拿到用户的输入，不需要手动去修改表单值(并且可以减少渲染)
-- 除了原生表单元素外，组件也需要考虑受控和非受控的情况。比如日历组件：它的参数就要考虑是支持非受控模式的 `defaultValue`，还是用受控模式的 `value + onChange`。
+- 除了原生表单元素外，组件也需要考虑受控和非受控的情况。比如日历组件：它的参数就要考虑是支持非受控模式的 `defaultValue`，还是用受控模式的 `value + onChange`
+- 同时支持受控和非受控模式: 参数同时支持 value 和 defaultValue，通过判断 value 是不是 undefined 来区分受控模式和非受控模式
+  - 如果是受控模式，useState 的初始值设置 props.value，然后渲染用 props.value
+  - 如果是非受控模式，那渲染用内部 state 的 value，然后 changeValue 里 setValue
+  - 当不是首次渲染，但 value 变为 undefined 的情况，也就是从受控模式切换到了非受控模式，要同步设置 state 为 propsValue
