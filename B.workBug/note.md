@@ -637,7 +637,7 @@ export default {
 - body 默认会 toString
 - 所以需要我们`body: JSON.stringify(params),`
 
-### 43. useCallback,useMemo 的使用 ❌
+### 43. useCallback,useMemo 的使用
 
 ### 44. taro 修改 tabbar 和 navigation
 
@@ -817,7 +817,7 @@ export const useCouponState = create<orderStateType>((set,get) => ({
 - 执行 pnpm i taro-ui@next
 - 然后会安装这个版本的 Taro-ui: `"taro-ui": "3.1.0-beta.6"`,
 
-### 56. 同一台服务器配置不同的前端项目 ❌
+### 56. 同一台服务器配置不同的前端项目 
 
 - 给不同的 server
 - 命名不同的 server name
@@ -1497,12 +1497,12 @@ export default App;
 
   - 需要注意的是，设置 publicPath 主要是为了确保资源（例如 CSS、JavaScript 文件等）的加载路径正确，以适应不同的路由模式和部署情况。选择 './' 还是 '/' 取决于你的应用部署环境以及使用的路由模式。
 
-## 80. formily5和antd5
+### 81. formily5和antd5
 
 - 需要使用formily5
 - "@formily/antd-v5": "^1.1.1"
 
-## 81. formily的使用
+### 82. formily的使用
 
 ```tsx
 import React from 'react'
@@ -1571,7 +1571,7 @@ export default () => {
   - component 属性，代表字段的输入控件，可以是 Input，也可以是 Select，等等
     -注意 component 属性传递的是数组形式，第一个参数代表指定组件类型，第二个参数代表指定组件属性
 
-### 80. 如何在react中自己实现一个防抖？
+### 83. 如何在react中自己实现一个防抖？
 
 - useRef,setTimeOut
 - 试用useRef的原因是因为useRef不受页面刷新影响，不然直接定义debouceTimer(let/useState)会随着页面刷新被更新状态
@@ -1602,7 +1602,7 @@ const onChangeSearch = (query: any) => {
 }
 ```
 
-### 82、布局问题
+### 84、布局问题
 
 - 我使用flex-1希望再下面的dom中能占据剩余的高度
 
@@ -1624,3 +1624,17 @@ const onChangeSearch = (query: any) => {
   <div flex-1></div>
 </div>
 ```
+
+### 85、Props对象的传递
+
+- 尽量平铺，对象的传递会导致引用的更新，不必要的渲染
+
+### 86、浏览器query携带中文
+
+- 正常的浏览器会默认encode一次中文，导致浏览器无法正常获取到中文，需要手动decode
+- 而小程序(Taro)不需要
+
+### 87、antd的form问题
+
+- antd中被设置了 name 属性的 Form.Item 包装的控件，表单控件会自动添加 value（或 valuePropName 指定的其他属性） onChange（或 trigger 指定的其他属性），数据同步将被 Form 接管
+- 导致不能用控件的 value 或 defaultValue 等属性来设置表单域的值，默认值可以用 Form 里的 initialValues 来设置。注意 initialValues 不能被 setState 动态更新，你需要用 setFieldsValue 来更新

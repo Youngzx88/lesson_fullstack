@@ -187,3 +187,6 @@
   - 如果是受控模式，useState 的初始值设置 props.value，然后渲染用 props.value
   - 如果是非受控模式，那渲染用内部 state 的 value，然后 changeValue 里 setValue
   - 当不是首次渲染，但 value 变为 undefined 的情况，也就是从受控模式切换到了非受控模式，要同步设置 state 为 propsValue
+- 如何区分受控和非受控？
+  - 受控组件：组件的值由父组件通过 value prop 提供，并通过 onChange 或类似的回调函数通知父组件状态的改变。
+  - 非受控组件：组件内部管理自己的状态，通常使用 useState 或 useRef，并且不依赖于外部 value prop 来控制其状态。
