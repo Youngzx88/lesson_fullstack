@@ -147,15 +147,15 @@ npm install @types/node --save-dev
 
 ### 14. qs 的使用,拿到 url 上的参数
 
-  ```js
-  // ?id = 1
-  let params = location.search
-  console.log('params', params) //params ?id=1
-  params = params.replace(/^\?/, '')
-  console.log('params2', params) //params2 id=1
-  let qs = QueryString.parse(params)
-  console.log('qs', qs) //qs {id: '1'}
-  ```
+```js
+// ?id = 1
+let params = location.search
+console.log('params', params) //params ?id=1
+params = params.replace(/^\?/, '')
+console.log('params2', params) //params2 id=1
+let qs = QueryString.parse(params)
+console.log('qs', qs) //qs {id: '1'}
+```
 
 ### 15. #的含义(锚点)
 
@@ -290,8 +290,9 @@ module.exports = {
       mobile: phoneNumber,
       code: codeNumber,
     })
+  ```
 
-```
+````
 
 ###27. State 的更新可能是异步的
 
@@ -303,7 +304,7 @@ module.exports = {
 this.setState({
   counter: this.state.counter + this.props.increment,
 })
-```
+````
 
 - 要解决这个问题，可以让 setState() 接收一个函数而不是一个对象。这个函数用上一个 state 作为第一个参数，将此次更新被应用时的 props 做为第二个参数
 
@@ -817,7 +818,7 @@ export const useCouponState = create<orderStateType>((set,get) => ({
 - 执行 pnpm i taro-ui@next
 - 然后会安装这个版本的 Taro-ui: `"taro-ui": "3.1.0-beta.6"`,
 
-### 56. 同一台服务器配置不同的前端项目 
+### 56. 同一台服务器配置不同的前端项目
 
 - 给不同的 server
 - 命名不同的 server name
@@ -1383,7 +1384,8 @@ if (avartar !== '' && nickName != '') {
 
   - immer
 
-- 为什么zustand中的Immer不需要传入原始修改的对象，draft是怎么映射到原对象的？
+- 为什么 zustand 中的 Immer 不需要传入原始修改的对象，draft 是怎么映射到原对象的？
+
   - 实际上，这个问题涉及到 JavaScript 的作用域和闭包机制。produce 函数内部会通过闭包将你的更新函数与原始数据关联起来，所以 draft 对象实际上是对原始数据的一个引用。
   - 所以，尽管你在 produce 函数中没有明确传递原始对象，但是通过 JavaScript 的作用域和闭包机制，draft 对象会正确映射到你要修改的对象。
 
@@ -1435,32 +1437,32 @@ if (avartar !== '' && nickName != '') {
 - 其次我们在需要重新渲染的地方仅引用需要修改的 zustand 变量
 - 举例说明
   - 又一个 zustand 单对象其中包含`{name:,age,email}`
-  - 因为是全局状态，当 A 去修改 name 以后，尽管 A 页面只用到了 email，但是 A 页面也会重新渲染(zustand好像优化了，不会重新渲染)
+  - 因为是全局状态，当 A 去修改 name 以后，尽管 A 页面只用到了 email，但是 A 页面也会重新渲染(zustand 好像优化了，不会重新渲染)
   - 这个时候我们需要控制渲染的颗粒度
 
 ### 78. 不可变数据
 
-- 为什么handleClick不会触发重新渲染？
+- 为什么 handleClick 不会触发重新渲染？
 - 在代码中，handleClick 函数中虽然对 list 进行了修改，但由于你直接使用了 list.push("add")，这并不会触发 React 的重新渲染。
 - React 的重新渲染是通过检测状态（state）的变化来触发的，以及调用组件的渲染函数来更新视图。在函数式组件中，每次组件函数被调用时，都会创建一个新的闭包，其中包含了组件函数内部的局部变量。
 - 在 handleClick 函数中，在修改 list 时实际上是在修改闭包内的局部变量 list，而并没有触发 React 对状态的更新。所以，虽然调用了 setList(list) 来更新 list，但实际上 list 并没有发生变化，React 并不会重新渲染。
-- 因为react比较的是引用，所以需要创建一个新的对象，来触发重新渲染
+- 因为 react 比较的是引用，所以需要创建一个新的对象，来触发重新渲染
 
 ```ts
-import React, { useState, useCallback } from "react";
-import ReactDom from "react-dom";
+import React, { useState, useCallback } from 'react'
+import ReactDom from 'react-dom'
 
 const Child = function ({ list }) {
-  console.log("child render");
-  return <div>{list.map((_) => _)}</div>;
-};
+  console.log('child render')
+  return <div>{list.map((_) => _)}</div>
+}
 function App() {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([])
   const handleClick = useCallback(() => {
-    list.push("add");
-    console.log("新增数据");
-    setList(list);
-  }, [list]);
+    list.push('add')
+    console.log('新增数据')
+    setList(list)
+  }, [list])
 
   return (
     <>
@@ -1469,40 +1471,40 @@ function App() {
         <Child list={list} />
       </div>
     </>
-  );
+  )
 }
 
-export default App;
-
+export default App
 ```
 
 ### 79. 如何写出优雅的前端代码
 
 - 面向测试编程，每个模块独立运行
-- 函数尽量不要嵌套而是平级，可以用参数传入函数当作参数add(a,b,function)
+- 函数尽量不要嵌套而是平级，可以用参数传入函数当作参数 add(a,b,function)
 
-### 80. 为什么hashRoute的publicPath: './',是这样的，而browserRoute的时候是'/'这样的
+### 80. 为什么 hashRoute 的 publicPath: './',是这样的，而 browserRoute 的时候是'/'这样的
 
 - 在 Web 应用中，路由分为两种主要模式：哈希路由（Hash Routing）和浏览器路由（Browser Routing）。
 
 - 哈希路由（Hash Routing）：
+
   - 在哈希路由中，路由信息被存储在 URL 的哈希部分（#后面），而不会导致页面的完全刷新。这是传统的单页面应用（SPA）的路由方式。哈希路由适用于不需要服务器端配置支持的情况，因为哈希部分的变化不会被发送到服务器，因此可以在客户端直接进行路由处理。
 
   - 当使用哈希路由时，通常会设置 publicPath 为 './'，这是因为相对路径会相对于当前目录进行解析，而哈希路由不会影响服务器上的文件路径，因此使用相对路径相对稳定。
 
 - 浏览器路由（Browser Routing）：
-浏览器路由通过使用 HTML5 的 history.pushState 和 history.replaceState API，使路由信息存储在实际的 URL 路径中。这种方式更加友好，能够在没有哈希部分的情况下展示清晰的 URL。
+  浏览器路由通过使用 HTML5 的 history.pushState 和 history.replaceState API，使路由信息存储在实际的 URL 路径中。这种方式更加友好，能够在没有哈希部分的情况下展示清晰的 URL。
 
   - 使用浏览器路由时，通常会设置 publicPath 为 '/'，因为浏览器路由使用实际路径来处理路由，所以 '/' 通常被用作根路径，不管应用部署在哪个子路径下。
 
   - 需要注意的是，设置 publicPath 主要是为了确保资源（例如 CSS、JavaScript 文件等）的加载路径正确，以适应不同的路由模式和部署情况。选择 './' 还是 '/' 取决于你的应用部署环境以及使用的路由模式。
 
-### 81. formily5和antd5
+### 81. formily5 和 antd5
 
-- 需要使用formily5
+- 需要使用 formily5
 - "@formily/antd-v5": "^1.1.1"
 
-### 82. formily的使用
+### 82. formily 的使用
 
 ```tsx
 import React from 'react'
@@ -1538,8 +1540,7 @@ export default () => {
               marginBottom: 20,
               padding: 5,
               border: '1px dashed #666',
-            }}
-          >
+            }}>
             实时响应：{form.values.input}
           </div>
         )}
@@ -1552,10 +1553,10 @@ export default () => {
 }
 ```
 
-- createForm用来创建表单核心领域模型，它是作为MVVM设计模式的标准 ViewModel
-- FormProvider组件是作为视图层桥接表单模型的入口，它只有一个参数，就是接收 createForm 创建出来的 Form 实例，并将 Form 实例以上下文形式传递到子组件中
-- FormLayout组件是用来批量控制FormItem样式的组件，这里我们指定布局为上下布局，也就是标签在上，组件在下
-- Field组件是用来承接普通字段的组件
+- createForm 用来创建表单核心领域模型，它是作为 MVVM 设计模式的标准 ViewModel
+- FormProvider 组件是作为视图层桥接表单模型的入口，它只有一个参数，就是接收 createForm 创建出来的 Form 实例，并将 Form 实例以上下文形式传递到子组件中
+- FormLayout 组件是用来批量控制 FormItem 样式的组件，这里我们指定布局为上下布局，也就是标签在上，组件在下
+- Field 组件是用来承接普通字段的组件
   - name 属性，标识字段在表单最终提交数据中的路径
   - title 属性，标识字段的标题
     - 如果 decorator 指定为 FormItem，那么在 FormItem 组件中会默认以接收 title 属性作为标签
@@ -1568,43 +1569,42 @@ export default () => {
   - initialValue 属性，代表字段的默认值
   - decorator 属性，代表字段的 UI 装饰器，通常我们都会指定为 FormItem
     - 注意 decorator 属性传递的是数组形式，第一个参数代表指定组件类型，第二个参数代表指定组件属性
-  - component 属性，代表字段的输入控件，可以是 Input，也可以是 Select，等等
-    -注意 component 属性传递的是数组形式，第一个参数代表指定组件类型，第二个参数代表指定组件属性
+  - component 属性，代表字段的输入控件，可以是 Input，也可以是 Select，等等 -注意 component 属性传递的是数组形式，第一个参数代表指定组件类型，第二个参数代表指定组件属性
 
-### 83. 如何在react中自己实现一个防抖？
+### 83. 如何在 react 中自己实现一个防抖？
 
 - useRef,setTimeOut
-- 试用useRef的原因是因为useRef不受页面刷新影响，不然直接定义debouceTimer(let/useState)会随着页面刷新被更新状态
+- 试用 useRef 的原因是因为 useRef 不受页面刷新影响，不然直接定义 debouceTimer(let/useState)会随着页面刷新被更新状态
 
 ```js
-import { useRef } from 'react';
+import { useRef } from 'react'
 
 const onChangeSearch = (query: any) => {
-  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimer = (useRef < NodeJS.Timeout) | (null > null)
 
   if (query !== '') {
-    setSearchQuery(query);
+    setSearchQuery(query)
     // 清除之前的延迟执行函数
     if (debounceTimer.current) {
-      clearTimeout(debounceTimer.current);
+      clearTimeout(debounceTimer.current)
     }
     // 创建新的延迟执行函数
     debounceTimer.current = setTimeout(() => {
-      setModalVisible(true);
-      setLoading(true);
-      search(query);
-    }, 300); // 设置延迟时间，单位为毫秒
+      setModalVisible(true)
+      setLoading(true)
+      search(query)
+    }, 300) // 设置延迟时间，单位为毫秒
   } else {
-    setSearchQuery('');
-    setModalVisible(false);
-    setLoading(false);
+    setSearchQuery('')
+    setModalVisible(false)
+    setLoading(false)
   }
 }
 ```
 
 ### 84、布局问题
 
-- 我使用flex-1希望再下面的dom中能占据剩余的高度
+- 我使用 flex-1 希望再下面的 dom 中能占据剩余的高度
 
 ```html
 <div>
@@ -1614,8 +1614,8 @@ const onChangeSearch = (query: any) => {
 </div>
 ```
 
-- 但是我发现当高度非常小的时候，flex-1会占满高度，是我需要设置min-height的原因？如何解决呢
-  - 设置min-height，不适配极端屏幕
+- 但是我发现当高度非常小的时候，flex-1 会占满高度，是我需要设置 min-height 的原因？如何解决呢
+  - 设置 min-height，不适配极端屏幕
 
 ```html
 <div>
@@ -1625,16 +1625,85 @@ const onChangeSearch = (query: any) => {
 </div>
 ```
 
-### 85、Props对象的传递
+### 85、Props 对象的传递
 
 - 尽量平铺，对象的传递会导致引用的更新，不必要的渲染
 
-### 86、浏览器query携带中文
+### 86、浏览器 query 携带中文
 
-- 正常的浏览器会默认encode一次中文，导致浏览器无法正常获取到中文，需要手动decode
+- 正常的浏览器会默认 encode 一次中文，导致浏览器无法正常获取到中文，需要手动 decode
 - 而小程序(Taro)不需要
 
-### 87、antd的form问题
+### 87、antd 的 form 问题
 
-- antd中被设置了 name 属性的 Form.Item 包装的控件，表单控件会自动添加 value（或 valuePropName 指定的其他属性） onChange（或 trigger 指定的其他属性），数据同步将被 Form 接管
+- antd 中被设置了 name 属性的 Form.Item 包装的控件，表单控件会自动添加 value（或 valuePropName 指定的其他属性） onChange（或 trigger 指定的其他属性），数据同步将被 Form 接管
 - 导致不能用控件的 value 或 defaultValue 等属性来设置表单域的值，默认值可以用 Form 里的 initialValues 来设置。注意 initialValues 不能被 setState 动态更新，你需要用 setFieldsValue 来更新
+
+### 88、reduce 的全面掌握
+
+- 累加
+- 展平数组
+
+  ```js
+  const nestedArray = [
+    [1, 2],
+    [3, 4],
+    [5, 6],
+  ]
+  const flattenedArray = nestedArray.reduce((acc, curr) => acc.concat(curr), [])
+  ```
+
+- 对对象进行分组
+
+  ```js
+  const tansfromPeople = people.reduce((acc, cur) => {
+    if (!acc.age) {
+      acc[cur.age] = []
+    }
+    acc[cur.age].push(cur)
+    return acc
+  }, {})
+  ```
+
+- 创建查找映射
+
+  - 尽管 reduce 本身是 O(n)，但是在写接口时也可以减少循环次数
+  - 把数组转换为 key，value 的对象使得查找变为 O(1)
+
+- 组合函数：来创建逐步转换数据的函数管道。
+
+  ```js
+  const add5 = (x: number): number => x + 5
+  const multiply3 = (x: number): number => x * 3
+  const subtract2 = (x: number): number => x - 2
+
+  const composedFunctions: ((x: number) => number)[] = [
+    add5,
+    multiply3,
+    subtract2,
+  ]
+
+  const result: number = composedFunctions.reduce((acc, curr) => curr(acc), 10)
+  console.log(result) // Output: 43
+  ```
+
+- 性能考虑
+
+  - 在处理大型数组或复杂操作时。一个常见的陷阱是在每次 reduce()迭代中创建新的对象或数组，这可能导致过多的内存分配并影响性能
+
+  ```js
+  const numbers: number[] = [1, 2, 3, 4, 5]
+
+  const doubledNumbers: number[] = numbers.reduce((acc, curr) => {
+    // 错误写法：return [...acc, curr * 2];
+    // 正确写法如下
+    acc.push(curr * 2)
+    return acc
+  }, [])
+
+  console.log(doubledNumbers) // Output: [2, 4, 6, 8, 10]
+  ```
+
+### 89、Promise 的写法导致的问题
+
+-
